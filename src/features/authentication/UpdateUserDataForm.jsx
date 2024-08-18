@@ -51,11 +51,12 @@ function UpdateUserDataForm() {
   async function onSubmit(data, e) {
     e.preventDefault();
 
-    if (currentAvatar) {
+    if (currentAvatar && avatar.id !== currentAvatar.id) {
       await destroyImage(currentAvatar.id);
     }
 
     if (!fullName) return;
+    console.log(fullName, phone, gender, birthday, avatar.id);
     updateUser(
       {
         fullName,
@@ -83,7 +84,8 @@ function UpdateUserDataForm() {
 
     if (phone !== currentPhone) setPhone(currentPhone);
 
-    if (birthday !== currentBirthday.slice(0, 10)) setBirthday(currentBirthday);
+    if (birthday !== currentBirthday?.slice(0, 10))
+      setBirthday(currentBirthday);
   }
 
   return (

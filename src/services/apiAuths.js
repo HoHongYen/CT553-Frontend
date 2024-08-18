@@ -10,6 +10,10 @@ export async function login(data) {
     return res;
 }
 
+export async function loginWithGoogle(data) {
+    return (await api.post("/loginWithGoogle", data)).data;
+}
+
 async function getLoggedInAccount(token) {
     return (
         await api.request({
