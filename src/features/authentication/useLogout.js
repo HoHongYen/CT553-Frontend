@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { logout as logoutApi } from "../../services/apiAuths";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useLogout() {
@@ -7,8 +6,8 @@ export function useLogout() {
     const queryClient = useQueryClient();
 
     const { mutate: logout, isLoading } = useMutation({
-        mutationFn: logoutApi,
-        onSuccess: () => {
+        onSettled: () => {
+            localStorage.removeItem("accesstoken");
             queryClient.removeQueries();
             navigate("/login", { replace: true });
         },

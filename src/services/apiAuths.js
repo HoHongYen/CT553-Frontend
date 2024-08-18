@@ -44,15 +44,12 @@ export async function signup({ fullName, email, password }) {
     return data;
 }
 
-export async function logout() {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-        console.error(error);
-        throw new Error("Logout failed");
-    }
-}
-
 export async function updateCurrentUser(updatedInfo) { // { fullName, phone, gender, birthday }
     console.log(updatedInfo);
     return (await apiAccount.put("", updatedInfo)).data;
+}
+
+export async function changePassword(data) { // { password }
+    console.log("password", data);
+    return (await apiAccount.put("/password", data)).data;
 }
