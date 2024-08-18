@@ -6,8 +6,7 @@ const api = createApiClient(baseUrl);
 const apiAccount = createApiClient("/api/accounts", { needAuth: true });
 
 export async function login(data) {
-    const res = (await api.post("/login", data)).data;
-    return res;
+    return (await api.post("/login", data)).data;
 }
 
 export async function loginWithGoogle(data) {
@@ -31,6 +30,11 @@ export async function getCurrentUser() {
     if (!accessToken) throw new Error("User not login");
     const loggedInAccount = await getLoggedInAccount(accessToken);
     return loggedInAccount.metadata;
+}
+
+export async function register(data) {
+    console.log(data);
+    return (await api.post("/register", data)).data;
 }
 
 export async function signup({ fullName, email, password }) {

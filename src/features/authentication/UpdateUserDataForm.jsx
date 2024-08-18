@@ -56,14 +56,14 @@ function UpdateUserDataForm() {
     }
 
     if (!fullName) return;
-    console.log(fullName, phone, gender, birthday, avatar.id);
+    // console.log(fullName, phone, gender, birthday, avatar.id);
     updateUser(
       {
         fullName,
         phone,
         gender,
         birthday,
-        avatarId: avatar.id,
+        avatarId: avatar?.id,
       },
       {
         onSuccess: () => {
@@ -127,10 +127,6 @@ function UpdateUserDataForm() {
               disabled={isUpdating}
               {...register("fullName", {
                 required: "Không được để trống",
-                minLength: {
-                  value: 3,
-                  message: "Họ tên phải có ít nhất 3 ký tự",
-                },
                 onChange: (e) => setFullName(e.target.value),
               })}
             />
