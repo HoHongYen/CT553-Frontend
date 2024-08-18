@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
@@ -10,8 +10,11 @@ import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
 import { HiOutlineCamera } from "react-icons/hi2";
 import { destroyImage, uploadImage } from "../../services/apiUpload";
+import { useForm } from "react-hook-form";
 
 function UpdateUserDataForm() {
+  const { register, handleSubmit, formState } = useForm();
+  const { errors } = formState;
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
   const {
     user: {
@@ -21,33 +24,46 @@ function UpdateUserDataForm() {
       gender,
       birthday: currentBirthday,
       avatar: currentAvatar,
-    }, 
+    },
   } = useUser();
 
-  const { updateUser, isUpdating } = useUpdateUser();
-
+  const [birthday, setBirthday] = useState(
+    currentBirthday?.slice(0, 10) || null
+  );
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(currentAvatar);
   const [phone, setPhone] = useState(currentPhone);
-  const [birthday, setBirthday] = useState(currentBirthday);
+
+  useEffect(() => {
+    setBirthday(birthday ? birthday.slice(0, 10) : null);
+  }, [birthday]);
+
+  const { updateUser, isUpdating } = useUpdateUser();
 
   async function handleUploadImage(e) {
     const form = new FormData();
     form.append("image", e.target.files[0]);
     const res = await uploadImage(form);
-
-    if (currentAvatar) {
-      await destroyImage(currentAvatar.id);
-    }
     console.log(res.metadata);
     setAvatar(res.metadata);
   }
 
-  function handleSubmit(e) {
+  async function onSubmit(data, e) {
     e.preventDefault();
+
+    if (currentAvatar) {
+      await destroyImage(currentAvatar.id);
+    }
+
     if (!fullName) return;
     updateUser(
-      { fullName, phone, gender, birthday, avatarId: avatar.id },
+      {
+        fullName,
+        phone,
+        gender,
+        birthday,
+        avatarId: avatar.id,
+      },
       {
         onSuccess: () => {
           e.target.reset();
@@ -58,15 +74,20 @@ function UpdateUserDataForm() {
 
   async function handleCancel() {
     // khong can e.preventDefault() vi day la button type="reset"
-    setFullName(currentFullName);
-    setAvatar(currentAvatar);
-    await destroyImage(avatar.id);
-    setPhone(currentPhone);
-    setBirthday(currentBirthday);
+    if (fullName !== currentFullName) setFullName(currentFullName);
+
+    if (avatar.id !== currentAvatar.id) {
+      await destroyImage(avatar.id);
+      setAvatar(currentAvatar);
+    }
+
+    if (phone !== currentPhone) setPhone(currentPhone);
+
+    if (birthday !== currentBirthday.slice(0, 10)) setBirthday(currentBirthday);
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-around">
         <div className="relative w-[80px] h-[80px] lg:w-[180px] lg:h-[180px]">
           <div className="flex justify-center">
@@ -96,27 +117,40 @@ function UpdateUserDataForm() {
           <FormRow label="Email">
             <Input value={email} disabled />
           </FormRow>
-          <FormRow label="Họ tên">
+          <FormRow label="Họ tên" error={errors?.fullName?.message}>
             <Input
               type="text"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
               id="fullName"
               disabled={isUpdating}
+              {...register("fullName", {
+                required: "Không được để trống",
+                minLength: {
+                  value: 3,
+                  message: "Họ tên phải có ít nhất 3 ký tự",
+                },
+                onChange: (e) => setFullName(e.target.value),
+              })}
             />
           </FormRow>
-          <FormRow label="Số điện thoại">
+          <FormRow label="Số điện thoại" error={errors?.phone?.message}>
             <Input
               type="text"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
               id="phone"
               disabled={isUpdating}
+              {...register("phone", {
+                pattern: {
+                  value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+                  message: "Vui lòng nhập đúng số điện thoại",
+                },
+                onChange: (e) => setPhone(e.target.value),
+              })}
             />
           </FormRow>
           <FormRow label="Ngày sinh">
             <Input
-              type="text"
+              type="date"
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
               id="birthday"
@@ -129,10 +163,7 @@ function UpdateUserDataForm() {
         <Button
           type="reset"
           variation="secondary"
-          disabled={
-            isUpdating ||
-            (fullName === currentFullName && avatar === currentAvatar)
-          }
+          disabled={isUpdating}
           onClick={handleCancel}
         >
           Hủy
