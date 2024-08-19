@@ -12,6 +12,8 @@ import { HiOutlineCamera } from "react-icons/hi2";
 import { destroyImage, uploadImage } from "../../services/apiUpload";
 import { useForm } from "react-hook-form";
 import SpinnerMini from "../../ui/SpinnerMini";
+import TickRoundIcon from "../../icons/TickRoundIcon";
+import EmptyRoundBoxIcon from "../../icons/EmptyRoundBoxIcon";
 
 function UpdateUserDataForm() {
   const { register, handleSubmit, formState } = useForm();
@@ -22,7 +24,7 @@ function UpdateUserDataForm() {
       email,
       fullName: currentFullName,
       phone: currentPhone,
-      gender,
+      gender: currentGender,
       birthday: currentBirthday,
       avatar: currentAvatar,
     },
@@ -33,6 +35,7 @@ function UpdateUserDataForm() {
   );
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(currentAvatar);
+  const [isMale, setIsMale] = useState(currentGender);
   const [phone, setPhone] = useState(currentPhone);
 
   useEffect(() => {
@@ -62,7 +65,7 @@ function UpdateUserDataForm() {
       {
         fullName,
         phone,
-        gender,
+        gender: isMale,
         birthday,
         avatarId: avatar?.id,
       },
@@ -100,7 +103,6 @@ function UpdateUserDataForm() {
                 src={avatar ? avatar.path : "/default-user.jpg"}
               />
             </div>
-            {/* spinner */}
             <div className="absolute w-6 h-6 lg:w-14 lg:h-14 left-[65%] bottom-0 bg-white rounded-[50%] cursor-pointer">
               <FormRow>
                 <FileInput
@@ -132,6 +134,30 @@ function UpdateUserDataForm() {
               })}
             />
           </FormRow>
+
+          <FormRow label="Giới tính">
+            <div id="gender" className="flex items-center justify-between px-4">
+              <div
+                className="flex items-center gap-5 cursor-pointer"
+                onClick={() => setIsMale(true)}
+              >
+                <div className="max-w-6">
+                  {isMale ? <TickRoundIcon /> : <EmptyRoundBoxIcon />}
+                </div>
+                <span>Nam</span>
+              </div>
+              <div
+                className="flex items-center gap-5 cursor-pointer"
+                onClick={() => setIsMale(false)}
+              >
+                <div className="max-w-6">
+                  {!isMale ? <TickRoundIcon /> : <EmptyRoundBoxIcon />}
+                </div>
+                <span>Nữ</span>
+              </div>
+            </div>
+          </FormRow>
+
           <FormRow label="Số điện thoại" error={errors?.phone?.message}>
             <Input
               type="text"
