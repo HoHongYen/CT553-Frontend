@@ -36,15 +36,9 @@ function App() {
           <ReactQueryDevtools initialIsOpen={false} />
           <BrowserRouter>
             <Routes>
-              <Route
-                element={
-                  <ProtectedRoute>
-                    <AppLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Navigate replace to="dashboard" />} />
-                <Route path="dashboard" element={<Dashboard />} />
+              <Route element={<AppLayout />}>
+                <Route index element={<Navigate replace to="/home" />} />
+                <Route path="/home" element={<Dashboard />} />
 
                 <Route element={<ProtectedRoute />}>
                   <Route path="account" element={<Account />} />

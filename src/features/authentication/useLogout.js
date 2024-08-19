@@ -9,7 +9,8 @@ export function useLogout() {
         onSettled: () => {
             localStorage.removeItem("accesstoken");
             queryClient.removeQueries();
-            navigate("/", { replace: true });
+            queryClient.setQueryData(["user"], null);
+            navigate("/");
         },
     });
 

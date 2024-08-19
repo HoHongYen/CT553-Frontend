@@ -1,10 +1,17 @@
 import styled from "styled-components";
-import HeaderMenu from "./HeaderMenu";
 import UserAvatar from "../features/authentication/UserAvatar";
 import Logo from "./Logo";
 import NavBar from "./NavBar";
 import ButtonIcon from "./ButtonIcon";
-import { HiMagnifyingGlass, HiOutlineShoppingCart } from "react-icons/hi2";
+import {
+  HiMagnifyingGlass,
+  HiOutlineShoppingCart,
+  HiOutlineUser,
+} from "react-icons/hi2";
+import { useUser } from "../features/authentication/useUser";
+import DarkModeToggle from "./DarkModeToggle";
+import Logout from "../features/authentication/Logout";
+import { Link, useNavigate } from "react-router-dom";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
@@ -16,7 +23,15 @@ const StyledHeader = styled.header`
   justify-content: space-between;
 `;
 
+const StyledHeaderMenu = styled.ul`
+  display: flex;
+  gap: 0.4rem;
+`;
+
 function Header() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
+
   return (
     <StyledHeader>
       <div className="flex items-center justify-between gap-3">
@@ -34,11 +49,27 @@ function Header() {
         </ButtonIcon>
       </form>
       <div className="flex justify-between gap-3">
-        <UserAvatar />
+        {isAuthenticated && <UserAvatar />}
+        {!isAuthenticated && (
+          <>
+            <ButtonIcon onClick={() => navigate("login")}>Đăng nhập</ButtonIcon>
+            <ButtonIcon onClick={() => navigate("register")}>
+              Đăng ký
+            </ButtonIcon>
+          </>
+        )}
         <ButtonIcon>
           <HiOutlineShoppingCart />
         </ButtonIcon>
-        <HeaderMenu />
+        <StyledHeaderMenu>
+          {isAuthenticated && (
+            <ButtonIcon onClick={() => navigate("/account")}>
+              <HiOutlineUser />
+            </ButtonIcon>
+          )}
+          <DarkModeToggle />
+          {isAuthenticated && <Logout />}
+        </StyledHeaderMenu>
       </div>
     </StyledHeader>
   );

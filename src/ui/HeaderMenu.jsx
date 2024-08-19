@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ButtonIcon from "./ButtonIcon";
 import { useNavigate } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
+import { useUser } from "../features/authentication/useUser";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -12,21 +13,10 @@ const StyledHeaderMenu = styled.ul`
 
 function HeaderMenu() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useUser();
 
   return (
-    <StyledHeaderMenu>
-      <li>
-        <ButtonIcon onClick={() => navigate("/account")}>
-          <HiOutlineUser />
-        </ButtonIcon>
-      </li>
-      <li>
-        <DarkModeToggle />
-      </li>
-      <li>
-        <Logout />
-      </li>
-    </StyledHeaderMenu>
+    
   );
 }
 
