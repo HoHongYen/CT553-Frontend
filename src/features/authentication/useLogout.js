@@ -9,7 +9,7 @@ export function useLogout() {
         onSettled: () => {
             localStorage.removeItem("accesstoken");
             queryClient.removeQueries();
-            navigate("/login", { replace: true });
+            navigate("/", { replace: true });
         },
     });
 

@@ -16,7 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import ConfirmCertain from "../../ui/ConfirmCertain";
 import { useDeleteBooking } from "./useDeleteBooking";
 
 const Cabin = styled.div`
@@ -132,7 +132,7 @@ function BookingRow({
           </Menus.List>
 
           <Modal.Window name="delete">
-            <ConfirmDelete
+            <ConfirmCertain
               resourceName="booking"
               disabled={isDeleting}
               onConfirm={() => deleteBooking(bookingId)}

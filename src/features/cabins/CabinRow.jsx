@@ -5,7 +5,7 @@ import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import ConfirmCertain from "../../ui/ConfirmCertain";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 
@@ -112,7 +112,7 @@ function CabinRow({ cabin }) {
             </Modal.Window>
 
             <Modal.Window name="delete">
-              <ConfirmDelete
+              <ConfirmCertain
                 resourceName="cabins"
                 disabled={isDeleting}
                 onConfirm={() => deleteCabin(cabinId)}

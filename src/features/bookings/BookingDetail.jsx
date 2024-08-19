@@ -14,7 +14,7 @@ import Spinner from "../../ui/Spinner";
 import { useNavigate } from "react-router-dom";
 import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
-import ConfirmDelete from "../../ui/ConfirmDelete";
+import ConfirmCertain from "../../ui/ConfirmCertain";
 import { useDeleteBooking } from "./useDeleteBooking";
 import Empty from "../../ui/Empty";
 
@@ -39,7 +39,7 @@ function BookingDetail() {
   const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
-  if (!booking) return <Empty resourceName="booking" />
+  if (!booking) return <Empty resourceName="booking" />;
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -76,7 +76,7 @@ function BookingDetail() {
             <Button variation="danger">Delete booking</Button>
           </Modal.Open>
           <Modal.Window name="delete">
-            <ConfirmDelete
+            <ConfirmCertain
               resourceName="booking"
               disabled={isDeleting}
               onConfirm={() =>
