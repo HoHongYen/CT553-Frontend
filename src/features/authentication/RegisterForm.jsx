@@ -10,13 +10,21 @@ import { Link } from "react-router-dom";
 import TickRoundIcon from "../../icons/TickRoundIcon";
 import EmptyRoundBoxIcon from "../../icons/EmptyRoundBoxIcon";
 import { useState } from "react";
-import moment from "moment/moment";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function RegisterForm() {
   const { register: registerFn, isLoading } = useRegister();
   const [isMale, setIsMale] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const images = {
+    eyeOn:
+      "https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-2/576/eye-64.png",
+    eyeOff:
+      "https://cdn3.iconfinder.com/data/icons/mix-pack-6/44/Asset_25-64.png",
+  };
 
   const {
     register,
@@ -66,74 +74,79 @@ function RegisterForm() {
         label="Mật khẩu (tối thiểu 8 ký tự)"
         error={errors?.password?.message}
       >
-        <Input
-          type="password"
-          id="password"
-          disabled={isLoading}
-          {...register("password", {
-            required: "Không được để trống",
-            minLength: {
-              value: 8,
-              message: "Mật khẩu phải có ít nhất 8 ký tự",
-            },
-          })}
-        />
+        <div id="password" className="relative">
+          <Input
+            className="w-full"
+            type={showPassword ? "text" : "password"}
+            disabled={isLoading}
+            {...register("password", {
+              required: "Không được để trống",
+              minLength: {
+                value: 8,
+                message: "Mật khẩu phải có ít nhất 8 ký tự",
+              },
+            })}
+          />
+          {/* show password begin  */}
+          <div className="absolute right-3 top-[50%] translate-y-[-50%]">
+            <img
+              onClick={() => setShowPassword((show) => !show)}
+              src={showPassword ? images.eyeOn : images.eyeOff}
+              className="hover:cursor-pointer h-8 w-8"
+            />
+          </div>
+          {/* show password end  */}
+        </div>
       </FormRow>
 
       <FormRow
         label="Nhập lại mật khẩu"
-        error={errors?.passwordConfirm?.message}
+        error={errors?.confirmPassword?.message}
       >
-        <Input
-          type="password"
-          id="passwordConfirm"
-          disabled={isLoading}
-          {...register("passwordConfirm", {
-            required: "Không được để trống",
-            validate: (value) =>
-              value === getValues().password || "Nhập lại mật khẩu không khớp",
-          })}
-        />
+        <div id="confirmPassword" className="relative">
+          <Input
+            className="w-full"
+            type={showConfirmPassword ? "text" : "password"}
+            disabled={isLoading}
+            {...register("confirmPassword", {
+              required: "Không được để trống",
+              validate: (value) =>
+                value === getValues().password ||
+                "Nhập lại mật khẩu không khớp",
+            })}
+          />
+
+          {/* show confirm password begin  */}
+          <div className="absolute right-3 top-[50%] translate-y-[-50%]">
+            <img
+              onClick={() => setShowConfirmPassword((show) => !show)}
+              src={showConfirmPassword ? images.eyeOn : images.eyeOff}
+              className="hover:cursor-pointer h-8 w-8"
+            />
+          </div>
+          {/* show confirm password end  */}
+        </div>
       </FormRow>
 
       <FormRow label="Giới tính">
-        <div className="flex items-center justify-between px-4">
-          <div>
-            {/* <input
-              // checked
-              id="male"
-              // value="true"
-              type="radio"
-              // {...register("gender")}
-              onChange={() => setIsMale(true)}
-            /> */}
-            <label
-              htmlFor="male"
-              className="flex items-center gap-5 cursor-pointer"
-              onClick={() => setIsMale(true)}
-            >
-              {/* {getValues().gender === "true" ? ( */}
+        <div id="gender" className="flex items-center justify-between px-4">
+          <div
+            className="flex items-center gap-5 cursor-pointer"
+            onClick={() => setIsMale(true)}
+          >
+            <div className="max-w-6">
               {isMale ? <TickRoundIcon /> : <EmptyRoundBoxIcon />}
-              Nam
-            </label>
+            </div>
+            <span>Nam</span>
           </div>
-          <div>
-            {/* <input
-              id="female"
-              // value="false"
-              type="radio"
-              // {...register("gender")}
-              onChange={() => setIsMale(false)}
-            /> */}
-            <label
-              htmlFor="female"
-              className="flex items-center gap-5 cursor-pointer"
-              onClick={() => setIsMale(true)}
-            >
-              {/* {getValues().gender === "false" ? ( */}
+          <div
+            className="flex items-center gap-5 cursor-pointer"
+            onClick={() => setIsMale(false)}
+          >
+            <div className="max-w-6">
               {!isMale ? <TickRoundIcon /> : <EmptyRoundBoxIcon />}
-              Nữ
-            </label>
+            </div>
+            <span>Nữ</span>
           </div>
         </div>
       </FormRow>

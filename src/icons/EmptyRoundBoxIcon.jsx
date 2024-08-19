@@ -5,7 +5,7 @@ function EmptyRoundBoxIcon() {
       height="1em"
       viewBox="0 0 18 18"
       fill="none"
-      fontSize="18"
+      fontSize="17"
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle

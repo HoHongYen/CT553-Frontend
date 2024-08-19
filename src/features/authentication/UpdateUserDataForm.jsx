@@ -11,6 +11,7 @@ import { useUpdateUser } from "./useUpdateUser";
 import { HiOutlineCamera } from "react-icons/hi2";
 import { destroyImage, uploadImage } from "../../services/apiUpload";
 import { useForm } from "react-hook-form";
+import SpinnerMini from "../../ui/SpinnerMini";
 
 function UpdateUserDataForm() {
   const { register, handleSubmit, formState } = useForm();
@@ -166,7 +167,9 @@ function UpdateUserDataForm() {
         >
           Hủy
         </Button>
-        <Button disabled={isUpdating}>Cập nhật thông tin cá nhân</Button>
+        <Button disabled={isUpdating}>
+          {!isUpdating ? "Cập nhật thông tin cá nhân" : <SpinnerMini />}
+        </Button>
       </FormRow>
     </Form>
   );
