@@ -11,7 +11,7 @@ export function useRegister() {
             console.log(user);
             toast.success("Đăng ký thành công!");
 
-            navigate("/login", { replace: true });
+            navigate("/dang-nhap", { replace: true });
         },
         onError: (error) => {
             console.log(error);

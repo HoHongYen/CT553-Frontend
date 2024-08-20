@@ -53,18 +53,20 @@ function Header() {
         {isAuthenticated && <UserAvatar />}
         {!isAuthenticated && (
           <>
-            <ButtonIcon onClick={() => navigate("login")}>Đăng nhập</ButtonIcon>
-            <ButtonIcon onClick={() => navigate("register")}>
+            <ButtonIcon onClick={() => navigate("/dang-nhap")}>
+              Đăng nhập
+            </ButtonIcon>
+            <ButtonIcon onClick={() => navigate("/dang-ky")}>
               Đăng ký
             </ButtonIcon>
           </>
         )}
-        <ButtonIcon>
+        <ButtonIcon onClick={() => navigate("/gio-hang")}>
           <HiOutlineShoppingCart />
         </ButtonIcon>
         <StyledHeaderMenu>
           {isAuthenticated && (
-            <ButtonIcon onClick={() => navigate("/account")}>
+            <ButtonIcon onClick={() => navigate("/tai-khoan")}>
               <HiOutlineUser />
             </ButtonIcon>
           )}

@@ -181,7 +181,7 @@ function RegisterForm() {
       </FormRowVertical>
       <div className="flex justify-center gap-6">
         <span>Đã có tài khoản?</span>
-        <Link className="italic underline" to="/login">
+        <Link className="italic underline" to="/dang-nhap">
           Đăng nhập
         </Link>
       </div>

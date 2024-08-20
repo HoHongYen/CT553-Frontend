@@ -14,16 +14,18 @@ import { useCreateCategory } from "./useCreateCategory";
 import { useCategories } from "./useCategories";
 import Select from "../../ui/Select";
 import slugify from "slugify";
+import UploadCategories from "./UploadCategories";
+import { useDarkMode } from "../../context/DarkModeContext";
 // import { useUploadImage } from "../upload/useUploadImage";
 
 function CreateCategoryForm() {
   const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
 
+  const { isDarkMode } = useDarkMode();
+  const { categories } = useCategories();
   const { createCategory, isLoading } = useCreateCategory();
-  // const { categories } = useCategories();
-  const categories = [];
-  // const { uploadImage, isLoading: isUploadingImage, image } = useUploadImage();
+  // const { uploadImage, isLoading: isUploadingImage } = useUploadImage();
 
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [parentId, setParentId] = useState(null);
@@ -38,7 +40,7 @@ function CreateCategoryForm() {
     const image = await uploadImage(form);
     setIsUploadingImage(false);
     // uploadImage(form);
-    console.log(image);
+    // setThumbnailImage(image);
     setThumbnailImage(image.metadata);
   }
 
@@ -50,13 +52,15 @@ function CreateCategoryForm() {
     createCategory(
       {
         name,
-        parentId,
+        parentId: parentId ? +parentId : null,
         thumbnailImageId: thumbnailImage?.id,
         slug,
       },
       {
         onSuccess: () => {
           e.target.reset();
+          setSlug("");
+          setParentId(null);
           setThumbnailImage(null);
         },
       }
@@ -64,13 +68,15 @@ function CreateCategoryForm() {
   }
 
   async function handleCancel() {
+    setSlug("");
+    setParentId(null);
     // khong can e.preventDefault() vi day la button type="reset"
     if (thumbnailImage) await destroyImage(thumbnailImage?.id);
     setThumbnailImage(null);
   }
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (categories?.length > 0) {
       setOptions([
         { value: null, label: "Không có" },
         ...categories.map((category) => {
@@ -94,7 +100,11 @@ function CreateCategoryForm() {
                 src={thumbnailImage ? thumbnailImage.path : "/default-user.jpg"}
               />
             </div>
-            <div className="absolute w-6 h-6 lg:w-14 lg:h-14 left-[65%] bottom-0 bg-white rounded-[50%] cursor-pointer">
+            <div
+              className={`absolute w-6 h-6 lg:w-14 lg:h-14 left-[65%] bottom-0 ${
+                !isDarkMode ? "bg-white" : "bg-gray-600"
+              } rounded-[50%] cursor-pointer`}
+            >
               <FormRow>
                 <FileInput
                   className="w-[36px] h-[36px] absolute opacity-0 cursor-pointer"
@@ -150,6 +160,7 @@ function CreateCategoryForm() {
         <Button disabled={isLoading}>
           {!isLoading ? "Tạo danh mục" : <SpinnerMini />}
         </Button>
+        <UploadCategories />
       </FormRow>
     </Form>
   );

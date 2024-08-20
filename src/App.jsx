@@ -38,23 +38,23 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to="/home" />} />
-                <Route path="/home" element={<Home />} />
+                <Route index element={<Navigate replace to="/trang-chu" />} />
+                <Route path="/trang-chu" element={<Home />} />
 
                 <Route element={<ProtectedRoute />}>
-                  <Route path="account" element={<Account />} />
+                  <Route path="tai-khoan" element={<Account />} />
                   <Route path="bookings" element={<Bookings />} />
                   <Route path="bookings/:bookingId" element={<Booking />} />
                   <Route path="checkin/:bookingId" element={<Checkin />} />
                 </Route>
 
-                <Route path="categories" element={<CreateCategory />} />
-                <Route path="cabins" element={<Cabins />} />
-                <Route path="users" element={<Users />} />
-                <Route path="settings" element={<Settings />} />
+                <Route path="danh-muc" element={<CreateCategory />} />
+                <Route path="khuyen-mai" element={<Cabins />} />
+                <Route path="lien-he" element={<Users />} />
+                <Route path="gio-hang" element={<Settings />} />
               </Route>
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
+              <Route path="dang-nhap" element={<Login />} />
+              <Route path="dang-ky" element={<Register />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </BrowserRouter>

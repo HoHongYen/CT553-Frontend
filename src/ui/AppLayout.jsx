@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Outlet } from "react-router-dom";
-import BreadCrumb from "./BreadCrumb";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -30,7 +29,6 @@ function AppLayout() {
       <div className="overflow-scroll">
         <Main>
           <Container>
-            <BreadCrumb breadcrumb={[]} />
             <Outlet />
           </Container>
         </Main>

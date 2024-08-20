@@ -119,7 +119,7 @@ function LoginForm() {
       </FormRowVertical>
       <div className="flex justify-center gap-6">
         <span>Chưa có tài khoản?</span>
-        <Link className="italic underline" to="/register">
+        <Link className="italic underline" to="/dang-ky">
           Đăng ký
         </Link>
       </div>

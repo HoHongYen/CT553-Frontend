@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import SpinnerMini from "../../ui/SpinnerMini";
 import TickRoundIcon from "../../icons/TickRoundIcon";
 import EmptyRoundBoxIcon from "../../icons/EmptyRoundBoxIcon";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function UpdateUserDataForm() {
   const { register, handleSubmit, formState } = useForm();
@@ -29,6 +30,8 @@ function UpdateUserDataForm() {
       avatar: currentAvatar,
     },
   } = useUser();
+
+  const { isDarkMode } = useDarkMode();
 
   const [birthday, setBirthday] = useState(
     currentBirthday?.slice(0, 10) || null
@@ -103,7 +106,11 @@ function UpdateUserDataForm() {
                 src={avatar ? avatar.path : "/default-user.jpg"}
               />
             </div>
-            <div className="absolute w-6 h-6 lg:w-14 lg:h-14 left-[65%] bottom-0 bg-white rounded-[50%] cursor-pointer">
+            <div
+              className={`absolute w-6 h-6 lg:w-14 lg:h-14 left-[65%] bottom-0 ${
+                !isDarkMode ? "bg-white" : "bg-gray-600"
+              } rounded-[50%] cursor-pointer`}
+            >
               <FormRow>
                 <FileInput
                   className="w-[36px] h-[36px] absolute opacity-0 cursor-pointer"

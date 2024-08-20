@@ -13,7 +13,7 @@ function ProtectedRoute({ children }) {
   // 2. If the user is not authenticated, redirect to the login page
   useEffect(() => {
     if (!isAuthenticated && !isLoading) {
-      navigate("/login");
+      navigate("/dang-nhap");
     }
   }, [isAuthenticated, isLoading, navigate]);
 

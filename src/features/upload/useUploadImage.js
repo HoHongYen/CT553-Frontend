@@ -3,7 +3,7 @@ import { uploadImage as uploadImageApi } from "../../services/apiUpload";
 import toast from "react-hot-toast";
 
 export function useUploadImage() {
-    const { mutate: uploadImage, isLoading, data: { metadata: image } = {} } = useMutation({
+    const { mutate: uploadImage, isLoading,data: image } = useMutation({
         mutationFn: (data) => uploadImageApi(data),
         onSuccess: (res) => {
             console.log(res);
