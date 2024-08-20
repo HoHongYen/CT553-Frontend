@@ -7,7 +7,6 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import { HiOutlineCamera } from "react-icons/hi2";
-import { destroyImage, uploadImage } from "../../services/apiUpload";
 import { useForm } from "react-hook-form";
 import SpinnerMini from "../../ui/SpinnerMini";
 import { useCreateCategory } from "./useCreateCategory";
@@ -16,7 +15,8 @@ import Select from "../../ui/Select";
 import slugify from "slugify";
 import UploadCategories from "./UploadCategories";
 import { useDarkMode } from "../../context/DarkModeContext";
-// import { useUploadImage } from "../upload/useUploadImage";
+import { useUploadImage } from "../upload/useUploadImage";
+import { useDeleteImage } from "../upload/useDeleteImage copy";
 
 function CreateCategoryForm() {
   const { register, handleSubmit, formState } = useForm();
@@ -25,7 +25,8 @@ function CreateCategoryForm() {
   const { isDarkMode } = useDarkMode();
   const { categories } = useCategories();
   const { createCategory, isLoading } = useCreateCategory();
-  // const { uploadImage, isLoading: isUploadingImage } = useUploadImage();
+  const { uploadImage } = useUploadImage();
+  const { deleteImage } = useDeleteImage();
 
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [parentId, setParentId] = useState(null);
@@ -36,12 +37,14 @@ function CreateCategoryForm() {
   async function handleUploadImage(e) {
     const form = new FormData();
     form.append("image", e.target.files[0]);
+
     setIsUploadingImage(true);
-    const image = await uploadImage(form);
-    setIsUploadingImage(false);
-    // uploadImage(form);
-    // setThumbnailImage(image);
-    setThumbnailImage(image.metadata);
+    uploadImage(form, {
+      onSuccess: (res) => {
+        setThumbnailImage(res.metadata);
+        setIsUploadingImage(false);
+      },
+    });
   }
 
   async function onSubmit({ name }, e) {
@@ -68,11 +71,16 @@ function CreateCategoryForm() {
   }
 
   async function handleCancel() {
+    // khong can e.preventDefault() vi day la button type="reset"
     setSlug("");
     setParentId(null);
-    // khong can e.preventDefault() vi day la button type="reset"
-    if (thumbnailImage) await destroyImage(thumbnailImage?.id);
-    setThumbnailImage(null);
+    if (thumbnailImage) {
+      deleteImage(thumbnailImage?.id, {
+        onSuccess: () => {
+          setThumbnailImage(null);
+        },
+      });
+    }
   }
 
   useEffect(() => {
