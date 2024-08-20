@@ -11,7 +11,7 @@ import {
 import { useUser } from "../features/authentication/useUser";
 import DarkModeToggle from "./DarkModeToggle";
 import Logout from "../features/authentication/Logout";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
