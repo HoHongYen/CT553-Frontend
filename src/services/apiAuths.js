@@ -1,4 +1,3 @@
-import supabase, { supabaseUrl } from "./supabase";
 import createApiClient from "./api";
 
 const baseUrl = "/api/auth";
@@ -35,21 +34,6 @@ export async function getCurrentUser() {
 export async function register(data) {
     console.log(data);
     return (await api.post("/register", data)).data;
-}
-
-export async function signup({ fullName, email, password }) {
-    const { data, error } = await supabase.auth.signUp({
-        email, password, options: {
-            data: { fullName, avatar: "" }
-        }
-    });
-
-    if (error) {
-        console.error(error);
-        throw new Error("Error signing up");
-    }
-    console.log(data);
-    return data;
 }
 
 export async function updateCurrentUser(updatedInfo) { // { fullName, phone, gender, birthday }

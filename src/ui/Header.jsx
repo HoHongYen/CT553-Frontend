@@ -21,6 +21,7 @@ const StyledHeader = styled.header`
   gap: 2.4rem;
   align-items: center;
   justify-content: space-between;
+  max-height: 8rem;
 `;
 
 const StyledHeaderMenu = styled.ul`

@@ -386,6 +386,12 @@ function MainNav() {
           </Dropdown>
         </li>
         <li>
+          <StyledNavLink to="/categories">
+            <HiOutlineGift />
+            <span>Tạo danh mục</span>
+          </StyledNavLink>
+        </li>
+        <li>
           <StyledNavLink to="/cabins">
             <HiOutlineGift />
             <span>Khuyến mại</span>

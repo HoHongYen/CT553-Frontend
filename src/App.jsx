@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 import Bookings from "./pages/Bookings";
 import Cabins from "./pages/Cabins";
 import Users from "./pages/Users";
@@ -17,6 +17,7 @@ import Checkin from "./pages/Checkin";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import Register from "./pages/Register";
+import CreateCategory from "./pages/CreateCategory";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,7 +39,7 @@ function App() {
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Navigate replace to="/home" />} />
-                <Route path="/home" element={<Dashboard />} />
+                <Route path="/home" element={<Home />} />
 
                 <Route element={<ProtectedRoute />}>
                   <Route path="account" element={<Account />} />
@@ -47,6 +48,7 @@ function App() {
                   <Route path="checkin/:bookingId" element={<Checkin />} />
                 </Route>
 
+                <Route path="categories" element={<CreateCategory />} />
                 <Route path="cabins" element={<Cabins />} />
                 <Route path="users" element={<Users />} />
                 <Route path="settings" element={<Settings />} />
