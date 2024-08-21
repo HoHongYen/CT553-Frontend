@@ -3,7 +3,7 @@ import { useCategories } from "@/hooks/category/useCategories";
 
 import FrameSkeleton from "@/components/skeletons/FrameSkeleton";
 import Button from "@/components/ui/Button";
-import RoundImage from "@/components/ui/RoundImage";
+import CategoryItem from "./CategoryItem";
 
 function CategoryMenu() {
   const { categories } = useCategories();
@@ -26,15 +26,7 @@ function CategoryMenu() {
     <div className="flex flex-col gap-10 bg-[var(--color-blue-100)] p-5 pt-10 rounded-3xl">
       <div className="flex flex-wrap justify-center gap-16">
         {showCategories?.map((category) => (
-          <div
-            key={category.id}
-            className="flex cursor-pointer flex-col justify-center gap-5"
-          >
-            <div className="flex justify-center">
-              <RoundImage size="large" path={category.thumbnailImage.path} />
-            </div>
-            <span className="capitalize">{category.name}</span>
-          </div>
+          <CategoryItem key={category.id} category={category} />
         ))}
       </div>
       <div className="flex justify-center">

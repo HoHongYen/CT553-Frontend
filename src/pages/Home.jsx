@@ -25,14 +25,26 @@ function Home() {
       <Carousel />
       <Introduce />
       <div className="flex flex-col gap-10 mt-10">
-        <Heading as="h2" className="uppercase font-bold">
+        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
           Danh mục tranh
         </Heading>
         <CategoryMenu />
       </div>
       <div className="flex flex-col gap-10 mt-10">
-        <Heading as="h2" className="uppercase font-bold">
+        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
           Sản phẩm mới
+        </Heading>
+        <HomeProducts />
+      </div>
+      <div className="flex flex-col gap-10 mt-10">
+        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
+          Sản phẩm nổi bật
+        </Heading>
+        <HomeProducts />
+      </div>
+      <div className="flex flex-col gap-10 mt-10">
+        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
+          Dành cho bạn
         </Heading>
         <HomeProducts />
       </div>
