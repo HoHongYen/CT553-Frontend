@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledRoundImage = styled.div`
   display: flex;
@@ -12,7 +12,8 @@ const StyledRoundImage = styled.div`
 
 const Image = styled.img`
   display: block;
-  width: 4rem;
+  ${(props) => sizes[props.size]}
+  /* width: 4rem; */
   aspect-ratio: 1;
   object-fit: cover;
   object-position: center;
@@ -20,10 +21,26 @@ const Image = styled.img`
   outline: 2px solid var(--color-grey-100);
 `;
 
-function RoundImage({ path }) {
+RoundImage.defaultProps = {
+  size: "small",
+};
+
+const sizes = {
+  small: css`
+    width: 4rem;
+  `,
+  medium: css`
+    width: 8rem;
+  `,
+  large: css`
+    width: 10rem;
+  `,
+};
+
+function RoundImage({ path, ...props }) {
   return (
-    <StyledRoundImage>
-      <Image src={path || "default-user.jpg"} />
+    <StyledRoundImage {...props}>
+      <Image {...props} src={path || "default-user.jpg"} />
     </StyledRoundImage>
   );
 }

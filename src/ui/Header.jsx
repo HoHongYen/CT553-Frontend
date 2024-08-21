@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
+  /* background-color: #fda4af; // bg-rose-300 */
   padding: 0.1rem 4.8rem;
   border-bottom: 1px solid var(--color-grey-100);
   display: flex;

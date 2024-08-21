@@ -8,3 +8,26 @@
   width: 0;
   height: 0;
 }
+
+/* carousel button in homepage begin */
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev {
+  background-color: var(--color-grey-400);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.ant-carousel .slick-next::after {
+  position: absolute;
+  top: 35%;
+  left: 30%;
+}
+
+.ant-carousel .slick-prev::after {
+  position: absolute;
+  top: 35%;
+  left: 40%;
+}
+/* carousel button in homepage end */
+

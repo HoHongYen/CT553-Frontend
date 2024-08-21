@@ -16,7 +16,7 @@ import slugify from "slugify";
 import UploadCategories from "./UploadCategories";
 import { useDarkMode } from "../../context/DarkModeContext";
 import { useUploadImage } from "../upload/useUploadImage";
-import { useDeleteImage } from "../upload/useDeleteImage copy";
+import { useDeleteImage } from "../upload/useDeleteImage";
 
 function CreateCategoryForm() {
   const { register, handleSubmit, formState } = useForm();

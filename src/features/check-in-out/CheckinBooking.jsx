@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox";
 import { formatCurrency } from "../../utils/helpers";
 import { useCheckin } from "./useCheckin";
-import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
   /* Box */
@@ -28,26 +27,22 @@ function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
-  const { settings, isLoading: isLoadingSettings } = useSettings();
 
   const moveBack = useMoveBack();
   const { checkin, isCheckingin } = useCheckin();
 
   useEffect(() => setConfirmPaid(booking?.isPaid || false), [booking]);
 
-  if (isLoading || isLoadingSettings) return <Spinner />;
+  if (isLoading) return <Spinner />;
 
   const {
     id: bookingId,
     guests,
     totalPrice,
-    numGuests,
     hasBreakfast,
-    numNights,
   } = booking || {};
 
-  const optionalBreakfastPrice =
-    settings?.breakfastPrice * numNights * numGuests || 0;
+  const optionalBreakfastPrice = 0;
 
   function handleCheckin() {
     if (!confirmPaid) return;

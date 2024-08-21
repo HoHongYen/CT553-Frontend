@@ -5,11 +5,7 @@ import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import BreadCrumb from "../ui/BreadCrumb";
 
-const breadcrumb = [
-  {
-    name: "Tài khoản",
-  },
-];
+const breadcrumb = [{ name: "Tài khoản" }, { name: "Thông tin cá nhân" }];
 
 function Account() {
   const { user } = useUser();
