@@ -1,9 +1,10 @@
-import UpdatePasswordForm from "../features/authentication/UpdatePasswordForm";
-import UpdateUserDataForm from "../features/authentication/UpdateUserDataForm";
-import { useUser } from "../features/authentication/useUser";
-import Heading from "../ui/Heading";
-import Row from "../ui/Row";
-import BreadCrumb from "../ui/BreadCrumb";
+import { useUser } from "@/hooks/profile/useUser";
+
+import UpdatePasswordForm from "@/components/profile/UpdatePasswordForm";
+import UpdateUserDataForm from "@/components/profile/UpdateUserDataForm";
+import Heading from "@/components/ui/Heading";
+import Row from "@/components/ui/Row";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 
 const breadcrumb = [{ name: "Tài khoản" }, { name: "Thông tin cá nhân" }];
 

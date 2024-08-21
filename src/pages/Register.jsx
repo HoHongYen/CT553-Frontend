@@ -1,11 +1,12 @@
-import styled from "styled-components";
-import Logo from "../ui/Logo";
-import Heading from "../ui/Heading";
-import RegisterForm from "../features/authentication/RegisterForm";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../features/authentication/useUser";
-import FullPage from "../ui/FullPage";
-import Spinner from "../ui/Spinner";
+import { useUser } from "@/hooks/profile/useUser";
+
+import styled from "styled-components";
+import RegisterForm from "@/components/auth/RegisterForm";
+import Logo from "@/components/header/Logo";
+import Heading from "@/components/ui/Heading";
+import FullPage from "@/components/ui/FullPage";
+import Spinner from "@/components/ui/Spinner";
 
 const AuthLayout = styled.main`
   min-height: 100vh;

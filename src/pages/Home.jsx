@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import BreadCrumb from "../ui/BreadCrumb";
-import Carousel from "../features/home/Carousel";
-import Introduce from "../features/home/Introduce";
-import HomeProducts from "../features/home/HomeProducts";
-import CategoryMenu from "../features/home/CategoryMenu";
-import Heading from "../ui/Heading";
+import BreadCrumb from "@/components/ui/BreadCrumb";
+import Carousel from "@/components/home/Carousel";
+import Introduce from "@/components//home/Introduce";
+import HomeProducts from "@/components/home/HomeProducts";
+import CategoryMenu from "@/components/home/CategoryMenu";
+import Heading from "@/components/ui/Heading";
 const breadcrumb = [];
 
 const Slogan = styled.div`
