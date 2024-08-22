@@ -120,10 +120,11 @@ function MainNav() {
       label: (
         <div className="mb-4">
           <Link
-            to={slugify(policy, { lower: true, locale: "vi" })}
-            className="capitalize"
+            to={slugify(policy.name, { lower: true, locale: "vi" })}
+            className="capitalize flex items-center gap-4"
           >
-            {policy}
+            <policy.icon className="w-[2.4rem] h-[2.4rem]" />
+            {policy.name}
           </Link>
         </div>
       ),

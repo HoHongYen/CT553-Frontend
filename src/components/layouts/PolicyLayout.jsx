@@ -11,7 +11,7 @@ const StyledPolicyLayout = styled.div`
   grid-template-columns: 26rem 1fr;
   grid-template-rows: auto 1fr;
   /* height: 100vh; */
-  gap: 2rem;
+  gap: 3rem;
 `;
 
 function Policy() {

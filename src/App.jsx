@@ -66,6 +66,7 @@ function App() {
                     element={<SecurityPolicy />}
                   />
                 </Route>
+
                 <Route path="lien-he" element={<Contact />} />
 
                 <Route element={<ProtectedRoute />}>
