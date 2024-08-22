@@ -1,8 +1,9 @@
 /* eslint-disable */
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, message } from "antd";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   HiOutlineHome,
@@ -10,10 +11,13 @@ import {
   HiOutlineGift,
   HiOutlineEnvelope,
   HiOutlineChevronRight,
+  HiOutlineClipboardDocumentList,
 } from "react-icons/hi2";
 
 import RoundImage from "@/components/ui/RoundImage";
 import { useCategories } from "@/hooks/category/useCategories";
+import slugify from "slugify";
+import { policies } from "@/utils/constants";
 
 const NavList = styled.ul`
   display: flex;
@@ -80,13 +84,13 @@ const StyledMenuNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
-  const onClick = ({ key }) => {
-    message.info(`Click on item ${key}`);
+  const handleChooseCategory = ({ key }) => {
+    message.info(`Danh muc ${key}`);
   };
 
   const { categories } = useCategories();
 
-  const items = categories?.map((category) => {
+  const categoriesList = categories?.map((category) => {
     return {
       key: category.id,
       type: category.id,
@@ -94,9 +98,9 @@ function MainNav() {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center">
             <RoundImage path={category.thumbnailImage.path} />
-            <span className="capitalize">{category.name}</span>
+            <Link className="capitalize">{category.name}</Link>
           </div>
-          <HiOutlineChevronRight />
+          {category.children.length > 0 && <HiOutlineChevronRight />}
         </div>
       ),
       children: category.children?.map((child) => {
@@ -106,6 +110,23 @@ function MainNav() {
           label: <span className="capitalize">{child.name}</span>,
         };
       }),
+    };
+  });
+
+  const policiesList = policies?.map((policy) => {
+    return {
+      key: uuidv4(),
+      type: uuidv4(),
+      label: (
+        <div className="mb-4">
+          <Link
+            to={slugify(policy, { lower: true, locale: "vi" })}
+            className="capitalize"
+          >
+            {policy}
+          </Link>
+        </div>
+      ),
     };
   });
 
@@ -122,15 +143,15 @@ function MainNav() {
           <Dropdown
             menu={{
               mode: "vertical",
-              items,
-              onClick,
+              items: categoriesList,
+              onClick: handleChooseCategory,
               expandIcon: null,
             }}
           >
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineCalendarDays />
-                <span>Danh mục</span>
+                <span>Sản phẩm</span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>
@@ -141,6 +162,23 @@ function MainNav() {
             <HiOutlineGift />
             <span>Khuyến mại</span>
           </StyledNavLink>
+        </li>
+        <li>
+          <Dropdown
+            menu={{
+              mode: "vertical",
+              items: policiesList,
+              expandIcon: null,
+            }}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+              <StyledMenuNavLink>
+                <HiOutlineClipboardDocumentList />
+                <span>Chính sách</span>
+                <DownOutlined className="w-6 h-6" />
+              </StyledMenuNavLink>
+            </a>
+          </Dropdown>
         </li>
         <li>
           <StyledNavLink to="/lien-he">

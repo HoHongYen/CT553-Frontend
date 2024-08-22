@@ -40,7 +40,7 @@ const sizes = {
 function RoundImage({ path, ...props }) {
   return (
     <StyledRoundImage {...props}>
-      <Image {...props} src={path || "default-user.jpg"} />
+      <Image {...props} src={path || "/default-image.jpg"} />
     </StyledRoundImage>
   );
 }
