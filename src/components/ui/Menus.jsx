@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useOutsideClick } from "@/hooks/common/useOutsideClick";
 
 import styled from "styled-components";
 import { createPortal } from "react-dom";

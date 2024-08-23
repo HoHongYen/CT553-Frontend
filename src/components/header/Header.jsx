@@ -69,7 +69,7 @@ function Header() {
         </ButtonIcon>
         <StyledHeaderMenu>
           {isAuthenticated && (
-            <ButtonIcon onClick={() => navigate("/tai-khoan")}>
+            <ButtonIcon onClick={() => navigate("tai-khoan/thong-tin-ca-nhan")}>
               <HiOutlineUser />
             </ButtonIcon>
           )}

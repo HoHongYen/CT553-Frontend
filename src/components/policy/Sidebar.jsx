@@ -21,14 +21,14 @@ function Sidebar() {
       <Heading as="h2" className="text-center">
         Các chính sách
       </Heading>
-      {policies.map((policy) => (
+      {policies.map((item) => (
         <StyledLink
           key={uuidv4()}
-          to={slugify(policy.name, { lower: true, locale: "vi" })}
+          to={slugify(item.title, { lower: true, locale: "vi" })}
           className="capitalize flex gap-5 items-center"
         >
-          <policy.icon className="w-[2.4rem] h-[2.4rem]" />
-          {policy.name}
+          <item.icon className="w-[2.4rem] h-[2.4rem]" />
+          {item.title}
         </StyledLink>
       ))}
     </div>
