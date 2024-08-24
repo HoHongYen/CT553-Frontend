@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { useAddresses } from "@/hooks/profile/addresses/useAddresses";
 
 import Spinner from "@/components/ui/Spinner";
 import Table from "@/components/ui/Table";
@@ -7,6 +7,7 @@ import AddressRow from "./AddressRow";
 
 function AddressTable() {
   // const { isLoading, categories } = useCategories();
+  const { isLoading, addresses } = useAddresses();
 
   // if (isLoading) return <Spinner />;
   // if (!categories.length) return <Empty resourceName="categories" />;
@@ -28,60 +29,60 @@ function AddressTable() {
   //   (a, b) => (a[field] - b[field]) * modifier
   // );
 
-  const addresses = [
-    {
-      id: uuidv4(),
-      provinceId: "1",
-      provinceName: "Hà Nội",
-      districtId: "2",
-      districtName: "Ba Đình",
-      wardId: "3",
-      wardName: "Cống Vị",
-      detailAddress: "Số 1, ngõ 1, phố 1",
-      contactName: "Nguyễn Văn A",
-      contactPhone: "0987654321",
-      isDefault: true,
-      isDeleted: false,
-    },
-    {
-      id: uuidv4(),
-      provinceId: "1",
-      provinceName: "Cà Mau",
-      districtId: "2",
-      districtName: "Phú Tân",
-      wardId: "3",
-      wardName: "Việt Thắng",
-      detailAddress: "Số 1",
-      contactName: "Nguyễn Văn B",
-      contactPhone: "0987654321",
-      isDefault: false,
-      isDeleted: false,
-    },
-    {
-      id: uuidv4(),
-      provinceId: "1",
-      provinceName: "Cần Thơ",
-      districtId: "2",
-      districtName: "Phú Tân",
-      wardId: "3",
-      wardName: "Việt Thắng",
-      detailAddress: "Số 1",
-      contactName: "Nguyễn Văn C",
-      contactPhone: "0987654321",
-      isDefault: false,
-      isDeleted: true,
-    },
-  ];
+  // const addresses = [
+  //   {
+  //     id: uuidv4(),
+  //     provinceId: "1",
+  //     provinceName: "Hà Nội",
+  //     districtId: "2",
+  //     districtName: "Ba Đình",
+  //     wardId: "3",
+  //     wardName: "Cống Vị",
+  //     detailAddress: "Số 1, ngõ 1, phố 1",
+  //     contactName: "Nguyễn Văn A",
+  //     contactPhone: "0987654321",
+  //     isDefault: true,
+  //     isDeleted: false,
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     provinceId: "1",
+  //     provinceName: "Cà Mau",
+  //     districtId: "2",
+  //     districtName: "Phú Tân",
+  //     wardId: "3",
+  //     wardName: "Việt Thắng",
+  //     detailAddress: "Số 1",
+  //     contactName: "Nguyễn Văn B",
+  //     contactPhone: "0987654321",
+  //     isDefault: false,
+  //     isDeleted: false,
+  //   },
+  //   {
+  //     id: uuidv4(),
+  //     provinceId: "1",
+  //     provinceName: "Cần Thơ",
+  //     districtId: "2",
+  //     districtName: "Phú Tân",
+  //     wardId: "3",
+  //     wardName: "Việt Thắng",
+  //     detailAddress: "Số 1",
+  //     contactName: "Nguyễn Văn C",
+  //     contactPhone: "0987654321",
+  //     isDefault: false,
+  //     isDeleted: true,
+  //   },
+  // ];
 
   return (
     <Menus>
-      <Table columns="2fr 1.5fr 1fr 1fr 1fr 1fr 1fr">
+      <Table columns="2fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr">
         <Table.Header>
-          <div>Tên</div>
+          <div>Tên người nhận</div>
           <div>Số điện thoại</div>
-          <div>Tỉnh/thành phố</div>
-          <div>Quận/huyện</div>
-          <div>Xã/phường</div>
+          <div>Tỉnh / thành phố</div>
+          <div>Quận / huyện</div>
+          <div>Xã / phường</div>
           <div>Chi tiết</div>
           <div></div>
         </Table.Header>

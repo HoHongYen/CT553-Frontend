@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { useUser } from "@/hooks/profile/useUser";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Sidebar from "@/components/profile/Sidebar";
-import Button from "@/components/ui/Button";
 import AddressTable from "@/components/profile/addresses/AddressTable";
 import AddAddress from "@/components/profile/addresses/AddAddress";
 
@@ -20,7 +18,6 @@ const StyledPolicyLayout = styled.div`
 `;
 
 function AddressList() {
-  const { user } = useUser();
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCategories } from "@/hooks/category/useCategories";
+import { useCategories } from "@/hooks/categories/useCategories";
 
 import FrameSkeleton from "@/components/skeletons/FrameSkeleton";
 import Button from "@/components/ui/Button";

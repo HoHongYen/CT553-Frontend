@@ -15,7 +15,7 @@ import {
 } from "react-icons/hi2";
 
 import RoundImage from "@/components/ui/RoundImage";
-import { useCategories } from "@/hooks/category/useCategories";
+import { useCategories } from "@/hooks/categories/useCategories";
 import slugify from "slugify";
 import { policies } from "@/utils/constants";
 

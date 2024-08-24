@@ -6,10 +6,10 @@ function AddAddress() {
   return (
     <div>
       <Modal>
-        <Modal.Open opens="category-form">
+        <Modal.Open opens="address-form">
           <Button>Thêm địa chỉ mới</Button>
         </Modal.Open>
-        <Modal.Window name="category-form">
+        <Modal.Window name="address-form">
           <CreateAddressForm />
         </Modal.Window>
       </Modal>
