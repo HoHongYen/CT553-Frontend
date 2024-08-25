@@ -97,7 +97,7 @@ function UpdateUserDataForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex justify-around">
+      <div className="flex justify-around mb-6">
         <div className="relative w-[80px] h-[80px] lg:w-[180px] lg:h-[180px]">
           <div className="flex justify-center">
             <div className="w-[80px] h-[80px] lg:w-[180px] lg:h-[180px] border border-gray-300 rounded-full overflow-hidden flex items-end justify-center">

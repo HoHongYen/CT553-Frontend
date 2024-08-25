@@ -97,15 +97,13 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
     helper(districtId);
   }, [provinceId, districtId]);
 
-  // const { isCreating, createCabin } = useCreateCabin();
-  // const { isUpdating, updateCabin } = useUpdateCabin();
+
   const { createAddress, isLoading: isCreating } = useCreateAddress();
   const { updateAddress, isLoading: isUpdating } = useUpdateAddress();
 
   const { id: editId, ...editValues } = addressToEdit;
 
   const isEditSession = Boolean(editId);
-  // const isEditSession = false;
 
   useEffect(() => {
     if (isEditSession) {
@@ -124,8 +122,7 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
     defaultValues: isEditSession ? editValues : {},
   });
 
-  // const isWorking = isCreating || isUpdating;
-  const isWorking = false;
+  const isWorking = isCreating || isUpdating;
 
   async function onSubmit(data, e) {
     e.preventDefault();
