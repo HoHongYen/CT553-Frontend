@@ -25,6 +25,8 @@ import ChangePassword from "./pages/profile/ChangePassword";
 import OrderList from "./pages/profile/OrderList";
 import AddressList from "./pages/profile/AddressList";
 import VoucherList from "./pages/profile/VoucherList";
+import MainCategory from "./pages/MainCategory";
+import Products from "./pages/Products";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,8 +47,14 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to="/trang-chu" />} />
-                <Route path="/trang-chu" element={<Home />} />
+                <Route index element={<Navigate replace to="trang-chu" />} />
+                <Route path="trang-chu" element={<Home />} />
+
+                <Route path="/:mainCategory" element={<MainCategory />} />
+                <Route
+                  path="/:mainCategory/:subCategory"
+                  element={<Products />}
+                />
 
                 <Route element={<PolicyLayout />}>
                   <Route

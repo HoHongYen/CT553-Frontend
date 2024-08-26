@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/utils/helpers";
+import { formatCurrency, formatDate } from "@/utils/helpers";
 
 function ProductCard({ product }) {
   return (
@@ -22,6 +22,7 @@ function ProductCard({ product }) {
           {formatCurrency(product.price)}{" "}
         </p>
       </div>
+      <p>{formatDate(product.created_at)}</p>
     </div>
   );
 }

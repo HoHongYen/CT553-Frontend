@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import Heading from "../ui/Heading";
-import slugify from "slugify";
 import { profileLinks } from "@/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
+import { formatSlugify } from "@/utils/helpers";
 
 const StyledLink = styled(NavLink)`
   /* This works because react-router places the active class on the active NavLink */
@@ -24,10 +24,7 @@ function Sidebar() {
       {profileLinks.map((item) => (
         <StyledLink
           key={uuidv4()}
-          to={`/tai-khoan/${slugify(item.title, {
-            lower: true,
-            locale: "vi",
-          })}`}
+          to={`/tai-khoan/${formatSlugify(item.title)}`}
           className="capitalize flex gap-5 items-center"
         >
           <item.icon className="w-[2.4rem] h-[2.4rem]" />

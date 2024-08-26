@@ -16,8 +16,8 @@ import {
 
 import RoundImage from "@/components/ui/RoundImage";
 import { useCategories } from "@/hooks/categories/useCategories";
-import slugify from "slugify";
 import { policies } from "@/utils/constants";
+import { formatSlugify } from "@/utils/helpers";
 
 const NavList = styled.ul`
   display: flex;
@@ -98,7 +98,9 @@ function MainNav() {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center">
             <RoundImage path={category.thumbnailImage.path} />
-            <Link className="capitalize">{category.name}</Link>
+            <Link className="capitalize" to={`${formatSlugify(category.name)}`}>
+              {category.name}
+            </Link>
           </div>
           {category.children.length > 0 && <HiOutlineChevronRight />}
         </div>
@@ -107,7 +109,16 @@ function MainNav() {
         return {
           key: child.id,
           icon: <RoundImage path={child.thumbnailImage.path} />,
-          label: <span className="capitalize">{child.name}</span>,
+          label: (
+            <Link
+              className="capitalize"
+              to={`${formatSlugify(category.name)}/${formatSlugify(
+                child.name
+              )}`}
+            >
+              {child.name}
+            </Link>
+          ),
         };
       }),
     };
@@ -120,7 +131,7 @@ function MainNav() {
       label: (
         <div className="mb-4">
           <Link
-            to={slugify(policy.title, { lower: true, locale: "vi" })}
+            to={formatSlugify(policy.title)}
             className="capitalize flex items-center gap-4"
           >
             <policy.icon className="w-[2.4rem] h-[2.4rem]" />

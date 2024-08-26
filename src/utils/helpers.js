@@ -1,4 +1,6 @@
 import { formatDistance, parseISO, differenceInDays } from 'date-fns';
+import slugify from 'slugify';
+import moment from 'moment';
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
 export const subtractDates = (dateStr1, dateStr2) =>
@@ -27,3 +29,10 @@ export const formatCurrency = (value) =>
   new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(
     value
   );
+
+export const formatSlugify = (value) =>
+  slugify(value, { lower: true, locale: 'vi' });
+
+export const formatDate = (date) => {
+  return moment(date).format("DD/MM/YYYY");
+};
