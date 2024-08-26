@@ -12,6 +12,7 @@ import Sidebar from "@/components/categories/Sidebar";
 import CategoryItem from "@/components/home/CategoryItem";
 import CategoryFilterOperations from "@/components/categories/CategoryFilterOperations";
 import ProductsList from "@/components/categories/ProductsList";
+import PriceSlider from "@/components/categories/PriceSlider";
 
 const StyledPolicyLayout = styled.div`
   display: grid;
@@ -50,13 +51,15 @@ function MainCategory() {
           </div>
         </div>
       )}
-      <div className="flex justify-end">
-        <CategoryFilterOperations />
-      </div>
+
       <StyledPolicyLayout>
         <Sidebar categories={categories} />
         <Row>
-          <div className="flex justify-end">
+          <div className="flex flex-col gap-7">
+            <div className="flex justify-between">
+              <PriceSlider />
+              <CategoryFilterOperations />
+            </div>
             <ProductsList />
           </div>
         </Row>

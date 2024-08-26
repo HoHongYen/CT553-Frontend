@@ -30,7 +30,7 @@ const Heading = styled.h1`
       text-align: center;
     `}
 
-    line-height: 1.4;
+    line-height: 1.2;
 `;
 
 export default Heading;

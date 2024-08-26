@@ -1,133 +1,9 @@
 import ProductCard from "@/components/products/ProductCard";
-import { formatDate } from "@/utils/helpers";
 import { useSearchParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+
+import { products } from "@/utils/constants";
 
 function ProductsList() {
-  const products = [
-    {
-      id: uuidv4(),
-      name: "Lovely cành hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 110200,
-      isDiscount: true,
-      created_at: "2024-08-20T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Vanegas gương cành hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 123224,
-      isDiscount: false,
-      created_at: "2024-08-25T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Hoa TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 50000,
-      isDiscount: true,
-      created_at: "2024-08-12T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Yenesa - Tranh tráng gương cành hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 100000,
-      isDiscount: true,
-      created_at: "2024-07-20T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 70000,
-      isDiscount: false,
-      created_at: "2024-05-16T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 35000,
-      isDiscount: true,
-      created_at: "2024-03-16T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 60000,
-      isDiscount: false,
-      created_at: "2024-08-21T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Gương cành hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 54000,
-      isDiscount: true,
-      created_at: "2024-07-20T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Tráng gương cành hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 1100000,
-      isDiscount: false,
-      created_at: "2024-08-11T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 34000,
-      isDiscount: true,
-      created_at: "2024-09-20T11:21:56.337Z",
-      // images
-    },
-    {
-      id: uuidv4(),
-      name: "Cành hồng nghệ thuật TG3338",
-      image: {
-        path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
-      },
-      price: 43000,
-      isDiscount: false,
-      created_at: "2024-02-10T11:21:56.337Z",
-      // images
-    },
-  ];
-
   const [searchParams] = useSearchParams();
 
   // 1. Filter
@@ -139,8 +15,16 @@ function ProductsList() {
   if (filterValue === "with-discount")
     filteredProducts = products.filter((product) => product.isDiscount);
 
+  if (searchParams.get("minPrice")) {
+    const minPrice = parseInt(searchParams.get("minPrice"));
+    const maxPrice = parseInt(searchParams.get("maxPrice"));
+    filteredProducts = filteredProducts.filter(
+      (product) => product.price >= minPrice && product.price <= maxPrice
+    );
+  }
+
   // 2. Sort
-  const sortBy = searchParams.get("sortBy") || "created_at-asc";
+  const sortBy = searchParams.get("sortBy") || "created_at-decs";
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
   const sortedProducts = filteredProducts.sort((a, b) => {
