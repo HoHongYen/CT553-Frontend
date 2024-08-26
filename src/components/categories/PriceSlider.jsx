@@ -1,6 +1,5 @@
 import { formatCurrency } from "@/utils/helpers";
 import { Slider } from "antd";
-import { set } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -29,7 +28,7 @@ function PriceSlider() {
     searchParams.set("maxPrice", value[1] * 50000);
     if (searchParams.get("page")) searchParams.set("page", 1);
     setSearchParams(searchParams);
-  }, [value]);
+  }, [value, searchParams, setSearchParams]);
 
   function formatter(value) {
     return `${formatCurrency(value * 50000)}`;
