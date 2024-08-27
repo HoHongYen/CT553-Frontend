@@ -1,19 +1,9 @@
-import styled from "styled-components";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { formatSlugify } from "@/utils/helpers";
 import Heading from "../ui/Heading";
 import RoundImage from "../ui/RoundImage";
-
-const StyledLink = styled(NavLink)`
-  /* This works because react-router places the active class on the active NavLink */
-  &:hover,
-  &:active,
-  &.active:link,
-  &.active:visited {
-    color: var(--color-brand-600);
-  }
-`;
+import StyledLink from "../ui/StyledLink";
 
 function Sidebar({ categories }) {
   const { slug } = useParams();

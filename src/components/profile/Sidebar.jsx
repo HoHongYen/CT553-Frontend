@@ -1,19 +1,8 @@
-import { NavLink } from "react-router-dom";
 import Heading from "../ui/Heading";
 import { profileLinks } from "@/utils/constants";
 import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
 import { formatSlugify } from "@/utils/helpers";
-
-const StyledLink = styled(NavLink)`
-  /* This works because react-router places the active class on the active NavLink */
-  &:hover,
-  &:active,
-  &.active:link,
-  &.active:visited {
-    color: var(--color-brand-600);
-  }
-`;
+import StyledLink from "../ui/StyledLink";
 
 function Sidebar() {
   return (
