@@ -1,10 +1,19 @@
-import { formatCurrency } from "@/utils/helpers";
-import { Slider } from "antd";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Slider } from "antd";
+import { formatCurrency } from "@/utils/helpers";
 
 function PriceSlider() {
-  const [value, setValue] = useState([0, 100]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentMinPriceFilter = searchParams.get("minPrice") || 0;
+  const currentMaxPriceFilter = searchParams.get("maxPrice") || 5000000;
+
+  function handleSlide(value) {
+    searchParams.set("minPrice", value[0] * 50000);
+    searchParams.set("maxPrice", value[1] * 50000);
+    if (searchParams.get("page")) searchParams.set("page", 1);
+    setSearchParams(searchParams);
+  }
+
   const marks = {
     0: {
       style: {
@@ -20,16 +29,6 @@ function PriceSlider() {
     },
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    console.log(value);
-    searchParams.set("minPrice", value[0] * 50000);
-    searchParams.set("maxPrice", value[1] * 50000);
-    if (searchParams.get("page")) searchParams.set("page", 1);
-    setSearchParams(searchParams);
-  }, [value, searchParams, setSearchParams]);
-
   function formatter(value) {
     return `${formatCurrency(value * 50000)}`;
   }
@@ -41,9 +40,9 @@ function PriceSlider() {
         step="10"
         tipFormatter={formatter}
         onChange={(value) => {
-          setValue(value);
+          handleSlide(value);
         }}
-        defaultValue={[0, 100]}
+        value={[currentMinPriceFilter / 50000, currentMaxPriceFilter / 50000]}
       />
     </div>
   );
