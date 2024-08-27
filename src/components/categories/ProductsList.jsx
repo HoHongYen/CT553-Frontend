@@ -2,6 +2,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { useSearchParams } from "react-router-dom";
 
 import { products } from "@/utils/constants";
+import Heading from "../ui/Heading";
 
 function ProductsList() {
   const [searchParams] = useSearchParams();
@@ -36,6 +37,14 @@ function ProductsList() {
     }
     return (a[field] - b[field]) * modifier;
   });
+
+  if (sortedProducts.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-96 ">
+        <Heading as="h2">Không tìm thấy sản phẩm nào!</Heading>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-10 h-full">

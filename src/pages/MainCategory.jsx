@@ -46,7 +46,11 @@ function MainCategory() {
         <div className="flex flex-col gap-10 bg-[var(--color-blue-100)] p-5 pt-10 rounded-3xl">
           <div className="flex flex-wrap justify-center gap-16">
             {activeCategory.children?.map((category) => (
-              <CategoryItem key={category.id} category={category} />
+              <CategoryItem
+                parentSlug={activeCategory.slug}
+                key={category.id}
+                category={category}
+              />
             ))}
           </div>
         </div>
