@@ -27,6 +27,7 @@ import AddressList from "./pages/profile/AddressList";
 import VoucherList from "./pages/profile/VoucherList";
 import MainCategory from "./pages/MainCategory";
 import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +56,8 @@ function App() {
                   path="/:mainCategory/:subCategory"
                   element={<Products />}
                 />
+
+                <Route path="san-pham/:productId" element={<ProductDetail />} />
 
                 <Route element={<PolicyLayout />}>
                   <Route

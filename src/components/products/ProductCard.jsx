@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
 import { formatCurrency, formatDate } from "@/utils/helpers";
 
 function ProductCard({ product }) {
   return (
-    <div key={product.id} className=" flex cursor-pointer flex-col gap-3">
+    <Link
+      to={`/san-pham/${product.id}`}
+      key={product.id}
+      className=" flex cursor-pointer flex-col gap-3"
+    >
       <div className="overflow-hidden">
         <img
           src={product.image.path}
@@ -14,7 +19,7 @@ function ProductCard({ product }) {
       <p className="capitalize mt-3">{product.name}</p>
       <div>
         {product.isDiscount && (
-          <p className="text-gray-400 line-through">
+          <p className="text-[var(--color-grey-400)] line-through">
             {formatCurrency(2000000)}{" "}
           </p>
         )}
@@ -23,7 +28,7 @@ function ProductCard({ product }) {
         </p>
       </div>
       <p>{formatDate(product.created_at)}</p>
-    </div>
+    </Link>
   );
 }
 

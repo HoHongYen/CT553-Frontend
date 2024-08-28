@@ -11,8 +11,10 @@ function Introduce() {
       <div className="flex items-center gap-4 ">
         <HiOutlineTruck className="w-14 h-14 bg-[var(--color-blue-100)] rounded-xl" />
         <div>
-          <p className="font-bold">Giao hàng tiết kiệm</p>
-          <p className="text-gray-400 text-xl">Giao hàng toàn quốc</p>
+          <p className="font-bold">Giao hàng toàn quốc</p>
+          <p className="text-gray-400 text-xl">
+            Dễ dàng nhận hàng tất cả các ngày trong tuần
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-4 ">
