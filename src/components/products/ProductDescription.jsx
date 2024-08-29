@@ -1,3 +1,6 @@
+import { CaretRightOutlined } from "@ant-design/icons";
+import { Collapse, theme } from "antd";
+
 import styled from "styled-components";
 import Heading from "../ui/Heading";
 
@@ -12,15 +15,23 @@ const Ul = styled.ul`
 `;
 
 function ProductDescription({ product }) {
-  return (
-    <div className="flex flex-col gap-7">
-      <Heading as="h1" className="text-2xl font-bold">
-        Mô tả sản phẩm
-      </Heading>
-      <div>
+  const { token } = theme.useToken();
+  const panelStyle = {
+    marginBottom: 12,
+    background: token.colorFillAlter,
+    borderRadius: token.borderRadiusLG,
+    border: "none",
+  };
+
+  const getItems = (panelStyle) => [
+    {
+      key: "1",
+      label: (
         <Heading as="h2" className="text-xl font-bold mb-2">
           Chất liệu tranh
         </Heading>
+      ),
+      children: (
         <Ul>
           <li>
             <P>
@@ -43,17 +54,27 @@ function ProductDescription({ product }) {
             </P>
           </li>
         </Ul>
-      </div>
-      <div>
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "2",
+      label: (
         <Heading as="h2" className="text-xl font-bold mb-2">
           Quy cách chất liệu tráng gương cao cấp
         </Heading>
-        <P>{product.specification}</P>
-      </div>
-      <div>
+      ),
+      children: <P>{product.specification}</P>,
+      style: panelStyle,
+    },
+    {
+      key: "3",
+      label: (
         <Heading as="h2" className="text-xl font-bold mb-2">
           Phụ kiện đính kèm
         </Heading>
+      ),
+      children: (
         <Ul>
           <li>
             <P>
@@ -69,11 +90,17 @@ function ProductDescription({ product }) {
             </P>
           </li>
         </Ul>
-      </div>
-      <div>
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "4",
+      label: (
         <Heading as="h2" className="text-xl font-bold mb-2">
           Đóng gói và vận chuyển
         </Heading>
+      ),
+      children: (
         <Ul>
           <li>
             <P>
@@ -90,16 +117,44 @@ function ProductDescription({ product }) {
             </P>
           </li>
         </Ul>
-      </div>
-      <div>
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "5",
+      label: (
         <Heading as="h2" className="text-xl font-bold mb-2">
           Hướng dẫn vệ sinh tranh
         </Heading>
+      ),
+      children: (
         <P>
           Chỉ cần dùng khăn ẩm lau trên bề mặt tranh là loại bỏ được bụi bẩn bám
           trên tranh. Đối với tranh Aloha Decor, khách hàng không cần sử dụng
           chất tẩy rửa để làm sạch tranh.
         </P>
+      ),
+      style: panelStyle,
+    },
+  ];
+
+  return (
+    <div className="flex flex-col">
+      <Heading as="h1" className="text-2xl font-bold">
+        Mô tả sản phẩm
+      </Heading>
+      <div>
+        <Collapse
+          bordered={false}
+          defaultActiveKey={["1"]}
+          expandIcon={({ isActive }) => (
+            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+          )}
+          style={{
+            background: token.colorBgContainer,
+          }}
+          items={getItems(panelStyle)}
+        />
       </div>
     </div>
   );
