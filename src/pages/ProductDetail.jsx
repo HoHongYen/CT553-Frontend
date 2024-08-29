@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatCurrency } from "@/utils/helpers";
 
 import Heading from "@/components/ui/Heading";
@@ -9,6 +9,11 @@ import Spinner from "@/components/ui/Spinner";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import ProductDescription from "@/components/products/ProductDescription";
+import { Carousel as AntdCarousel } from "antd";
+import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
+import ViewImage from "@/components/products/ViewImage";
+import ImageMagnifier from "@/components/ui/ImageMagnifier";
+import { useAutoplay } from "@/hooks/common/useAutoplay";
 
 function ProductDetail() {
   const product = {
@@ -63,6 +68,18 @@ function ProductDetail() {
 
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
   const [quantity, setQuantity] = useState(1);
+  const [currentImage, setCurrentImage] = useState(product.image);
+
+  const [viewImage, setViewImage] = useState(currentImage);
+
+  const [firstTime, setIsFirstime] = useState(true);
+
+  const mediaRef = useRef(null);
+
+  const thumbnailClicked = (id) => {
+    console.log("thumbnail clicked:", id);
+    mediaRef.current.goTo(id, false);
+  };
 
   // useEffect(() => {
   //   setBreadcrumb([{ name: category?.name }]);
@@ -75,13 +92,51 @@ function ProductDetail() {
       <BreadCrumb breadcrumb={breadcrumb} />
       <Row>
         <div className="grid grid-cols-2 gap-3">
-          <div className="">
-            <div className="p-10 pt-3">
-              <img
-                src={product.image.path}
-                alt={product.name}
-                className="transition-all duration-700 hover:scale-105"
-              />
+          <div className="flex">
+            <div className="flex flex-col gap-3 w-40 pt-3">
+              {product.images.map((image, index) => (
+                <img
+                  onClick={() => thumbnailClicked(index)}
+                  key={image.path}
+                  src={image.path}
+                  className={`border cursor-pointer hover:border-[var(--color-brand-600)] ${
+                    image.path === currentImage.path &&
+                    "border-[var(--color-brand-600)] border-2"
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="relative w-[90%] p-10 pt-3">
+              <div
+                onClick={() => {
+                  if (firstTime) {
+                    setViewImage(currentImage);
+                    setIsFirstime(false);
+                  }
+                }}
+                className="absolute cursor-pointer top-5 right-10 z-10"
+              >
+                <ViewImage image={viewImage} setIsFirstime={setIsFirstime} />
+              </div>
+              <AntdCarousel
+                afterChange={(current) => {
+                  setCurrentImage(product.images[current]);
+                }}
+                arrows
+                autoplay
+                ref={mediaRef}
+              >
+                {product.images.map((image) => (
+                  <ImageMagnifier
+                    className={"w-full h-full"}
+                    key={image.path}
+                    src={image.path}
+                    magnifierHeight={200}
+                    magnifierWidth={200}
+                    zoomLevel={2}
+                  />
+                ))}
+              </AntdCarousel>
             </div>
           </div>
           <div className="flex flex-col gap-5 ">
@@ -127,7 +182,7 @@ function ProductDetail() {
                     onClick={() => setSelectedVariant(variant)}
                     className={`cursor-pointer border p-3 rounded-md border-[var(--color-grey-400)] ${
                       variant.size === selectedVariant.size &&
-                      "border-[var(--color-brand-600)] border-2 -outline-offset-1"
+                      "border-[var(--color-brand-500)] border-2 -outline-offset-1"
                     }`}
                     key={variant.size}
                   >
