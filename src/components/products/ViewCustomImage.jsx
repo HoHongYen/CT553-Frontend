@@ -63,6 +63,10 @@ function ViewCustomImage({ image }) {
     setPercentValue(percent + "%");
   }, [percent]);
 
+  async function handleUploadImage(e) {
+    setBackgroundImage(URL.createObjectURL(e.target.files[0]));
+  }
+
   if (!image) return null;
 
   return (
@@ -80,11 +84,11 @@ function ViewCustomImage({ image }) {
           </Heading>
           <div className=" flex gap-10">
             <div className="relative flex flex-col gap-5">
-              <div className=" min-w-[70vh]">
+              <div className="w-[30vw] h-[52vh]">
                 <img
                   style={{ backgroundImage: `url(${colorImage})` }}
                   src={backgroundImage}
-                  className="rounded-md border border-[var(--color-grey-500)]"
+                  className="h-[100%] w-[100%] object-cover rounded-md border border-[var(--color-grey-500)]"
                 />
               </div>
               <div
@@ -99,24 +103,28 @@ function ViewCustomImage({ image }) {
                   <p>Chọn màu tường</p>
                 </div>
                 <div className="flex flex-wrap gap-4">
-                  {colorImages.map((colorImage, index) => (
+                  {colorImages.map((item, index) => (
                     <img
                       key={index}
-                      src={colorImage}
-                      onClick={() => setColorImage(colorImage)}
-                      className="cursor-pointer border rounded-md border-[var(--color-grey-500)] w-[35px] h-[35px] object-cover"
+                      src={item}
+                      onClick={() => setColorImage(item)}
+                      className={`cursor-pointer border rounded-md border-[var(--color-grey-500)] w-[35px] h-[35px] object-cover ${
+                        item === colorImage
+                          ? "border-2 border-[var(--color-brand-700)]"
+                          : ""
+                      }`}
                     />
                   ))}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-5">
                 <div className="flex gap-4 items-center">
                   <HiOutlineCloudArrowUp />
                   <p>Tải ảnh căn phòng</p>
                 </div>
-                <FileInput accept="image/*" />
+                <FileInput accept="image/*" onChange={handleUploadImage} />
               </div>
               <div className=" flex flex-col gap-5">
                 <div className="flex gap-4 items-center">
@@ -124,12 +132,16 @@ function ViewCustomImage({ image }) {
                   <p>Chọn một căn phòng</p>
                 </div>
                 <div className="flex flex-wrap gap-4">
-                  {backgroundImages.map((backgroundImage, index) => (
+                  {backgroundImages.map((item, index) => (
                     <img
                       key={index}
-                      src={backgroundImage}
-                      onClick={() => setBackgroundImage(backgroundImage)}
-                      className="cursor-pointer border rounded-md border-[var(--color-grey-500)] w-[70px] h-[70px] object-cover"
+                      src={item}
+                      onClick={() => setBackgroundImage(item)}
+                      className={`cursor-pointer border rounded-md border-[var(--color-grey-500)] w-[70px] h-[70px] object-cover ${
+                        item === backgroundImage
+                          ? "border-2 border-[var(--color-brand-700)]"
+                          : ""
+                      }`}
                     />
                   ))}
                 </div>
