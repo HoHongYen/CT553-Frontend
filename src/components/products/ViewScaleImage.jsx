@@ -4,7 +4,7 @@ import ButtonIcon from "../ui/ButtonIcon";
 import Modal from "./Modal";
 import Button from "../ui/Button";
 
-function ViewImage({ image, setIsFirstime }) {
+function ViewScaleImage({ image, setIsFirstime }) {
   const [percent, setPercent] = useState(25);
   const [percentValue, setPercentValue] = useState(25 + "%");
 
@@ -16,12 +16,12 @@ function ViewImage({ image, setIsFirstime }) {
 
   return (
     <Modal setIsFirstime={setIsFirstime}>
-      <Modal.Open opens="delete">
+      <Modal.Open opens="scaleImage">
         <ButtonIcon>
           <HiOutlineArrowsPointingOut className="w-10 h-10" />
         </ButtonIcon>
       </Modal.Open>
-      <Modal.Window name="delete">
+      <Modal.Window name="scaleImage">
         <div className="relative h-[100vh] w-[100vw] flex justify-center items-center ">
           <div
             className={`z-[991] max-w-[100vh]`}
@@ -37,7 +37,7 @@ function ViewImage({ image, setIsFirstime }) {
             >
               -
             </Button>
-            <div>{percent * 2}</div>
+            <div>{percent * 2}%</div>
             <Button
               onClick={() => {
                 if (percent < 50) setPercent((percent) => percent + 5);
@@ -52,4 +52,4 @@ function ViewImage({ image, setIsFirstime }) {
   );
 }
 
-export default ViewImage;
+export default ViewScaleImage;

@@ -10,10 +10,10 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import ProductDescription from "@/components/products/ProductDescription";
 import { Carousel as AntdCarousel } from "antd";
-import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
-import ViewImage from "@/components/products/ViewImage";
+import ViewScaleImage from "@/components/products/ViewScaleImage";
 import ImageMagnifier from "@/components/ui/ImageMagnifier";
-import { useAutoplay } from "@/hooks/common/useAutoplay";
+import ViewCustomImage from "@/components/products/ViewCustomImage";
+import { HiOutlineShoppingCart } from "react-icons/hi2";
 
 function ProductDetail() {
   const product = {
@@ -21,6 +21,9 @@ function ProductDetail() {
     name: "Lovely cành hồng nghệ thuật TG3338",
     image: {
       path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
+    },
+    viewImage: {
+      path: "https://tuongxinh.com.vn/wp-content/uploads/2023/10/tg2941.png",
     },
     images: [
       {
@@ -90,10 +93,10 @@ function ProductDetail() {
   return (
     <>
       <BreadCrumb breadcrumb={breadcrumb} />
-      <Row>
+      <Row className="-mt-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="flex">
-            <div className="flex flex-col gap-3 w-40 pt-3">
+            <div className="flex flex-col gap-3 w-40">
               {product.images.map((image, index) => (
                 <img
                   onClick={() => thumbnailClicked(index)}
@@ -116,7 +119,9 @@ function ProductDetail() {
                 }}
                 className="absolute cursor-pointer top-5 right-10 z-10"
               >
-                <ViewImage image={viewImage} setIsFirstime={setIsFirstime} />
+                <ViewScaleImage
+                  image={viewImage}
+                />
               </div>
               <AntdCarousel
                 afterChange={(current) => {
@@ -137,6 +142,12 @@ function ProductDetail() {
                   />
                 ))}
               </AntdCarousel>
+              <div className="flex justify-end mt-2">
+                <ViewCustomImage
+                  image={product.viewImage}
+                  setIsFirstime={setIsFirstime}
+                />
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-5 ">
@@ -201,7 +212,12 @@ function ProductDetail() {
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
-                <Button>Thêm vào giỏ hàng</Button>
+                <Button variation="success">
+                  <div className="flex justify-center items-center gap-4">
+                    <HiOutlineShoppingCart />
+                    Thêm vào giỏ hàng
+                  </div>
+                </Button>
               </div>
             </div>
           </div>
