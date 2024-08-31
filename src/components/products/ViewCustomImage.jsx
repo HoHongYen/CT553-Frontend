@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   HiOutlineCloudArrowUp,
   HiOutlineMagnifyingGlassPlus,
@@ -5,53 +6,13 @@ import {
   HiOutlinePhoto,
   HiOutlineViewfinderCircle,
 } from "react-icons/hi2";
-import { useEffect, useState } from "react";
-// import Modal from "./Modal";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Heading from "../ui/Heading";
 import FileInput from "../ui/FileInput";
-
-const backgroundImages = [
-  "https://bantranh.com/wp-content/uploads/2024/02/phongkhach2.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongkhach13.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongkhach14.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongkhach16.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/congso4.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/congso7.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongtam.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongan1.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongngu2.png",
-  "https://bantranh.com/wp-content/uploads/2024/02/phongngu68.png",
-  "https://bantranh.com/wp-content/uploads/2021/02/phong1.png",
-  "https://bantranh.com/wp-content/uploads/2021/02/phong2.png",
-  "https://bantranh.com/wp-content/uploads/2021/02/phong3.png",
-  "https://bantranh.com/wp-content/uploads/2021/02/phong4.png",
-  "https://bantranh.com/wp-content/uploads/2021/02/phong5.png",
-];
-
-const colorImages = [
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/11.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/22.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/33.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/44.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/55.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/66.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/77.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/88.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/99.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/100.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/110.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/120.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/130.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/140.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/150.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/160.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/170.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/180.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/190.png",
-  "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/200.png",
-];
+import Draggable from "react-draggable";
+import { Resizable } from "re-resizable";
+import { backgroundImages, colorImages } from "@/utils/constants";
 
 function ViewCustomImage({ image }) {
   const [percent, setPercent] = useState(25);
@@ -95,7 +56,11 @@ function ViewCustomImage({ image }) {
                 className={`absolute top-20 left-0 right-0 ml-auto mr-auto bg-opacity-50`}
                 style={{ width: percentValue }}
               >
-                <img src={image.path} />
+                <Draggable>
+                  <Resizable>
+                    <img src={image.path} />
+                  </Resizable>
+                </Draggable>
               </div>
               <div className=" flex flex-col gap-5">
                 <div className="flex gap-4 items-center">

@@ -159,3 +159,44 @@ export const products = [
         // images
     },
 ];
+
+export const backgroundImages = [
+    "https://bantranh.com/wp-content/uploads/2024/02/phongkhach2.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongkhach13.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongkhach14.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongkhach16.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/congso4.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/congso7.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongtam.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongan1.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongngu2.png",
+    "https://bantranh.com/wp-content/uploads/2024/02/phongngu68.png",
+    "https://bantranh.com/wp-content/uploads/2021/02/phong1.png",
+    "https://bantranh.com/wp-content/uploads/2021/02/phong2.png",
+    "https://bantranh.com/wp-content/uploads/2021/02/phong3.png",
+    "https://bantranh.com/wp-content/uploads/2021/02/phong4.png",
+    "https://bantranh.com/wp-content/uploads/2021/02/phong5.png",
+];
+
+export const colorImages = [
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/11.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/22.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/33.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/44.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/55.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/66.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/77.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/88.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/99.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/100.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/110.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/120.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/130.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/140.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/150.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/160.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/170.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/180.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/190.png",
+    "https://bantranh.com/wp-content/plugins/Products_Viewer/img/colors/200.png",
+];

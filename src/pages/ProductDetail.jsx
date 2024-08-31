@@ -14,6 +14,8 @@ import ViewScaleImage from "@/components/products/ViewScaleImage";
 import ImageMagnifier from "@/components/ui/ImageMagnifier";
 import ViewCustomImage from "@/components/products/ViewCustomImage";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
+import Select from "@/components/ui/Select";
+import { set } from "date-fns";
 
 function ProductDetail() {
   const product = {
@@ -23,7 +25,7 @@ function ProductDetail() {
       path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
     },
     viewImage: {
-      path: "https://tuongxinh.com.vn/wp-content/uploads/2023/10/tg2941.png",
+      path: "https://res.cloudinary.com/dphzvfcmy/image/upload/v1725026756/CT553/canh_hong_view_ooezqt.png",
     },
     images: [
       {
@@ -51,16 +53,17 @@ function ProductDetail() {
       "Bức tranh “Lá cây phủ màu trầm – Tranh lá cây treo tường LC004-29” là một kiệt tác nghệ thuật, kết hợp giữa vẻ đẹp tự nhiên và sự tinh tế trong thiết kế. Tác phẩm này thổi hồn vào không gian sống của bạn bằng hình ảnh tuyệt vời của lá cây, tạo ra một không gian gần gũi với thiên nhiên ngay trong lòng căn phòng.",
     variants: [
       {
-        size: "40x60cm",
+        size: "40x60cm (bộ 3 tấm). Tổng cao 60cm và rộng 1,2m",
         price: 1100000,
       },
       {
-        size: "50x70cm",
+        size: "50x70cm (bộ 3 tấm). Tổng cao 70cm và rộng 1,5m",
         price: 1400000,
       },
     ],
     specification:
-      "Quy cách chất liệu tráng gương cao cấp: Công nghệ in Uv in trực tiếp lên mica, mực Uv Mỹ.",
+      "– Tranh được in trực tiếp lên tấm mica dày 0,3mm có độ bóng, độ bền cao, chống bụi bẩn\n– Hình ảnh bằng công nghệ UV cho ra chất lượng tranh siêu sắc nét và bền màu\n– Mặt lưng tranh là tấm gỗ MDF dày 1.2cm được cắt bằng công nghệ Laze chuẩn từng chi tiết\n– Được gắn Đèn LED phía sau lưng giúp tranh nổi bật hơn và tăng thêm thẩm mỹ khi trang trí",
+    // "Quy cách chất liệu tráng gương cao cấp: Công nghệ in Uv in trực tiếp lên mica, mực Uv Mỹ.",
   };
 
   const [breadcrumb, setBreadcrumb] = useState([
@@ -69,6 +72,7 @@ function ProductDetail() {
     { name: "Lovely cành hồng nghệ thuật TG3338" },
   ]);
 
+  const [selectedVariantId, setSelectedVariantId] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
   const [quantity, setQuantity] = useState(1);
   const [currentImage, setCurrentImage] = useState(product.image);
@@ -119,9 +123,7 @@ function ProductDetail() {
                 }}
                 className="absolute cursor-pointer top-5 right-10 z-10"
               >
-                <ViewScaleImage
-                  image={viewImage}
-                />
+                <ViewScaleImage image={viewImage} />
               </div>
               <AntdCarousel
                 afterChange={(current) => {
@@ -188,18 +190,33 @@ function ProductDetail() {
                 {selectedVariant.size}
               </p>
               <div className="flex gap-4 mt-3">
-                {product.variants.map((variant) => (
+                <Select
+                  // disabled={isWorking}
+                  options={product.variants.map((variant, index) => {
+                    return {
+                      label: variant.size,
+                      value: index,
+                    };
+                  })}
+                  value={selectedVariantId}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setSelectedVariantId(e.target.value);
+                    setSelectedVariant(product.variants[e.target.value]);
+                  }}
+                />
+                {/* {product.variants.map((variant) => (
                   <div
                     onClick={() => setSelectedVariant(variant)}
                     className={`cursor-pointer border p-3 rounded-md border-[var(--color-grey-400)] ${
                       variant.size === selectedVariant.size &&
-                      "border-[var(--color-brand-500)] border-2 -outline-offset-1"
+                      "border-[var(--color-brand-700)] border-2 -outline-offset-1"
                     }`}
                     key={variant.size}
                   >
                     {variant.size}
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
 
@@ -220,6 +237,11 @@ function ProductDetail() {
                 </Button>
               </div>
             </div>
+            <Button>
+              <div className="flex justify-center items-center gap-4">
+                MUA NGAY
+              </div>
+            </Button>
           </div>
         </div>
         <ProductDescription product={product} />
