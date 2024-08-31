@@ -192,12 +192,12 @@ function MainNav() {
             </a>
           </Dropdown>
         </li>
-        <li>
+        {/* <li>
           <StyledNavLink to="/lien-he">
             <HiOutlineEnvelope />
             <span>Liên hệ</span>
           </StyledNavLink>
-        </li>
+        </li> */}
       </NavList>
     </nav>
   );

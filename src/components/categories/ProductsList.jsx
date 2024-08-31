@@ -14,7 +14,7 @@ function ProductsList() {
   if (filterValue === "no-discount")
     filteredProducts = products.filter((product) => !product.isDiscount);
   if (filterValue === "with-discount")
-    filteredProducts = products.filter((product) => product.isDiscount);
+    filteredProducts = products.filter((product)  => product.isDiscount);
 
   if (searchParams.get("minPrice")) {
     const minPrice = parseInt(searchParams.get("minPrice"));
@@ -45,6 +45,11 @@ function ProductsList() {
       </div>
     );
   }
+
+  // PAGINATION
+  const page = !searchParams.get("page")
+  ? 1
+  : Number(searchParams.get("page"));
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-10 h-full">
