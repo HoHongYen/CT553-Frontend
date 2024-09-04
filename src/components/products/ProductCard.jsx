@@ -4,13 +4,13 @@ import { formatCurrency, formatDate } from "@/utils/helpers";
 function ProductCard({ product }) {
   return (
     <Link
-      to={`/san-pham/${product.id}`}
+      to={`/san-pham/${product.slug}`}
       key={product.id}
       className=" flex cursor-pointer flex-col gap-3"
     >
       <div className="overflow-hidden">
         <img
-          src={product.image.path}
+          src={product.images[0].image.path}
           alt={product.name}
           className="transition-all duration-700 hover:scale-105"
           // className="p-3 transition ease-out hover:-translate-y-1 hover:scale-105 duration-700"
@@ -18,16 +18,16 @@ function ProductCard({ product }) {
       </div>
       <p className="capitalize mt-3">{product.name}</p>
       <div>
-        {product.isDiscount && (
+        {/* {product.isDiscount && (
           <p className="text-[var(--color-grey-400)] line-through">
             {formatCurrency(2000000)}{" "}
           </p>
-        )}
+        )} */}
         <p className="font-bold text-[var(--color-brand-700)]">
-          {formatCurrency(product.price)}{" "}
+          {formatCurrency(product.variants[0].price)}{" "}
         </p>
       </div>
-      <p>{formatDate(product.created_at)}</p>
+      <p>{formatDate(product.createdAt)}</p>
     </Link>
   );
 }

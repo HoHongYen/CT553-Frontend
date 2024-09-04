@@ -1,11 +1,13 @@
 import ProductCard from "@/components/products/ProductCard";
 import { useSearchParams } from "react-router-dom";
 
-import { products } from "@/utils/constants";
 import Heading from "../ui/Heading";
+import { useProducts } from "@/hooks/products/useProducts";
 
 function ProductsList() {
   const [searchParams] = useSearchParams();
+
+  const { products } = useProducts();
 
   // 1. Filter
   const filterValue = searchParams.get("discount") || "all";
@@ -14,7 +16,7 @@ function ProductsList() {
   if (filterValue === "no-discount")
     filteredProducts = products.filter((product) => !product.isDiscount);
   if (filterValue === "with-discount")
-    filteredProducts = products.filter((product)  => product.isDiscount);
+    filteredProducts = products.filter((product) => product.isDiscount);
 
   if (searchParams.get("minPrice")) {
     const minPrice = parseInt(searchParams.get("minPrice"));
@@ -47,9 +49,7 @@ function ProductsList() {
   }
 
   // PAGINATION
-  const page = !searchParams.get("page")
-  ? 1
-  : Number(searchParams.get("page"));
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-10 h-full">
