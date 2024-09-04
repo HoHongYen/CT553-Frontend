@@ -68,7 +68,9 @@ function ProductDetail() {
                 }
                 return (
                   <img
-                    onClick={() => thumbnailClicked(index)}
+                    onClick={() =>
+                      thumbnailClicked(index === 0 ? 0 : index - 1)
+                    }
                     key={image.image.path}
                     src={image.image.path}
                     className={`border cursor-pointer hover:border-[var(--color-brand-600)] ${
@@ -93,7 +95,11 @@ function ProductDetail() {
               </div>
               <AntdCarousel
                 afterChange={(current) => {
-                  setCurrentImage(product.images[current].image);
+                  setCurrentImage(
+                    product.images[
+                      current === product.images.length ? 0 : current + 1
+                    ].image
+                  );
                 }}
                 arrows
                 autoplay
