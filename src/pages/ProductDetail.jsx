@@ -32,6 +32,10 @@ function ProductDetail() {
 
   const mediaRef = useRef(null);
 
+  const thumbnailClicked = (id) => {
+    mediaRef.current.goTo(id, false);
+  };
+
   useEffect(() => {
     console.log(product);
 
@@ -48,6 +52,7 @@ function ProductDetail() {
     getBreadcrumb();
   }, [product]);
 
+  console.log(product);
   if (isLoading) return <Spinner />;
 
   return (
@@ -63,6 +68,7 @@ function ProductDetail() {
                 }
                 return (
                   <img
+                    onClick={() => thumbnailClicked(index)}
                     key={image.image.path}
                     src={image.image.path}
                     className={`border cursor-pointer hover:border-[var(--color-brand-600)] ${
