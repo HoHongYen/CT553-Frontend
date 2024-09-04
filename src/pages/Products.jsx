@@ -75,7 +75,7 @@ function Products() {
               <PriceSlider />
               <CategoryFilterOperations />
             </div>
-            <ProductsList categoryIds={[activeSubCategory.id]} />
+            <ProductsList />
           </div>
         </Row>
       </StyledPolicyLayout>
