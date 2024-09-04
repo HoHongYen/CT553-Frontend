@@ -32,28 +32,11 @@ function ProductDescription({ product }) {
         </Heading>
       ),
       children: (
-        <Ul>
-          <li>
-            <P>
-              Vải Canvas: Nhập khẩu Nhật Bản, in trên công nghệ UV chuẩn Châu
-              Âu. Chất liệu này kết hợp với mực nhập khẩu chất lượng giúp nổi rõ
-              đường vân trên tranh, nên màu sắc, đường nét vô cùng tinh tế, tạo
-              hiệu ứng 3D cho bức tranh. Vì thế, tranh Canvas Aloha giống tranh
-              sơn dầu đến 90%.
-            </P>
-          </li>
-          <li>
-            <P>
-              Gương pha lê: Được in bằng công nghệ UV trên bề mặt MiCa trong
-              suốt và tráng gương pha lê ngoài cùng, tạo độ bóng sáng, lấp lánh
-              cho mọi bức tranh. Mặt sau tranh được ép 1 lớp fomex giúp tranh
-              cứng cáp và hút ẩm tốt nhất. Đây là loại tranh sang trọng bậc nhất
-              thị trường hiện nay. Cả hai chất liệu canvas và gương pha lê đều
-              có khả năng chống thấm nước, chống phai màu. Vì thế, tranh Aloha
-              đảm bảo bền đẹp theo thời gian.
-            </P>
-          </li>
-        </Ul>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: product.material,
+          }}
+        ></div>
       ),
       style: panelStyle,
     },
@@ -61,10 +44,16 @@ function ProductDescription({ product }) {
       key: "2",
       label: (
         <Heading as="h2" className="text-xl font-bold mb-2">
-          Quy cách chất liệu tráng gương cao cấp
+          Chi tiết sản phẩm
         </Heading>
       ),
-      children: <P>{product.specification}</P>,
+      children: (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: product.specification,
+          }}
+        ></div>
+      ),
       style: panelStyle,
     },
     {
@@ -128,11 +117,11 @@ function ProductDescription({ product }) {
         </Heading>
       ),
       children: (
-        <P>
-          Chỉ cần dùng khăn ẩm lau trên bề mặt tranh là loại bỏ được bụi bẩn bám
-          trên tranh. Đối với tranh Aloha Decor, khách hàng không cần sử dụng
-          chất tẩy rửa để làm sạch tranh.
-        </P>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: product.instruction,
+          }}
+        ></div>
       ),
       style: panelStyle,
     },

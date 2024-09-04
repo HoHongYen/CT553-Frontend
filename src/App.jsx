@@ -57,7 +57,7 @@ function App() {
                   element={<Products />}
                 />
 
-                <Route path="san-pham/:productId" element={<ProductDetail />} />
+                <Route path="san-pham/:slug" element={<ProductDetail />} />
 
                 <Route element={<PolicyLayout />}>
                   <Route

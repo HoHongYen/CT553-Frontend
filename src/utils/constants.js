@@ -96,7 +96,7 @@ export const products = [
         id: uuidv4(),
         name: "Thuật TG3338",
         image: {
-            path: "https://tuongxinh.com.vn/wp-content/uploads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
+            path: "https://tuongxinh.com.vn/wp-content/uplcoads/2024/02/z5122716454948_6df55452e093e488987ba4213857f458.jpg",
         },
         price: 3500000,
         isDiscount: true,

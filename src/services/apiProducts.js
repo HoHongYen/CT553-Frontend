@@ -9,3 +9,10 @@ export async function getProducts(filterMinPrice, filterMaxPrice, sortBy, limit 
     return products;
 }
 
+export async function getOneBySlug(slug) {
+    const product = (await api.get(`/slug/${slug}`)).data;
+    console.log("product", product);
+    return product;
+
+    // return (await api.get(`/slug/${slug}`)).data;
+}
