@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import { useEffect, useRef, useState } from "react";
+import GoTop from "../ui/GoTop";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -23,17 +25,44 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
+  const [scrollPosition, setSrollPosition] = useState(0);
+  const [showGoTop, setshowGoTop] = useState(false);
+
+  const handleVisibleButton = () => {
+    const position = window.pageYOffset;
+    setSrollPosition(position);
+
+    if (scrollPosition > 50) {
+      return setshowGoTop(true);
+    } else if (scrollPosition < 50) {
+      return setshowGoTop(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleVisibleButton);
+  });
+
+  const refScrollUp = useRef();
+
+  const handleScrollUp = () => {
+    refScrollUp.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <StyledAppLayout>
-      <Header />
-      <div className="overflow-scroll">
-        <Main>
-          <Container>
-            <Outlet />
-          </Container>
-        </Main>
-        <Footer />
+      <div ref={refScrollUp}> </div>
+      <div className="fixed bottom-24 right-10">
+        <GoTop showGoTop={showGoTop} scrollUp={handleScrollUp} />
       </div>
+
+      <Header />
+      <Main>
+        <Container>
+          <Outlet />
+        </Container>
+      </Main>
+      <Footer />
     </StyledAppLayout>
   );
 }

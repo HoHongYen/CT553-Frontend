@@ -28,6 +28,7 @@ import VoucherList from "./pages/profile/VoucherList";
 import MainCategory from "./pages/MainCategory";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import ScrollToTop from "./components/ui/ScrollToTop";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,6 +47,7 @@ function App() {
           <GlobalStyles />
           <ReactQueryDevtools initialIsOpen={false} />
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route element={<AppLayout />}>
                 <Route index element={<Navigate replace to="trang-chu" />} />
