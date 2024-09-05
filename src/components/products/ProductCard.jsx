@@ -8,7 +8,7 @@ function ProductCard({ product }) {
       key={product.id}
       className=" flex cursor-pointer flex-col gap-3"
     >
-      <div className="overflow-hidden">
+      <div className="overflow-hidden rounded-md">
         <img
           src={product.images[0].image.path}
           alt={product.name}
