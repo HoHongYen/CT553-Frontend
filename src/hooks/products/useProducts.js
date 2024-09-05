@@ -48,7 +48,7 @@ export function useProducts() {
         error,
     } = useQuery({
         queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, mainCategory, subCategory],
-        queryFn: () => getProducts({ categoryIds: [category.id], type: PRODUCT_ALL, filter, filterMinPrice, filterMaxPrice, sortBy, page }),
+        queryFn: () => getProducts({ categoryIds: !category ? [] : [category.id], type: PRODUCT_ALL, filter, filterMinPrice, filterMaxPrice, sortBy, page }),
     });
 
     // PRE_FETCHING
