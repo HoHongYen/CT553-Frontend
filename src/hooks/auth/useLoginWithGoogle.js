@@ -7,8 +7,9 @@ export function useLoginWithGoogle() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { mutate: loginWithGoogle, isLoading } = useMutation({
-        mutationFn: ({ fullName, email, phone, avatarId }) => loginWithGoogleApi({ fullName, email, phone, avatarId }),
+        mutationFn: ({ fullName, email, phone, avatarURL }) => loginWithGoogleApi({ fullName, email, phone, avatarURL }),
         onSuccess: (res) => {
+            console.log("useLoginWithGoogle", res);
             toast.success("Đăng nhập thành công!");
             const user = res.metadata.account;
             queryClient.setQueryData(["user"], user);

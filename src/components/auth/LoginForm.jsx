@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { uploadImage } from "@/services/apiUpload";
 import { useLogin } from "@/hooks/auth/useLogin";
 import { useLoginWithGoogle } from "@/hooks/auth/useLoginWithGoogle";
 
@@ -20,7 +19,8 @@ function LoginForm() {
   const [email, setEmail] = useState("test@gmail.com");
   const [password, setPassword] = useState("12345678");
   const { login, isLoading: isLoading1 } = useLogin();
-  const { loginWithGoogle, isLoading: isLoading2 } = useLoginWithGoogle();
+  const { loginWithGoogle } = useLoginWithGoogle();
+  const [isLoading2, setIsLoading2] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,42 +37,23 @@ function LoginForm() {
   }
 
   // LOGIN WITH GOOGLE
-  const getUrlExtension = (url) => {
-    return url.split(/[#?]/)[0].split(".").pop().trim();
-  };
-
-  const changeImageUrlToFile = async (imgUrl) => {
-    var imgExt = getUrlExtension(imgUrl);
-
-    const response = await fetch(imgUrl);
-    const contentType = response.headers.get("content-type");
-    const blob = await response.blob();
-    const file = new File([blob], "profileImage." + imgExt, {
-      // type: blob.type,
-      contentType,
-    });
-    return file;
-  };
-
   function handleLoginWithGoogle(e) {
     e.preventDefault();
-    console.log("Login with Google");
-
+    setIsLoading2(true);
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then(async (result) => {
-
-      const form = new FormData();
-      const file = await changeImageUrlToFile(result.user.photoURL);
-
-      form.append("image", file);
-      const uploadedImage = await uploadImage(form);
+      console.log("Login with Google result", result);
       const user = {
         fullName: result.user.displayName,
         email: result.user.email,
         phone: result.user.phoneNumber,
-        avatarId: uploadedImage.metadata.id,
+        avatarURL: result.user.photoURL,
       };
-      loginWithGoogle(user);
+      loginWithGoogle(user, {
+        onSettled: () => {
+          setIsLoading2(false);
+        },
+      });
     });
   }
 
@@ -118,7 +99,9 @@ function LoginForm() {
               <span>Đăng nhập bằng Google</span>
             </div>
           ) : (
-            <SpinnerMini />
+            <div className="flex justify-center items-center">
+              <SpinnerMini />
+            </div>
           )}
         </Button>
       </FormRowVertical>
