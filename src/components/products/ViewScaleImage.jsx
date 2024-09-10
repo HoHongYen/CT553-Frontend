@@ -4,7 +4,7 @@ import ButtonIcon from "../ui/ButtonIcon";
 import Modal from "./Modal";
 import Button from "../ui/Button";
 
-function ViewScaleImage({ image, setIsFirstime }) {
+function ViewScaleImage({ image, setIsFirstTime }) {
   const [percent, setPercent] = useState(25);
   const [percentValue, setPercentValue] = useState(25 + "%");
 
@@ -15,7 +15,7 @@ function ViewScaleImage({ image, setIsFirstime }) {
   if (!image) return null;
 
   return (
-    <Modal setIsFirstime={setIsFirstime}>
+    <Modal setIsFirstTime={setIsFirstTime}>
       <Modal.Open opens="scaleImage">
         <ButtonIcon>
           <HiOutlineArrowsPointingOut className="w-10 h-10" />

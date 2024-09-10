@@ -57,11 +57,11 @@ const Button = styled.button`
 
 const ModalContext = createContext();
 
-function Modal({ children, setIsFirstime }) {
+function Modal({ children, setIsFirstTime }) {
   const [openName, setOpenName] = useState("");
   const close = () => {
     setOpenName("");
-    setIsFirstime(true);
+    setIsFirstTime(true);
   };
   const open = setOpenName;
   return (

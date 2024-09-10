@@ -10,7 +10,7 @@ function ProductCard({ product }) {
     >
       <div className="overflow-hidden rounded-md">
         <img
-          src={product.images[0].image.path}
+          src={product.thumbnailImage.path}
           alt={product.name}
           className="transition-all duration-700 hover:scale-105"
           // className="p-3 transition ease-out hover:-translate-y-1 hover:scale-105 duration-700"

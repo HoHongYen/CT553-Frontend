@@ -28,7 +28,8 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [currentImage, setCurrentImage] = useState();
   const [viewImage, setViewImage] = useState();
-  const [firstTime, setIsFirstime] = useState(true);
+  const [firstTime, setIsFirstTime] = useState(true);
+  const [allImages, setAllImages] = useState([]);
 
   const mediaRef = useRef(null);
 
@@ -41,8 +42,13 @@ function ProductDetail() {
 
     if (product) {
       setSelectedVariant(product.variants[0]);
-      setCurrentImage(product.images[0].image);
-      setViewImage(product.images[0].image);
+      setAllImages([
+        product.thumbnailImage,
+        product.viewImage,
+        ...product.images.map((image) => image.image),
+      ]);
+      setCurrentImage(product.thumbnailImage);
+      setViewImage(product.thumbnailImage);
     }
 
     async function getBreadcrumb() {
@@ -62,19 +68,14 @@ function ProductDetail() {
         <div className="grid grid-cols-2 gap-3">
           <div className="flex">
             <div className="flex flex-col gap-3 w-40">
-              {product.images.map((image, index) => {
-                if (index === 1) {
-                  return null;
-                }
+              {allImages.map((image, index) => {
                 return (
                   <img
-                    onClick={() =>
-                      thumbnailClicked(index === 0 ? 0 : index - 1)
-                    }
-                    key={image.image.path}
-                    src={image.image.path}
+                    onClick={() => thumbnailClicked(index)}
+                    key={image.path}
+                    src={image.path}
                     className={`border cursor-pointer hover:border-[var(--color-brand-600)] ${
-                      image.image.path === currentImage?.path &&
+                      image.path === currentImage?.path &&
                       "border-[var(--color-brand-600)] border-2"
                     }`}
                   />
@@ -86,7 +87,7 @@ function ProductDetail() {
                 onClick={() => {
                   if (firstTime) {
                     setViewImage(currentImage);
-                    setIsFirstime(false);
+                    setIsFirstTime(false);
                   }
                 }}
                 className="absolute cursor-pointer top-5 right-10 z-10"
@@ -95,25 +96,18 @@ function ProductDetail() {
               </div>
               <AntdCarousel
                 afterChange={(current) => {
-                  setCurrentImage(
-                    product.images[
-                      current === product.images.length ? 0 : current + 1
-                    ].image
-                  );
+                  setCurrentImage(allImages[current]);
                 }}
                 arrows
                 autoplay
                 ref={mediaRef}
               >
-                {product.images.map((image, index) => {
-                  if (index === 1) {
-                    return null;
-                  }
+                {allImages.map((image, index) => {
                   return (
                     <ImageMagnifier
                       className={"w-full h-full"}
-                      key={image.image.path}
-                      src={image.image.path}
+                      src={image.path}
+                      key={image.path}
                       magnifierHeight={200}
                       magnifierWidth={200}
                       zoomLevel={2}
@@ -123,8 +117,8 @@ function ProductDetail() {
               </AntdCarousel>
               <div className="flex justify-end mt-2">
                 <ViewCustomImage
-                  image={product.images[1].image}
-                  setIsFirstime={setIsFirstime}
+                  image={product.viewImage}
+                  setIsFirstTime={setIsFirstTime}
                 />
               </div>
             </div>
