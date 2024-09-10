@@ -42,7 +42,7 @@ function RegisterForm() {
       password,
       gender: isMale,
       phone,
-      birthday: new Date(birthday).toISOString(),
+      birthday: birthday ? new Date(birthday).toISOString() : null,
     });
   }
 

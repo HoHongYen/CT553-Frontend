@@ -45,9 +45,11 @@ function LoginForm() {
     var imgExt = getUrlExtension(imgUrl);
 
     const response = await fetch(imgUrl);
+    const contentType = response.headers.get("content-type");
     const blob = await response.blob();
     const file = new File([blob], "profileImage." + imgExt, {
-      type: blob.type,
+      // type: blob.type,
+      contentType,
     });
     return file;
   };
@@ -58,8 +60,10 @@ function LoginForm() {
 
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then(async (result) => {
+
       const form = new FormData();
       const file = await changeImageUrlToFile(result.user.photoURL);
+
       form.append("image", file);
       const uploadedImage = await uploadImage(form);
       const user = {
