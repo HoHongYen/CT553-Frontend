@@ -2,7 +2,7 @@ import { HiOutlineCash, HiOutlineTruck } from "react-icons/hi";
 import { HiMiniArrowPathRoundedSquare, HiOutlineEye, HiOutlineGift, HiOutlineLockClosed, HiOutlineMapPin, HiOutlineShoppingBag, HiOutlineUser, HiOutlineWrench } from "react-icons/hi2";
 import { v4 as uuidv4 } from "uuid";
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 8;
 
 export const policies = [
     { title: "Chính sách thanh toán", icon: HiOutlineCash },

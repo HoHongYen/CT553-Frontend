@@ -25,10 +25,10 @@ export function useProducts() {
     const filterValue = searchParams.get("discount") || "all";
     const filter = !filterValue || filterValue === "all" ? null : { field: "discount", value: filterValue };
 
-    const filterMinPriceValue = searchParams.get("minPrice");
+    const filterMinPriceValue = Number(searchParams.get("minPrice"));
     const filterMinPrice = !filterMinPriceValue ? null : { field: "minPrice", value: filterMinPriceValue };
 
-    const filterMaxPriceValue = searchParams.get("maxPrice");
+    const filterMaxPriceValue = Number(searchParams.get("maxPrice"));
     const filterMaxPrice = !filterMaxPriceValue ? null : { field: "maxPrice", value: filterMaxPriceValue };
 
     // SORT
@@ -41,14 +41,16 @@ export function useProducts() {
         ? 1
         : Number(searchParams.get("page"));
 
+    const limit = searchParams.get("limit") || PAGE_SIZE;
+
     // QUERY
     const {
         isLoading,
         data: { metadata: { products, pagination: { totalProducts, totalPages } } } = { metadata: { products: [], pagination: { totalProducts: 0, totalPages: 0 } } },
         error,
     } = useQuery({
-        queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, mainCategory, subCategory],
-        queryFn: () => getProducts({ categoryIds: !category ? [] : [category.id], type: PRODUCT_ALL, filter, filterMinPrice, filterMaxPrice, sortBy, page }),
+        queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, limit, mainCategory, subCategory],
+        queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, page, limit }),
     });
 
     // PRE_FETCHING

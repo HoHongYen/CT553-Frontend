@@ -1,27 +1,27 @@
-import { PRODUCT_ALL } from "@/utils/constants";
+import { PAGE_SIZE, PRODUCT_ALL } from "@/utils/constants";
 import createApiClient from "./api";
 
 const baseUrl = "/api/products";
 const api = createApiClient(baseUrl);
 
-export async function getProducts({ type, categoryIds, filterMinPrice, filterMaxPrice, sortBy, limit = 10, page = 1 }) {
-    // const products = (await api.get("", { params: { filterMinPrice, filterMaxPrice, sortBy, limit, page } })).data;
-    const products = (await api.get("", { params: { type, categoryIds, filterMinPrice, filterMaxPrice, sortBy, limit, page } })).data;
-    console.log("products", products);
+export async function getProducts({ type = PRODUCT_ALL, categoryIds, filter, filterMinPrice = 0, filterMaxPrice = 0, sortBy, page = 1, limit = PAGE_SIZE }) {
+    console.log("filter", filter);
+    console.log("filterMinPrice", filterMinPrice);
+    console.log("filterMaxPrice", filterMaxPrice);
+    console.log("type", type);
+    console.log("limit", limit);
+    const products = (await api.get("/", { params: { type, categoryIds, filter, filterMinPrice, filterMaxPrice, sortBy, limit, page } })).data;
     return products;
 }
 
-export async function getByCategories({ categoryIds = [], type = PRODUCT_ALL, limit = 10, page = 1 }) {
-    console.log(categoryIds);
-    return (
-        await api.get("/", { params: { type, limit, categoryIds, page } })
-    ).data;
+export async function getHomeProducts({ type, limit }) {
+    console.log("type", type);
+    console.log("limit", limit);
+    const products = (await api.get("/", { params: { type, limit } })).data;
+    return products;
 }
 
 export async function getOneBySlug(slug) {
     const product = (await api.get(`/slug/${slug}`)).data;
-    console.log("product", product);
     return product;
-
-    // return (await api.get(`/slug/${slug}`)).data;
 }

@@ -24,7 +24,10 @@ function ProductCard({ product }) {
           </p>
         )} */}
         <p className="font-bold text-[var(--color-brand-700)]">
-          {formatCurrency(product.variants[0].price)}{" "}
+          {formatCurrency(product.variants[0].price)} {" - "}
+          {formatCurrency(
+            product.variants[product.variants.length - 1].price
+          )}{" "}
         </p>
       </div>
       <p>{formatDate(product.createdAt)}</p>

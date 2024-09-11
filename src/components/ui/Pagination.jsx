@@ -2,6 +2,8 @@ import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { PAGE_SIZE } from "@/utils/constants";
+import Select from "./Select";
+import { useState } from "react";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -59,6 +61,29 @@ const PaginationButton = styled.button`
   }
 `;
 
+const PageButton = styled.button`
+  border: 1px solid
+    ${(props) =>
+      props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
+  color: ${(props) =>
+    props.active ? " var(--color-brand-600)" : "var(--color-black-50)"};
+  border-radius: var(--border-radius-sm);
+  font-weight: 500;
+  font-size: 1.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-brand-600);
+    color: var(--color-brand-50);
+  }
+`;
+
 function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("page")
@@ -66,6 +91,22 @@ function Pagination({ count }) {
     : Number(searchParams.get("page"));
 
   const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  const limitOptions = [
+    { label: "Hiển thị 4 sản phẩm", value: 4 },
+    { label: "Hiển thị 8 sản phẩm", value: 8 },
+    { label: "Hiển thị 12 sản phẩm", value: 12 },
+    { label: "Hiển thị 16 sản phẩm", value: 16 },
+    { label: "Hiển thị 20 sản phẩm", value: 20 },
+  ];
+
+  const [limitId, setLimitId] = useState(searchParams.get("limit") || PAGE_SIZE);
+
+  function handleLimitChange(e) {
+    setLimitId(e.target.value);
+    searchParams.set("limit", e.target.value);
+    setSearchParams(searchParams);
+  }
 
   function prevPage() {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
@@ -84,24 +125,48 @@ function Pagination({ count }) {
   return (
     <StyledPagination>
       <P>
-        Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
+        Hiển thị từ <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> đến{" "}
         <span>
           {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
         </span>{" "}
-        of <span>{count}</span> results
+        trong tổng số <span>{count}</span> sản phẩm
       </P>
       <Buttons>
         <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
           <HiChevronLeft />
-          <span>Previous</span>
+          <span>Trước</span>
         </PaginationButton>
+
+        <div className="flex justify-center gap-5">
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
+            <PageButton
+              className="px-10 py-2"
+              key={page}
+              active={page === currentPage}
+              onClick={() => {
+                searchParams.set("page", page);
+                setSearchParams(searchParams);
+              }}
+            >
+              <span>{page}</span>
+            </PageButton>
+          ))}
+        </div>
+
         <PaginationButton
           onClick={nextPage}
           disabled={currentPage === pageCount}
         >
-          <span>Next</span>
+          <span>Sau</span>
           <HiChevronRight />
         </PaginationButton>
+
+        <Select
+        className="ml-10"
+          options={limitOptions}
+          value={limitId}
+          onChange={handleLimitChange}
+        />
       </Buttons>
     </StyledPagination>
   );
