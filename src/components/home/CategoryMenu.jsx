@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCategories } from "@/hooks/categories/useCategories";
 
-import FrameSkeleton from "@/components/skeletons/FrameSkeleton";
+import { Skeleton } from "antd";
 import Button from "@/components/ui/Button";
 import CategoryItem from "./CategoryItem";
 
@@ -17,16 +17,19 @@ function CategoryMenu() {
     } else {
       setShowCategories(categories);
     }
-    console.log("showCategories", showCategories);
   }, [categories, isShowAll]);
 
-  if (!categories) return <FrameSkeleton />;
+  if (!categories) return <Skeleton active />;
 
   return (
     <div className="flex flex-col gap-10 bg-[var(--color-blue-100)] p-5 pt-10 rounded-3xl">
       <div className="flex flex-wrap justify-center gap-16">
         {showCategories?.map((category) => (
-          <CategoryItem key={category.id} category={category} />
+          <CategoryItem
+            key={category.id}
+            category={category}
+            parentSlug={category.parent?.slug}
+          />
         ))}
       </div>
       <div className="flex justify-center">

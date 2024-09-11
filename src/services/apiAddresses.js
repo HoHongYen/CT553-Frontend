@@ -5,26 +5,21 @@ const api = createApiClient(baseUrl, { needAuth: true });
 
 export async function getProvinces() {
     const provinces = (await api.get("/provinces")).data;
-    console.log("provinces", provinces);
     return provinces;
 }
 
 
 export async function getDistricts(provinceId) {
-    console.log("provinceId", provinceId);
     const districts = (await api.get("/districts?provinceId=" + provinceId)).data;
-    console.log("districts", districts);
     return districts;
 }
 
 export async function getWards(districtId) {
     const wards = (await api.get("/wards?districtId=" + districtId)).data;
-    console.log("wards", wards);
     return wards;
 }
 
 export async function createAddress(data) {
-    console.log(data);
     return (await api.post("", data)).data;
 }
 

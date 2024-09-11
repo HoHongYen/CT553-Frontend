@@ -84,10 +84,6 @@ const StyledMenuNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
-  const handleChooseCategory = ({ key }) => {
-    message.info(`Danh muc ${key}`);
-  };
-
   const { categories } = useCategories();
 
   const categoriesList = categories?.map((category) => {
@@ -156,7 +152,6 @@ function MainNav() {
             menu={{
               mode: "vertical",
               items: categoriesList,
-              onClick: handleChooseCategory,
               expandIcon: null,
             }}
           >
