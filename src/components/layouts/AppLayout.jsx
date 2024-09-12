@@ -25,17 +25,17 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
-  const [scrollPosition, setSrollPosition] = useState(0);
-  const [showGoTop, setshowGoTop] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [showGoTop, setShowGoTop] = useState(false);
 
   const handleVisibleButton = () => {
     const position = window.pageYOffset;
-    setSrollPosition(position);
+    setScrollPosition(position);
 
     if (scrollPosition > 50) {
-      return setshowGoTop(true);
+      return setShowGoTop(true);
     } else if (scrollPosition < 50) {
-      return setshowGoTop(false);
+      return setShowGoTop(false);
     }
   };
 

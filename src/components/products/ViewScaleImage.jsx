@@ -4,7 +4,7 @@ import ButtonIcon from "../ui/ButtonIcon";
 import Modal from "./Modal";
 import Button from "../ui/Button";
 
-function ViewScaleImage({ image, setIsFirstTime }) {
+function ViewScaleImage({ image, setIsFirstTime, isFirstTime}) {
   const [percent, setPercent] = useState(25);
   const [percentValue, setPercentValue] = useState(25 + "%");
 

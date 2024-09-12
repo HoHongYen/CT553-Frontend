@@ -28,7 +28,7 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [currentImage, setCurrentImage] = useState();
   const [viewImage, setViewImage] = useState();
-  const [firstTime, setIsFirstTime] = useState(true);
+  const [isFirstTime, setIsFirstTime] = useState(true);
   const [allImages, setAllImages] = useState([]);
 
   const mediaRef = useRef(null);
@@ -38,8 +38,6 @@ function ProductDetail() {
   };
 
   useEffect(() => {
-    console.log(product);
-
     if (product) {
       setSelectedVariant(product.variants[0]);
       setAllImages([
@@ -58,7 +56,6 @@ function ProductDetail() {
     getBreadcrumb();
   }, [product]);
 
-  console.log(product);
   if (isLoading) return <Spinner />;
 
   return (
@@ -85,14 +82,14 @@ function ProductDetail() {
             <div className="relative w-[90%] p-10 pt-3">
               <div
                 onClick={() => {
-                  if (firstTime) {
+                  if (isFirstTime) {
                     setViewImage(currentImage);
                     setIsFirstTime(false);
                   }
                 }}
                 className="absolute cursor-pointer top-5 right-10 z-10"
               >
-                <ViewScaleImage image={viewImage} />
+                <ViewScaleImage image={viewImage} setIsFirstTime={setIsFirstTime} />
               </div>
               <AntdCarousel
                 afterChange={(current) => {
