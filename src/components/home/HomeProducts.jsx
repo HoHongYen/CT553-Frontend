@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getHomeProducts, getProducts } from "@/services/apiProducts";
+import { getHomeProducts } from "@/services/apiProducts";
 import { PRODUCT_NEWEST } from "@/utils/constants";
 
 import ProductCard from "@/components/products/ProductCard";
@@ -11,7 +11,7 @@ function HomeProducts() {
 
   useEffect(() => {
     async function fetchNewestProducts() {
-      const products = await getProducts({
+      const products = await getHomeProducts({
         type: PRODUCT_NEWEST,
         limit: 10,
       });
@@ -19,7 +19,7 @@ function HomeProducts() {
     }
 
     fetchNewestProducts();
-  });
+  }, []);
 
   if (!newestProducts) {
     return <Skeleton active />;
