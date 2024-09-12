@@ -57,13 +57,6 @@ function Filter({ filterField, options }) {
           {option.label}
         </FilterButton>
       ))}
-      {/* <FilterButton onClick={() => handleClick("all")}>All</FilterButton>
-      <FilterButton onClick={() => handleClick("no-discount")}>
-        No discount
-      </FilterButton>
-      <FilterButton onClick={() => handleClick("with-discount")}>
-        With discount
-      </FilterButton> */}
     </StyledFilter>
   );
 }

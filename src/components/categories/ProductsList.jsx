@@ -5,7 +5,7 @@ import Heading from "../ui/Heading";
 import Pagination from "../ui/Pagination";
 
 function ProductsList() {
-  const { products, totalProducts } = useProducts();
+  const { products, totalProducts, totalPages } = useProducts();
 
   if (totalProducts === 0) {
     return (
@@ -23,7 +23,7 @@ function ProductsList() {
         ))}
       </div>
       <div className="mt-10">
-        <Pagination count={totalProducts} />
+        <Pagination count={totalProducts} totalPages={totalPages} />
       </div>
     </>
   );

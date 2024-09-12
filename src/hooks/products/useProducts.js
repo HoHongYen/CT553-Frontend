@@ -32,7 +32,7 @@ export function useProducts() {
     const filterMaxPrice = !filterMaxPriceValue ? null : { field: "maxPrice", value: filterMaxPriceValue };
 
     // SORT
-    const sortByRaw = searchParams.get("sortBy") || "created_at-decs";
+    const sortByRaw = searchParams.get("sortBy") || "createdAt-desc";
     const [field, direction] = sortByRaw.split("-");
     const sortBy = { field, direction };
 

@@ -84,13 +84,11 @@ const PageButton = styled.button`
   }
 `;
 
-function Pagination({ count }) {
+function Pagination({ count, totalPages }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("page")
     ? 1
     : Number(searchParams.get("page"));
-
-  const pageCount = Math.ceil(count / PAGE_SIZE);
 
   const limitOptions = [
     { label: "Hiển thị 4 sản phẩm", value: 4 },
@@ -100,7 +98,9 @@ function Pagination({ count }) {
     { label: "Hiển thị 20 sản phẩm", value: 20 },
   ];
 
-  const [limitId, setLimitId] = useState(searchParams.get("limit") || PAGE_SIZE);
+  const [limitId, setLimitId] = useState(
+    searchParams.get("limit") || PAGE_SIZE
+  );
 
   function handleLimitChange(e) {
     setLimitId(e.target.value);
@@ -115,19 +115,19 @@ function Pagination({ count }) {
   }
 
   function nextPage() {
-    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+    const next = currentPage === totalPages ? currentPage : currentPage + 1;
     searchParams.set("page", next);
     setSearchParams(searchParams);
   }
 
-  if (pageCount <= 1) return null;
+  if (totalPages <= 1) return null;
 
   return (
     <StyledPagination>
       <P>
         Hiển thị từ <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> đến{" "}
         <span>
-          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
+          {currentPage === totalPages ? count : currentPage * PAGE_SIZE}
         </span>{" "}
         trong tổng số <span>{count}</span> sản phẩm
       </P>
@@ -138,7 +138,7 @@ function Pagination({ count }) {
         </PaginationButton>
 
         <div className="flex justify-center gap-5">
-          {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <PageButton
               className="px-10 py-2"
               key={page}
@@ -155,14 +155,14 @@ function Pagination({ count }) {
 
         <PaginationButton
           onClick={nextPage}
-          disabled={currentPage === pageCount}
+          disabled={currentPage === totalPages}
         >
           <span>Sau</span>
           <HiChevronRight />
         </PaginationButton>
 
         <Select
-        className="ml-10"
+          className="ml-10"
           options={limitOptions}
           value={limitId}
           onChange={handleLimitChange}

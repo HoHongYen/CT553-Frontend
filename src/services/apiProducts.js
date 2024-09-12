@@ -5,18 +5,11 @@ const baseUrl = "/api/products";
 const api = createApiClient(baseUrl);
 
 export async function getProducts({ type = PRODUCT_ALL, categoryIds, filter, filterMinPrice = 0, filterMaxPrice = 0, sortBy, page = 1, limit = PAGE_SIZE }) {
-    console.log("filter", filter);
-    console.log("filterMinPrice", filterMinPrice);
-    console.log("filterMaxPrice", filterMaxPrice);
-    console.log("type", type);
-    console.log("limit", limit);
     const products = (await api.get("/", { params: { type, categoryIds, filter, filterMinPrice, filterMaxPrice, sortBy, limit, page } })).data;
     return products;
 }
 
 export async function getHomeProducts({ type, limit }) {
-    console.log("type", type);
-    console.log("limit", limit);
     const products = (await api.get("/", { params: { type, limit } })).data;
     return products;
 }

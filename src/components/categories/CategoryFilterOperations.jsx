@@ -15,8 +15,8 @@ function CategoryFilterOperations() {
       />
       <SortBy
         options={[
-          { value: "created_at-desc", label: "Mới nhất" },
-          { value: "created_at-asc", label: "Cũ nhất" },
+          { value: "createdAt-desc", label: "Mới nhất" },
+          { value: "createdAt-asc", label: "Cũ nhất" },
           { value: "name-asc", label: "Xếp theo tên (A-Z)" },
           { value: "name-desc", label: "Xếp theo tên (Z-A)" },
           {
