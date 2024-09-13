@@ -89,7 +89,10 @@ function ProductDetail() {
                 }}
                 className="absolute cursor-pointer top-5 right-10 z-10"
               >
-                <ViewScaleImage image={viewImage} setIsFirstTime={setIsFirstTime} />
+                <ViewScaleImage
+                  image={viewImage}
+                  setIsFirstTime={setIsFirstTime}
+                />
               </div>
               <AntdCarousel
                 afterChange={(current) => {

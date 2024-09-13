@@ -4,7 +4,7 @@ import StyledLink from "../ui/StyledLink";
 function CategoryItem({ category, parentSlug = "", isActive = false }) {
   return (
     <StyledLink
-      to={`/${parentSlug}/${category.slug}`}
+      to={parentSlug ? `/${parentSlug}/${category.slug}` : `/${category.slug}`}
       key={category.id}
       className={`flex cursor-pointer flex-col justify-center gap-5 capitalize ${
         isActive ? "text-[var(--color-blue-800)]" : ""
