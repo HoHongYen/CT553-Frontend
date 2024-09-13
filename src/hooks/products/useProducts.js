@@ -43,14 +43,17 @@ export function useProducts() {
 
     const limit = searchParams.get("limit") || PAGE_SIZE;
 
+    // SEARCH
+    const search = searchParams.get("s");
+
     // QUERY
     const {
         isLoading,
         data: { metadata: { products, pagination: { totalProducts, totalPages } } } = { metadata: { products: [], pagination: { totalProducts: 0, totalPages: 0 } } },
         error,
     } = useQuery({
-        queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, limit, mainCategory, subCategory],
-        queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, page, limit }),
+        queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, limit, search, mainCategory, subCategory],
+        queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, page, limit, search }),
     });
 
     // PRE_FETCHING

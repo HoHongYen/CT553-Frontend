@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/hooks/profile/useUser";
 
@@ -13,7 +14,10 @@ import {
   HiMagnifyingGlass,
   HiOutlineShoppingCart,
   HiOutlineUser,
+  HiXMark,
 } from "react-icons/hi2";
+// import SearchBar from "./SearchBar-v1";
+import SearchBar from "./SearchBar";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
@@ -24,7 +28,8 @@ const StyledHeader = styled.header`
   gap: 2.4rem;
   align-items: center;
   justify-content: space-between;
-  max-height: 8rem;
+  min-height: 8rem;
+
 `;
 
 const StyledHeaderMenu = styled.ul`
@@ -36,22 +41,42 @@ function Header() {
   const navigate = useNavigate();
   const { isAuthenticated } = useUser();
 
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
     <StyledHeader>
       <div className="flex items-center justify-between gap-3">
         <Logo />
-        <NavBar />
+        {!isSearchOpen && (
+          <>
+            <NavBar />
+            <ButtonIcon onClick={() => setIsSearchOpen(true)}>
+              <HiMagnifyingGlass />
+            </ButtonIcon>
+          </>
+        )}
       </div>
-      <form className="flex flex-1">
-        <input
-          type="text"
-          className="w-full rounded-xl px-4 border py-2 outline-none"
-          placeholder="Tìm kiếm..."
-        />
-        <ButtonIcon>
-          <HiMagnifyingGlass />
-        </ButtonIcon>
-      </form>
+      <div className="flex items-center gap-5">
+        {isSearchOpen && (
+          <>
+            <SearchBar
+              placeholder="Nhập từ khóa tìm kiếm..."
+              style={{
+                width: 500,
+                height: 40,
+              }}
+            />
+            <div>
+              <ButtonIcon onClick={() => setIsSearchOpen(true)}>
+                <HiMagnifyingGlass />
+              </ButtonIcon>
+              <ButtonIcon onClick={() => setIsSearchOpen(false)}>
+                <HiXMark />
+              </ButtonIcon>
+            </div>
+          </>
+        )}
+      </div>
       <div className="flex justify-between gap-3">
         {isAuthenticated && <UserAvatar />}
         {!isAuthenticated && (

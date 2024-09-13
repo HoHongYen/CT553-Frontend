@@ -29,6 +29,7 @@ import MainCategory from "./pages/MainCategory";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import ScrollToTop from "./components/ui/ScrollToTop";
+import ProductSearch from "./pages/ProductSearch";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,13 +54,18 @@ function App() {
                 <Route index element={<Navigate replace to="trang-chu" />} />
                 <Route path="trang-chu" element={<Home />} />
 
-                <Route path="/:mainCategory" element={<MainCategory />} />
+                <Route
+                  path="/:mainCategory"
+                  element={<MainCategory />}
+                />
                 <Route
                   path="/:mainCategory/:subCategory"
                   element={<Products />}
-                />
+                />c
 
                 <Route path="san-pham/:slug" element={<ProductDetail />} />
+
+                <Route path="tim-kiem" element={<ProductSearch />} />
 
                 <Route element={<PolicyLayout />}>
                   <Route
