@@ -18,6 +18,7 @@ import {
 } from "react-icons/hi2";
 // import SearchBar from "./SearchBar-v1";
 import SearchBar from "./SearchBar";
+import Dictaphone from "../home/Dictaphone";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
@@ -48,12 +49,13 @@ function Header() {
       <div className="flex items-center justify-between gap-3">
         <Logo />
         {!isSearchOpen && (
-          <>
+          <div className="flex items-center gap-5">
             <NavBar />
             <ButtonIcon onClick={() => setIsSearchOpen(true)}>
               <HiMagnifyingGlass />
             </ButtonIcon>
-          </>
+            <Dictaphone />
+          </div>
         )}
       </div>
       <div className="flex items-center gap-5">

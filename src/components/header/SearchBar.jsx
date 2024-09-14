@@ -24,10 +24,8 @@ function SearchBar({ placeholder, style }) {
 
   const [data, setData] = useState([]);
   const [value, setValue] = useState();
-  const [newValue, setNewValue] = useState();
 
   const handleSearch = (newValue) => {
-    setNewValue(newValue);
     fetch(newValue, setData);
   };
 
