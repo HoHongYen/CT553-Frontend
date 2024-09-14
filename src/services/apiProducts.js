@@ -4,8 +4,8 @@ import createApiClient from "./api";
 const baseUrl = "/api/products";
 const api = createApiClient(baseUrl);
 
-export async function getProducts({ type = PRODUCT_ALL, categoryIds, filter, filterMinPrice = 0, filterMaxPrice = 0, sortBy, page = 1, limit = PAGE_SIZE, search = "" }) {
-    const products = (await api.get("/", { params: { type, categoryIds, filter, filterMinPrice, filterMaxPrice, sortBy, limit, search, page } })).data;
+export async function getProducts({ type = PRODUCT_ALL, categoryIds, filter, filterMinPrice = 0, filterMaxPrice = 0, sortBy, page = 1, limit = PAGE_SIZE }) {
+    const products = (await api.get("/", { params: { type, categoryIds, filter, filterMinPrice, filterMaxPrice, sortBy, limit, page } })).data;
     return products;
 }
 
@@ -14,10 +14,10 @@ export async function getHomeProducts({ type, limit }) {
     return products;
 }
 
-export async function search(search) {
+export async function search(search = "") {
     console.log("search", search);
-    const products = (await api.get("/search", { params: { s: search } })).data;
-    return products;
+    const res = (await api.get("/search", { params: { s: search } })).data;
+    return res;
 }
 
 

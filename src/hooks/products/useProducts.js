@@ -50,7 +50,7 @@ export function useProducts() {
     const {
         isLoading,
         data: { metadata: { products, pagination: { totalProducts, totalPages } } } = { metadata: { products: [], pagination: { totalProducts: 0, totalPages: 0 } } },
-        error,
+        error,  
     } = useQuery({
         queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, limit, search, mainCategory, subCategory],
         queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, page, limit, search }),
