@@ -74,6 +74,7 @@ function SearchBar({ placeholder, style }) {
       console.log("value", value);
       setSearchQuery(value);
       searchParams.set("s", value);
+      searchParams.delete("imageUrl");
       setSearchParams(searchParams);
       navigate(`/tim-kiem/?${searchParams.toString()}`);
     }

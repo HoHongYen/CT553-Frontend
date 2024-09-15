@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useSearchProducts } from "@/hooks/products/useSearchProducts";
+import { useSearchProductByText } from "@/hooks/products/useSearchProductByText";
+import { useSearchProductByImage } from "@/hooks/products/useSearchProductByImage";
 
+import { Skeleton } from "antd";
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import BreadCrumb from "@/components/ui/BreadCrumb";
@@ -10,18 +12,40 @@ import ProductCard from "@/components/products/ProductCard";
 function ProductSearch() {
   const [breadcrumb, setBreadcrumb] = useState([{ name: "" }]);
   const [searchParams] = useSearchParams();
-  const { fullTextSearchResult, semanticSearchResult } = useSearchProducts();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
+
+  const { fullTextSearchResult, semanticSearchResult } =
+    useSearchProductByText();
+
+  const { products: imageSearchResult } = useSearchProductByImage();
 
   useEffect(() => {
     setBreadcrumb([{ name: "Tìm kiếm" }]);
   }, []);
 
+  // useEffect(() => {
+  //   if (searchParams.get("s")) {
+  //     console.log("fullTextSearchResult", fullTextSearchResult);
+  //     console.log("semanticSearchResult", semanticSearchResult);
+  //     setProducts([...fullTextSearchResult, ...semanticSearchResult]);
+  //   }
+  //   if (searchParams.get("imageUrl")) {
+  //     console.log("imageSearchResult", imageSearchResult);
+  //     setProducts(imageSearchResult);
+  //   }
+  // }, [fullTextSearchResult, semanticSearchResult, imageSearchResult]);
+
   useEffect(() => {
-    console.log("fullTextSearchResult", fullTextSearchResult);
-    console.log("semanticSearchResult", semanticSearchResult);
-    setProducts([...fullTextSearchResult, ...semanticSearchResult]);
+    if (searchParams.get("s") !== "") {
+      console.log("fullTextSearchResult", fullTextSearchResult);
+      console.log("semanticSearchResult", semanticSearchResult);
+      setProducts([...fullTextSearchResult, ...semanticSearchResult]);
+    }
   }, [fullTextSearchResult, semanticSearchResult]);
+
+  if (!products) {
+    return <Skeleton active />;
+  }
 
   if (products.length === 0) {
     return (

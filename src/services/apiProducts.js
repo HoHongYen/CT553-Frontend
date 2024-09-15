@@ -14,12 +14,23 @@ export async function getHomeProducts({ type, limit }) {
     return products;
 }
 
-export async function search(search = "") {
+export async function search(search) {
     console.log("search", search);
     const res = (await api.get("/search", { params: { s: search } })).data;
+    if (search === "") {
+        return { metadata: { fullTextSearchResult: [], semanticSearchResult: [] } };
+    }
     return res;
 }
 
+export async function searchByImageUrl(imageUrl) {
+    console.log("imageUrl", imageUrl);
+    if (!imageUrl) {
+        console.log("imageUrl", imageUrl);
+        return { metadata: { products: [] } };
+    }
+    return (await api.get("/search/image", { params: { imageUrl } })).data;
+}
 
 export async function getOneBySlug(slug) {
     const product = (await api.get(`/slug/${slug}`)).data;

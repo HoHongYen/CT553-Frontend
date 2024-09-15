@@ -9,4 +9,12 @@ export async function uploadImage(formData) {
 
 export async function destroyImage(uploadedImageId) {
     return (await api.delete("/" + uploadedImageId)).data;
-  }
+}
+
+export async function uploadImageToDisk(formData) {
+    return (await api.post("/image/disk", formData)).data;
+}
+
+export async function destroyImageInDisk(uploadedImagePath) {
+    return (await api.delete("/disk/" + uploadedImagePath)).data;
+}

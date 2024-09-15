@@ -45,7 +45,7 @@ const Dictaphone = () => {
   const [toastId, setToastId] = useState(null);
 
   useEffect(() => {
-    if (transcript === "") {
+    if (transcript === "" || !isListening) {
       return;
     }
     const timeoutId = setTimeout(() => {
@@ -64,12 +64,13 @@ const Dictaphone = () => {
           color: "#fff",
         },
       });
-      resetTranscript();
 
       setSearchQuery(transcript);
       searchParams.set("s", transcript);
       setSearchParams(searchParams);
       navigate(`/tim-kiem/?${searchParams.toString()}`);
+
+      resetTranscript();
 
       setToastId(tempId);
     }, 500);
@@ -105,7 +106,6 @@ const Dictaphone = () => {
             <ButtonIcon>
               <HiMicrophone />
             </ButtonIcon>
-            <button>Nghe</button>
           </div>
         ) : (
           <div onClick={handleStop} className="flex gap-5">
@@ -117,7 +117,6 @@ const Dictaphone = () => {
                 <HiMicrophone className="h-8 w-8" />
               </ButtonIcon>
             </div>
-            <button>Dừng</button>
           </div>
         )}
       </div>
