@@ -3,6 +3,7 @@ import { formatCurrency } from "@/utils/helpers";
 
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 import { useProduct } from "@/hooks/products/useProduct";
+import { ACTIONS, useCart } from "@/context/CartContext";
 
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { Carousel as AntdCarousel } from "antd";
@@ -18,6 +19,7 @@ import ViewScaleImage from "@/components/products/ViewScaleImage";
 import ImageMagnifier from "@/components/ui/ImageMagnifier";
 import ViewCustomImage from "@/components/products/ViewCustomImage";
 import Select from "@/components/ui/Select";
+import toast from "react-hot-toast";
 
 function ProductDetail() {
   const { product, isLoading } = useProduct();
@@ -30,6 +32,8 @@ function ProductDetail() {
   const [viewImage, setViewImage] = useState();
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [allImages, setAllImages] = useState([]);
+
+  const { dispatch } = useCart();
 
   const mediaRef = useRef(null);
 
@@ -50,11 +54,25 @@ function ProductDetail() {
     }
 
     async function getBreadcrumb() {
-      const breadcrumb = await getBreadcrumbFromCategory(product.categoryId);
-      setBreadcrumb([...breadcrumb.metadata, { name: product.name }]);
+      if (product) {
+        const breadcrumb = await getBreadcrumbFromCategory(product.categoryId);
+        setBreadcrumb([...breadcrumb.metadata, { name: product.name }]);
+      }
     }
     getBreadcrumb();
   }, [product]);
+
+  const handleAddToCart = () => {
+    dispatch({
+      type: ACTIONS.ADD_TO_CART,
+      payload: {
+        variant: selectedVariant,
+        quantity: quantity,
+        product: product,
+      },
+    });
+    toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+  };
 
   if (isLoading) return <Spinner />;
 
@@ -190,7 +208,7 @@ function ProductDetail() {
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                 />
-                <Button variation="success">
+                <Button onClick={handleAddToCart} variation="success">
                   <div className="flex justify-center items-center gap-4">
                     <HiOutlineShoppingCart />
                     Thêm vào giỏ hàng

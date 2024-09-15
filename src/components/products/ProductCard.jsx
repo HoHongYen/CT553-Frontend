@@ -6,7 +6,7 @@ function ProductCard({ product }) {
     <Link
       to={`/san-pham/${product.slug}`}
       key={product.id}
-      className=" flex cursor-pointer flex-col gap-3"
+      className="flex cursor-pointer flex-col gap-3"
     >
       <div className="overflow-hidden rounded-md">
         <img

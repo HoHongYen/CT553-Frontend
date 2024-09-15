@@ -30,7 +30,6 @@ const StyledNavLink = styled(NavLink)`
     display: flex;
     align-items: center;
     gap: 1.2rem;
-
     color: var(--color-blue-600);
     font-size: 1.6rem;
     font-weight: 500;
@@ -128,7 +127,7 @@ function MainNav() {
         <div className="mb-4">
           <Link
             to={formatSlugify(policy.title)}
-            className="capitalize flex items-center gap-4"
+            className="capitalize flex items-center"
           >
             <policy.icon className="w-[2.4rem] h-[2.4rem]" />
             {policy.title}
@@ -144,7 +143,7 @@ function MainNav() {
         <li>
           <StyledNavLink to="/">
             <HiOutlineHome />
-            <span>Trang chủ</span>
+            <span className="font-bold text-[1.7rem]">Trang chủ</span>
           </StyledNavLink>
         </li>
         <li>
@@ -158,7 +157,7 @@ function MainNav() {
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineCalendarDays />
-                <span>Sản phẩm</span>
+                <span className="font-bold text-[1.7rem]">Sản phẩm</span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>
@@ -167,7 +166,7 @@ function MainNav() {
         <li>
           <StyledNavLink to="/khuyen-mai">
             <HiOutlineGift />
-            <span>Khuyến mại</span>
+            <span className="font-bold text-[1.7rem]">Khuyến mại</span>
           </StyledNavLink>
         </li>
         <li>
@@ -181,7 +180,7 @@ function MainNav() {
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineClipboardDocumentList />
-                <span>Chính sách</span>
+                <span className="font-bold text-[1.7rem]">Chính sách</span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>
@@ -190,7 +189,7 @@ function MainNav() {
         {/* <li>
           <StyledNavLink to="/lien-he">
             <HiOutlineEnvelope />
-            <span>Liên hệ</span>
+            <span className="font-bold text-[1.7rem]">Liên hệ</span>
           </StyledNavLink>
         </li> */}
       </NavList>

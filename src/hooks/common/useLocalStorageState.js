@@ -6,6 +6,11 @@ export function useLocalStorageState(initialState, key) {
     return storedValue ? JSON.parse(storedValue) : initialState;
   });
 
+  const removeValue = () => {
+    setValue(null);
+    localStorage.removeItem(key);
+  }
+
   useEffect(
     function () {
       localStorage.setItem(key, JSON.stringify(value));
@@ -13,5 +18,5 @@ export function useLocalStorageState(initialState, key) {
     [value, key]
   );
 
-  return [value, setValue];
+  return [value, setValue, removeValue];
 }

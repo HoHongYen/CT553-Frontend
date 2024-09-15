@@ -20,6 +20,8 @@ import {
 import SearchBar from "./SearchBar";
 import Dictaphone from "../home/Dictaphone";
 
+import ProductSearchImage from "./ProductSearchImage";
+
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
   /* background-color: #fda4af; // bg-rose-300 */
@@ -29,8 +31,8 @@ const StyledHeader = styled.header`
   gap: 2.4rem;
   align-items: center;
   justify-content: space-between;
-  min-height: 8rem;
-
+  /* min-height: 8rem; */
+  height: 8rem;
 `;
 
 const StyledHeaderMenu = styled.ul`
@@ -68,10 +70,12 @@ function Header() {
                 height: 40,
               }}
             />
-            <div>
+            <div className="flex">
               <ButtonIcon onClick={() => setIsSearchOpen(true)}>
                 <HiMagnifyingGlass />
               </ButtonIcon>
+              <Dictaphone />
+              <ProductSearchImage setIsSearchOpen={setIsSearchOpen} />
               <ButtonIcon onClick={() => setIsSearchOpen(false)}>
                 <HiXMark />
               </ButtonIcon>
@@ -84,10 +88,10 @@ function Header() {
         {!isAuthenticated && (
           <>
             <ButtonIcon onClick={() => navigate("/dang-nhap")}>
-              Đăng nhập
+              <span className="font-bold text-[1.7rem]">Đăng nhập</span>
             </ButtonIcon>
             <ButtonIcon onClick={() => navigate("/dang-ky")}>
-              Đăng ký
+              <span className="font-bold text-[1.7rem]">Đăng ký</span>
             </ButtonIcon>
           </>
         )}
