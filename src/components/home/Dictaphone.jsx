@@ -66,6 +66,7 @@ const Dictaphone = () => {
       });
 
       setSearchQuery(transcript);
+      searchParams.delete("imageUrl");
       searchParams.set("s", transcript);
       setSearchParams(searchParams);
       navigate(`/tim-kiem/?${searchParams.toString()}`);

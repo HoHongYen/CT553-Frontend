@@ -29,7 +29,9 @@ export async function searchByImageUrl(imageUrl) {
         console.log("imageUrl", imageUrl);
         return { metadata: { products: [] } };
     }
-    return (await api.get("/search/image", { params: { imageUrl } })).data;
+    const res = (await api.get("/search/image", { params: { imageUrl } })).data;
+    console.log("searchByImageUrl API res", res);
+    return res;
 }
 
 export async function getOneBySlug(slug) {

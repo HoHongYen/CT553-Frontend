@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HiOutlineCamera, HiOutlineCloudArrowUp } from "react-icons/hi2";
 import ButtonIcon from "../ui/ButtonIcon";
 import Modal from "../ui/Modal";
@@ -6,17 +6,14 @@ import Heading from "../ui/Heading";
 import Input from "../ui/Input";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { destroyImageInDisk, uploadImageToDisk } from "@/services/apiUpload";
-import { set } from "date-fns";
 import Button from "../ui/Button";
 
 function ProductSearchImage({ setIsSearchOpen }) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [imageUrl, setImageUrl] = useState("");
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
-
   const [inputImageUrl, setInputImageUrl] = useState("");
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
   async function handleUploadImageToSearch(e) {
     const file = e.target.files[0];
@@ -26,52 +23,39 @@ function ProductSearchImage({ setIsSearchOpen }) {
     try {
       const res = await uploadImageToDisk(formData);
       console.log("res", res);
-      const imageUrlRes = `${import.meta.env.VITE_API_BASE_URL}/${
+      const imageUrl = `${import.meta.env.VITE_API_BASE_URL}/${
         res.metadata.path
       }`;
-      //   setImageUrl(URL.createObjectURL(file));
-      setUploadedImageUrl(imageUrlRes);
-      console.log("imageUrl", imageUrl);
-      console.log("uploadedImageUrl", uploadedImageUrl);
-      // router.push({ path: "/tim-kiem", query: { imageUrl } });
+      setUploadedImageUrl(imageUrl);
+      setInputImageUrl(URL.createObjectURL(file));
     } catch (error) {
       console.log(error);
     }
   }
 
   async function handleDestroyUpdatedImage() {
+    setInputImageUrl("");
     console.log("uploadedImageUrl", uploadedImageUrl);
-    // get from index 2
     let pop1 = uploadedImageUrl.split("/").pop().split("\\").pop();
     console.log("uploadedImageUrl.split", pop1);
     await destroyImageInDisk(pop1);
     setUploadedImageUrl("");
+    document.getElementById("image-file").value = null;
   }
 
-  useEffect(() => {
-    if (uploadedImageUrl !== "") {
-      console.log("uploadedImageUrl in useEffect", uploadedImageUrl);
-      setImageUrl(uploadedImageUrl);
-      setInputImageUrl("");
-    }
-  }, [uploadedImageUrl]);
+  function handleSearchByImageUrl() {
+    const imageUrl = uploadedImageUrl ? uploadedImageUrl : inputImageUrl;
 
-  useEffect(() => {
-    if (inputImageUrl !== "") {
-      setImageUrl(inputImageUrl);
-    }
-  }, [inputImageUrl]);
+    console.log("imageUrl", imageUrl);
 
-  useEffect(() => {
-    if (imageUrl !== "") {
-      console.log("imageUrl", imageUrl);
-      setSearchQuery(imageUrl);
-      searchParams.delete("s");
-      searchParams.set("imageUrl", imageUrl);
-      setSearchParams(searchParams);
-      navigate(`/tim-kiem/?${searchParams.toString()}`);
-    }
-  }, [imageUrl]);
+    setSearchQuery(imageUrl);
+    searchParams.delete("s");
+    searchParams.set("imageUrl", imageUrl);
+    setSearchParams(searchParams);
+    navigate(`/tim-kiem/?${searchParams.toString()}`);
+    setIsSearchOpen(false);
+    setInputImageUrl("");
+  }
 
   return (
     <Modal>
@@ -81,15 +65,17 @@ function ProductSearchImage({ setIsSearchOpen }) {
         </ButtonIcon>
       </Modal.Open>
       <Modal.Window name="customImage">
-        <div className="h-[60vh] w-[40vw] flex flex-col gap-12">
+        <div className="min-h-[50vh] w-[40vw] flex flex-col gap-12">
           <Heading as="h2" className="flex justify-center">
             Tìm kiếm sản phẩm bằng hình ảnh
           </Heading>
           <div className="flex flex-col gap-8">
-            <div className="flex gap-8 max-h-[35vh] max-w-[60vw]">
+            <div className="flex gap-8 h-[35vh] min-w-[40vw] w-[40vw] max-w-[40vw]">
               <div className="overflow-hidden border-2 border-dashed border-[var(--color-grey-300)] ">
                 <img
-                  src={imageUrl !== "" ? imageUrl : "/default-image.png"}
+                  src={
+                    inputImageUrl !== "" ? inputImageUrl : "/default-image.png"
+                  }
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -98,16 +84,21 @@ function ProductSearchImage({ setIsSearchOpen }) {
                   <HiOutlineCloudArrowUp />
                   <p>Tải lên ảnh cần tìm</p>
                 </div>
-                <input type="file" onChange={handleUploadImageToSearch} />
-                <Button
-                  onClick={handleDestroyUpdatedImage}
-                  className="mt-5 w-[50%]"
-                >
-                  Xóa ảnh tải lên
-                </Button>
+                <input
+                  type="file"
+                  id="image-file"
+                  onChange={handleUploadImageToSearch}
+                />
+                {uploadedImageUrl && (
+                  <div>
+                    <Button onClick={handleDestroyUpdatedImage}>
+                      Xóa ảnh tải lên
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
-            <div className=" flex flex-col gap-5">
+            <div className="flex flex-col gap-5">
               <div className="flex gap-4 items-center">
                 <p>Hoặc thêm link ảnh</p>
               </div>
@@ -116,6 +107,9 @@ function ProductSearchImage({ setIsSearchOpen }) {
                 onChange={(e) => setInputImageUrl(e.target.value)}
                 className="w-full"
               />
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={handleSearchByImageUrl}>Tìm kiếm</Button>
             </div>
           </div>
         </div>

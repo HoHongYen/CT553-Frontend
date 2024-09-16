@@ -12,7 +12,9 @@ import ProductCard from "@/components/products/ProductCard";
 function ProductSearch() {
   const [breadcrumb, setBreadcrumb] = useState([{ name: "" }]);
   const [searchParams] = useSearchParams();
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
+
+  const [isImageSearch, setIsImageSearch] = useState(false);
 
   const { fullTextSearchResult, semanticSearchResult } =
     useSearchProductByText();
@@ -23,49 +25,53 @@ function ProductSearch() {
     setBreadcrumb([{ name: "Tìm kiếm" }]);
   }, []);
 
-  // useEffect(() => {
-  //   if (searchParams.get("s")) {
-  //     console.log("fullTextSearchResult", fullTextSearchResult);
-  //     console.log("semanticSearchResult", semanticSearchResult);
-  //     setProducts([...fullTextSearchResult, ...semanticSearchResult]);
-  //   }
-  //   if (searchParams.get("imageUrl")) {
-  //     console.log("imageSearchResult", imageSearchResult);
-  //     setProducts(imageSearchResult);
-  //   }
-  // }, [fullTextSearchResult, semanticSearchResult, imageSearchResult]);
-
   useEffect(() => {
-    if (searchParams.get("s") !== "") {
-      console.log("fullTextSearchResult", fullTextSearchResult);
-      console.log("semanticSearchResult", semanticSearchResult);
+    const isImageSearching = searchParams.get("imageUrl") !== null;
+
+    if (isImageSearching) {
+      setProducts(imageSearchResult);
+      console.log("products as imageSearchResult", products);
+    } else {
       setProducts([...fullTextSearchResult, ...semanticSearchResult]);
     }
-  }, [fullTextSearchResult, semanticSearchResult]);
+
+    setIsImageSearch(isImageSearching);
+  }, [imageSearchResult]);
 
   if (!products) {
     return <Skeleton active />;
-  }
-
-  if (products.length === 0) {
-    return (
-      <div className="flex justify-center items-center h-96 ">
-        <Heading as="h2">Không tìm thấy sản phẩm nào!</Heading>
-      </div>
-    );
   }
 
   return (
     <>
       <BreadCrumb breadcrumb={breadcrumb} />
       <div className="flex justify-between items-center">
-        <Heading as="h1">
-          Hiển thị tất cả kết quả tìm kiếm cho{" "}
-          <span className="italic">"{searchParams.get("s")}"</span>
-        </Heading>
+        {!isImageSearch ? (
+          <Heading as="h1">
+            Hiển thị tất cả kết quả tìm kiếm cho{" "}
+            <span className="italic">"{searchParams.get("s")}"</span>
+          </Heading>
+        ) : (
+          <Heading as="h1">
+            Hiển thị tất cả kết quả tìm kiếm cho hình ảnh:
+            <div className="mt-4 flex gap-8 h-[25vh] min-w-[30vw] w-[30vw] max-w-[40vw]">
+              <div className="overflow-hidden border-2 border-dashed border-[var(--color-grey-300)] ">
+                <img
+                  src={searchParams.get("imageUrl")}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+          </Heading>
+        )}
         <p>{products.length} kết quả được tìm thấy</p>
       </div>
       <Row>
+        {products.length === 0 && (
+          <div className="flex justify-center items-center h-96 ">
+            <Heading as="h2">Không tìm thấy sản phẩm nào!</Heading>
+          </div>
+        )}
         <div className="flex flex-col gap-7">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 gap-y-10 h-full">
             {products?.map((product) => (

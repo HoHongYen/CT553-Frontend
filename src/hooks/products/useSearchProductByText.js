@@ -6,7 +6,9 @@ export function useSearchProductByText() {
     const [searchParams] = useSearchParams();
 
     // SEARCH
-    const searchText = searchParams.get("s");
+    const searchText = searchParams.get("s") || "";
+
+    console.log("searchText in useSearchProductByText", searchText);
 
     // QUERY
     const {
@@ -15,6 +17,7 @@ export function useSearchProductByText() {
     } = useQuery({
         queryKey: ["productSearch", searchText],
         queryFn: () => searchApi(searchText),
+        enabled: searchText !== "",
     });
 
     return { isLoading, fullTextSearchResult, semanticSearchResult };
