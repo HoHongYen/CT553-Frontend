@@ -36,114 +36,132 @@ function App() {
                   <Route index element={<Navigate replace to="trang-chu" />} />
                   <Route
                     path="trang-chu"
-                    element={<SuspenseWrapper path="./pages/Home" />}
+                    element={<SuspenseWrapper path="Home" />}
                   />
                   <Route
                     path="/:mainCategory"
-                    element={<SuspenseWrapper path="./pages/MainCategory" />}
+                    element={<SuspenseWrapper path="MainCategory" />}
                   />
                   <Route
                     path="/:mainCategory/:subCategory"
-                    element={<SuspenseWrapper path="./pages/Products" />}
+                    element={<SuspenseWrapper path="Products" />}
                   />
                   <Route
                     path="san-pham/:slug"
-                    element={<SuspenseWrapper path="./pages/ProductDetail" />}
+                    element={<SuspenseWrapper path="ProductDetail" />}
                   />
                   <Route
                     path="tim-kiem"
-                    element={<SuspenseWrapper path="./pages/ProductSearch" />}
+                    element={<SuspenseWrapper path="ProductSearch" />}
                   />
                   <Route element={<PolicyLayout />}>
                     <Route
                       path="chinh-sach-thanh-toan"
                       element={
-                        <SuspenseWrapper path="./pages/policy/PaymentPolicy" />
+                        <SuspenseWrapper
+                          level1={"policy"}
+                          path="PaymentPolicy"
+                        />
                       }
                     />
                     <Route
                       path="chinh-sach-giao-hang"
                       element={
-                        <SuspenseWrapper path="./pages/policy/DeliveryPolicy" />
+                        <SuspenseWrapper
+                          level1="policy"
+                          path="DeliveryPolicy"
+                        />
                       }
                     />
                     <Route
                       path="chinh-sach-kiem-hang"
                       element={
-                        <SuspenseWrapper path="./pages/policy/CheckProductPolicy" />
+                        <SuspenseWrapper
+                          level1="policy"
+                          path="CheckProductPolicy"
+                        />
                       }
                     />
                     <Route
                       path="chinh-sach-doi-tra"
                       element={
-                        <SuspenseWrapper path="./pages/policy/ReturnPolicy" />
+                        <SuspenseWrapper level1="policy" path="ReturnPolicy" />
                       }
                     />
                     <Route
                       path="chinh-sach-bao-hanh"
                       element={
-                        <SuspenseWrapper path="./pages/policy/WarrantyPolicy" />
+                        <SuspenseWrapper
+                          level1="policy"
+                          path="WarrantyPolicy"
+                        />
                       }
                     />
                     <Route
                       path="chinh-sach-bao-mat"
                       element={
-                        <SuspenseWrapper path="./pages/policy/SecurityPolicy" />
+                        <SuspenseWrapper
+                          level1="policy"
+                          path="SecurityPolicy"
+                        />
                       }
                     />
                   </Route>
                   <Route
                     path="lien-he"
-                    element={<SuspenseWrapper path="./pages/Contact" />}
+                    element={<SuspenseWrapper path="Contact" />}
                   />
                   <Route
                     path="gio-hang"
-                    element={<SuspenseWrapper path="./pages/Cart" />}
+                    element={<SuspenseWrapper path="Cart" />}
                   />
                   <Route element={<ProtectedRoute />}>
                     <Route
                       path="tai-khoan/thong-tin-ca-nhan"
                       element={
-                        <SuspenseWrapper path="./pages/profile/UserInfo" />
+                        <SuspenseWrapper level1="profile" path="UserInfo" />
                       }
                     />
                     <Route
                       path="tai-khoan/thay-doi-mat-khau"
                       element={
-                        <SuspenseWrapper path="./pages/profile/ChangePassword" />
+                        <SuspenseWrapper
+                          level1="profile"
+                          path="ChangePassword"
+                        />
                       }
                     />
                     <Route
                       path="tai-khoan/quan-ly-don-hang"
                       element={
-                        <SuspenseWrapper path="./pages/profile/OrderList" />
+                        <SuspenseWrapper level1="profile" path="OrderList" />
                       }
                     />
                     <Route
                       path="tai-khoan/so-dia-chi"
                       element={
-                        <SuspenseWrapper path="./pages/profile/AddressList" />
+                        <SuspenseWrapper level1="profile" path="AddressList" />
                       }
                     />
                     <Route
                       path="tai-khoan/kho-voucher"
                       element={
-                        <SuspenseWrapper path="./pages/profile/VoucherList" />
+                        <SuspenseWrapper level1="profile" path="VoucherList" />
                       }
                     />
                   </Route>
                 </Route>
                 <Route
                   path="dang-nhap"
-                  element={<SuspenseWrapper path="./pages/Login" />}
+                  element={<SuspenseWrapper path="Login" />}
                 />
                 <Route
                   path="dang-ky"
-                  element={<SuspenseWrapper path="./pages/Register" />}
+                  element={<SuspenseWrapper path="Register" />}
                 />
                 <Route
                   path="*"
-                  element={<SuspenseWrapper path="./pages/PageNotFound" />}
+                  element={<SuspenseWrapper path="PageNotFound" />}
                 />
               </Routes>
             </BrowserRouter>
