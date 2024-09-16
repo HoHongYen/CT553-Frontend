@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useSearchProductByText } from "@/hooks/products/useSearchProductByText";
 import { useSearchProductByImage } from "@/hooks/products/useSearchProductByImage";
@@ -45,27 +45,33 @@ function ProductSearch() {
   return (
     <>
       <BreadCrumb breadcrumb={breadcrumb} />
-      <div className="flex justify-between items-center">
-        {!isImageSearch ? (
+
+      {!isImageSearch ? (
+        <div className="flex justify-between items-center">
           <Heading as="h1">
-            Hiển thị tất cả kết quả tìm kiếm cho{" "}
+            <div>Hiển thị tất cả kết quả tìm kiếm cho </div>
             <span className="italic">"{searchParams.get("s")}"</span>
           </Heading>
-        ) : (
-          <Heading as="h1">
-            Hiển thị tất cả kết quả tìm kiếm cho hình ảnh:
-            <div className="mt-4 flex gap-8 h-[25vh] min-w-[30vw] w-[30vw] max-w-[40vw]">
-              <div className="overflow-hidden border-2 border-dashed border-[var(--color-grey-300)] ">
-                <img
-                  src={searchParams.get("imageUrl")}
-                  className="w-full h-full object-contain"
-                />
-              </div>
+          <p>{products.length} kết quả được tìm thấy</p>
+        </div>
+      ) : (
+        <>
+          <div className="flex justify-between items-center">
+            <Heading as="h1">
+              <div>Hiển thị tất cả kết quả tìm kiếm cho hình ảnh:</div>
+            </Heading>
+            <p>{products.length} kết quả được tìm thấy</p>
+          </div>
+          <div className="flex gap-8 h-[25vh] min-w-[30vw] w-[30vw] max-w-[40vw]">
+            <div className="overflow-hidden border-2 border-dashed border-[var(--color-grey-300)] ">
+              <img
+                src={searchParams.get("imageUrl")}
+                className="w-full h-full object-contain"
+              />
             </div>
-          </Heading>
-        )}
-        <p>{products.length} kết quả được tìm thấy</p>
-      </div>
+          </div>
+        </>
+      )}
       <Row>
         {products.length === 0 && (
           <div className="flex justify-center items-center h-96 ">
