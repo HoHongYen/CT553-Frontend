@@ -3,15 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/utils/helpers";
 import Swal from "sweetalert2";
 
-import { ACTIONS, useCart } from "@/context/CartContext";
+import { useCart } from "@/context/CartContext";
 
-import { HiOutlineTrash } from "react-icons/hi2";
+import { HiOutlineShoppingCart, HiOutlineTrash } from "react-icons/hi2";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Button from "@/components/ui/Button";
 import ButtonIcon from "@/components/ui/ButtonIcon";
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import Select from "@/components/ui/Select";
+import Input from "@/components/ui/Input";
 
 function Cart() {
   const navigate = useNavigate();
@@ -141,26 +142,38 @@ function Cart() {
                       </div>
                     </div>
 
-                    <div className="flex">
-                      <span className="font-semibold mr-3">Số lượng:</span>
-                      <div className="flex items-center gap-5 bottom-20 right-20">
-                        <Button
-                          onClick={() => decreaseQuantity(cartItem.variant.id)}
-                          variation="secondary"
-                          size="small"
-                        >
-                          -
-                        </Button>
-                        <span className="leading-[18px]">
-                          {cartItem.quantity}
-                        </span>
-                        <Button
-                          onClick={() => increaseQuantity(cartItem.variant.id)}
-                          variation="secondary"
-                          size="small"
-                        >
-                          +
-                        </Button>
+                    <div className="mt-3">
+                      <p className="font-semibold">Số lượng:</p>
+                      <div className="flex gap-4 mt-3">
+                        <div className="flex gap-[0.5px]">
+                          <Button
+                            onClick={() =>
+                              decreaseQuantity(cartItem.variant.id)
+                            }
+                            variation="secondary"
+                            size="small"
+                            radius="radius-none"
+                          >
+                            -
+                          </Button>
+                          <Input
+                            className="w-[70px]"
+                            radius="radius-none"
+                            type="number"
+                            value={cartItem.quantity}
+                            // onChange={(e) => setQuantity(e.target.value)}
+                          />
+                          <Button
+                            onClick={() =>
+                              increaseQuantity(cartItem.variant.id)
+                            }
+                            variation="secondary"
+                            size="small"
+                            radius="radius-none"
+                          >
+                            +
+                          </Button>
+                        </div>
                       </div>
                     </div>
 
@@ -224,7 +237,7 @@ function Cart() {
                 size="large"
                 className="w-full"
               >
-                Tiếp tục xem sản phẩm{" "}
+                Tiếp tục xem sản phẩm &rarr;
               </Button>
             </div>
           </div>

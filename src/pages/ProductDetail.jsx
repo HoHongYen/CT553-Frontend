@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { formatCurrency } from "@/utils/helpers";
 
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 import { useProduct } from "@/hooks/products/useProduct";
@@ -20,6 +19,8 @@ import ImageMagnifier from "@/components/ui/ImageMagnifier";
 import ViewCustomImage from "@/components/products/ViewCustomImage";
 import Select from "@/components/ui/Select";
 import toast from "react-hot-toast";
+import Discount from "@/components/products/Discount";
+import { Link } from "react-router-dom";
 
 function ProductDetail() {
   const { product, isLoading } = useProduct();
@@ -55,7 +56,9 @@ function ProductDetail() {
 
     async function getBreadcrumb() {
       if (product) {
-        const breadcrumb = await getBreadcrumbFromCategory(product.categoryId);
+        const breadcrumb = await getBreadcrumbFromCategory(
+          product.categories[0].category.id
+        );
         setBreadcrumb([...breadcrumb.metadata, { name: product.name }]);
       }
     }
@@ -142,14 +145,26 @@ function ProductDetail() {
             </div>
           </div>
           <div className="flex flex-col gap-5 ">
-            <div className="pb-5 border-b border-black flex flex-col gap-5">
-              <Heading as="h1" className="capitalize mt-3">
-                {product.name}
-              </Heading>
+            <div className="pb-5 border-b border-[var(---color-grey-900)] flex flex-col gap-5">
+              <div className="relative">
+                <Heading as="h1" className="capitalize mt-3">
+                  {product.name}
+                </Heading>
+                {product.productDiscount.at(0)?.discountType ===
+                  "percentage" && (
+                  <div className="absolute -right-6 -top-6 p-2 rounded-[50%] text-[var(--color-grey-0)] bg-[var(--color-red-700)]">
+                    -{product.productDiscount?.at(0).discountValue}%
+                  </div>
+                )}
+              </div>
 
               <div className="flex gap-5 divide-gray-400 divide-x-[1px]">
                 <p>
                   Mã sản phẩm: <span className="font-bold">{product.id}</span>
+                </p>
+                <p className="pl-5">
+                  Còn lại:{" "}
+                  <span className="font-bold">{selectedVariant?.quantity}</span>
                 </p>
                 <p className="pl-5">
                   Đã bán:{" "}
@@ -159,22 +174,13 @@ function ProductDetail() {
             </div>
 
             <p
-              className="py-5 text-[var(--color-grey-500)]"
+              className="pt-5 text-[var(--color-grey-500)]"
               dangerouslySetInnerHTML={{
                 __html: product.overview,
               }}
             ></p>
 
-            <div className="flex gap-5">
-              <p className="text-4xl font-bold text-[var(--color-brand-700)]">
-                {formatCurrency(selectedVariant?.price)}{" "}
-              </p>
-              {/* {product.isDiscount && (
-                <p className="text-[var(--color-grey-400)] line-through">
-                  {formatCurrency(2000000)}{" "}
-                </p>
-              )} */}
-            </div>
+            <Discount product={product} selectedVariant={selectedVariant} />
 
             <div className="mt-3">
               <p>
@@ -202,12 +208,31 @@ function ProductDetail() {
             <div className="mt-3">
               <p className="font-bold">Số lượng:</p>
               <div className="flex gap-4 mt-3">
-                <Input
-                  className="w-[80px]"
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                />
+                <div className="flex gap-[0.5px]">
+                  <Button
+                    onClick={() => setQuantity((q) => q - 1)}
+                    variation="secondary"
+                    size="small"
+                    radius="radius-none"
+                  >
+                    -
+                  </Button>
+                  <Input
+                    className="w-[70px]"
+                    radius="radius-none"
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                  <Button
+                    onClick={() => setQuantity((q) => q + 1)}
+                    variation="secondary"
+                    size="small"
+                    radius="radius-none"
+                  >
+                    +
+                  </Button>
+                </div>
                 <Button onClick={handleAddToCart} variation="success">
                   <div className="flex justify-center items-center gap-4">
                     <HiOutlineShoppingCart />
@@ -221,6 +246,22 @@ function ProductDetail() {
                 MUA NGAY
               </div>
             </Button>
+
+            <div className="mt-3">
+              <p>
+                <span className="font-bold">Danh mục:</span>{" "}
+                {product.categories.map((category, index) => (
+                  <Link
+                    to={`/${category.category.parent.slug}/${category.category.slug}`}
+                    key={category.category.id}
+                    className="ml-2 italic"
+                  >
+                    {category.category.name}
+                    {index !== product.categories.length - 1 && ","}
+                  </Link>
+                ))}
+              </p>
+            </div>
           </div>
         </div>
         <ProductDescription product={product} />
