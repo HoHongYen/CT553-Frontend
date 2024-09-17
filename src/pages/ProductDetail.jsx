@@ -5,7 +5,7 @@ import { useProduct } from "@/hooks/products/useProduct";
 import { ACTIONS, useCart } from "@/context/CartContext";
 
 import { HiOutlineShoppingCart } from "react-icons/hi2";
-import { Carousel as AntdCarousel } from "antd";
+import { Carousel as AntdCarousel, Badge } from "antd";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -123,7 +123,7 @@ function ProductDetail() {
                 autoplay
                 ref={mediaRef}
               >
-                {allImages.map((image, index) => {
+                {allImages.map((image) => {
                   return (
                     <ImageMagnifier
                       src={image.path}
@@ -146,15 +146,18 @@ function ProductDetail() {
           <div className="flex flex-col gap-5 ">
             <div className="pb-5 border-b border-[var(---color-grey-900)] flex flex-col gap-5">
               <div className="relative">
+                {product.productDiscount.at(0)?.discountType ===
+                  "percentage" && (
+                  <div className="absolute -right-5 -top-8">
+                    <Badge.Ribbon
+                      text={`-${product.productDiscount?.at(0).discountValue}%`}
+                      color="red"
+                    />
+                  </div>
+                )}
                 <Heading as="h1" className="capitalize mt-3">
                   {product.name}
                 </Heading>
-                {product.productDiscount.at(0)?.discountType ===
-                  "percentage" && (
-                  <div className="absolute -right-6 -top-6 p-2 rounded-[50%] text-[var(--color-grey-0)] bg-[var(--color-red-700)]">
-                    -{product.productDiscount?.at(0).discountValue}%
-                  </div>
-                )}
               </div>
 
               <div className="flex gap-5 divide-gray-400 divide-x-[1px]">

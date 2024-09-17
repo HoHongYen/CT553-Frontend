@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/hooks/profile/useUser";
+import { useCart } from "@/context/CartContext";
 
+import { Badge } from "antd";
 import styled from "styled-components";
 import Logout from "@/components/auth/Logout";
 import UserAvatar from "@/components/profile/UserAvatar";
@@ -19,7 +21,6 @@ import {
 // import SearchBar from "./SearchBar-v1";
 import SearchBar from "./SearchBar";
 import Dictaphone from "../home/Dictaphone";
-
 import ProductSearchImage from "./ProductSearchImage";
 
 const StyledHeader = styled.header`
@@ -45,6 +46,7 @@ function Header() {
   const { isAuthenticated } = useUser();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <StyledHeader>
@@ -96,7 +98,9 @@ function Header() {
           </>
         )}
         <ButtonIcon onClick={() => navigate("/gio-hang")}>
-          <HiOutlineShoppingCart />
+          <Badge size="small" count={totalItems}>
+            <HiOutlineShoppingCart />
+          </Badge>
         </ButtonIcon>
         <StyledHeaderMenu>
           {isAuthenticated && (
@@ -104,7 +108,7 @@ function Header() {
               <HiOutlineUser />
             </ButtonIcon>
           )}
-          <DarkModeToggle />
+          <DarkModeToggle />  
           {isAuthenticated && <Logout />}
         </StyledHeaderMenu>
       </div>

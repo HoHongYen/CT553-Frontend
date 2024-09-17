@@ -3,8 +3,6 @@ import { useOutsideClick } from "@/hooks/common/useOutsideClick";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
-import { useAutoplay } from "@/hooks/common/useAutoplay";
-import { set } from "date-fns";
 
 const StyledModal = styled.div`
   position: fixed;
