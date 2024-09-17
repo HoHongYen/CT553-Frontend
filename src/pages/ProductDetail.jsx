@@ -100,7 +100,7 @@ function ProductDetail() {
                 );
               })}
             </div>
-            <div className="relative w-[90%] p-10 pt-3">
+            <div className="relative w-[90%] p-10 pt-0">
               <div
                 onClick={() => {
                   if (isFirstTime) {
@@ -126,7 +126,6 @@ function ProductDetail() {
                 {allImages.map((image, index) => {
                   return (
                     <ImageMagnifier
-                      className={"w-full h-full"}
                       src={image.path}
                       key={image.path}
                       magnifierHeight={200}

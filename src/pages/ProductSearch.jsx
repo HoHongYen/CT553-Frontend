@@ -49,10 +49,12 @@ function ProductSearch() {
       {!isImageSearch ? (
         <div className="flex justify-between items-center">
           <Heading as="h1">
-            <div>Hiển thị tất cả kết quả tìm kiếm cho </div>
+            Hiển thị tất cả kết quả tìm kiếm cho {""}
             <span className="italic">"{searchParams.get("s")}"</span>
           </Heading>
-          <p>{products.length} kết quả được tìm thấy</p>
+          <p className="font-semibold italic">
+            {products.length} kết quả được tìm thấy
+          </p>
         </div>
       ) : (
         <>
@@ -60,7 +62,9 @@ function ProductSearch() {
             <Heading as="h1">
               <div>Hiển thị tất cả kết quả tìm kiếm cho hình ảnh:</div>
             </Heading>
-            <p>{products.length} kết quả được tìm thấy</p>
+            <p className="font-semibold italic">
+              {products.length} kết quả được tìm thấy
+            </p>
           </div>
           <div className="flex gap-8 h-[25vh] min-w-[30vw] w-[30vw] max-w-[40vw]">
             <div className="overflow-hidden border-2 border-dashed border-[var(--color-grey-300)] ">

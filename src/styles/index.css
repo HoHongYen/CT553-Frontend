@@ -31,3 +31,10 @@
 }
 /* carousel button in homepage end */
 
+/* slick carousel in product detail page */
+.slick-track {
+  max-height: 72vh;
+  display: flex !important;
+  justify-content: center;
+  align-items: center !important;
+}
