@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 import { useCart } from "@/context/CartContext";
 
-import { HiOutlineShoppingCart, HiOutlineTrash } from "react-icons/hi2";
+import { HiOutlineTrash } from "react-icons/hi2";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Button from "@/components/ui/Button";
 import ButtonIcon from "@/components/ui/ButtonIcon";
@@ -91,6 +91,7 @@ function Cart() {
       </div>
       <Row>
         <div className="grid md:grid-cols-3 gap-5">
+          {/* order items begin */}
           <div className="md:col-span-2 space-y-4">
             {cartItems.map((cartItem, index) => (
               <div
@@ -110,7 +111,10 @@ function Cart() {
                   <div className="flex flex-col gap-2 w-full">
                     <div className="flex justify-between items-center">
                       <Link to={`/san-pham/${cartItem.product.slug}`}>
-                        <Heading as="h2" className="capitalize font-bold">
+                        <Heading
+                          as="h2"
+                          className="capitalize font-bold hover:text-[var(--color-brand-700)]"
+                        >
                           {cartItem.product.name}
                         </Heading>
                       </Link>
@@ -199,6 +203,7 @@ function Cart() {
               </div>
             ))}
           </div>
+          {/* order items end */}
 
           {/* order summary begin */}
           <div className="bg-[var(--color-grey-0)] rounded-md px-6 py-6 h-max shadow-[0_2px_12px_-3px_var(--color-blue-700)]">

@@ -121,7 +121,7 @@ const Dictaphone = () => {
           </div>
         )}
       </div>
-      {transcript && <button onClick={handleReset}>Ghi lại</button>}
+      {/* {transcript && <button onClick={handleReset}>Ghi lại</button>} */}
     </div>
   );
 };

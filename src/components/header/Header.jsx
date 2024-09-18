@@ -22,6 +22,7 @@ import {
 import SearchBar from "./SearchBar";
 import Dictaphone from "../home/Dictaphone";
 import ProductSearchImage from "./ProductSearchImage";
+import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);
@@ -47,6 +48,7 @@ function Header() {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { totalItems } = useCart();
+  const { openCartDrawer } = useShowCartDrawer();
 
   return (
     <StyledHeader>
@@ -58,6 +60,7 @@ function Header() {
             <ButtonIcon onClick={() => setIsSearchOpen(true)}>
               <HiMagnifyingGlass />
             </ButtonIcon>
+            <ProductSearchImage setIsSearchOpen={setIsSearchOpen} />
             <Dictaphone />
           </div>
         )}
@@ -97,7 +100,10 @@ function Header() {
             </ButtonIcon>
           </>
         )}
-        <ButtonIcon onClick={() => navigate("/gio-hang")}>
+        <ButtonIcon
+          onClick={() => navigate("/gio-hang")}
+          onMouseOver={openCartDrawer}
+        >
           <Badge size="small" count={totalItems}>
             <HiOutlineShoppingCart />
           </Badge>
@@ -108,7 +114,7 @@ function Header() {
               <HiOutlineUser />
             </ButtonIcon>
           )}
-          <DarkModeToggle />  
+          <DarkModeToggle />
           {isAuthenticated && <Logout />}
         </StyledHeaderMenu>
       </div>

@@ -143,7 +143,7 @@ function MainNav() {
         <li>
           <StyledNavLink to="/">
             <HiOutlineHome />
-            <span className="font-bold text-[1.7rem]">Trang chủ</span>
+            <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Trang chủ</span>
           </StyledNavLink>
         </li>
         <li>
@@ -157,7 +157,7 @@ function MainNav() {
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineCalendarDays />
-                <span className="font-bold text-[1.7rem]">Sản phẩm</span>
+                <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Sản phẩm</span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>
@@ -166,7 +166,7 @@ function MainNav() {
         <li>
           <StyledNavLink to="/khuyen-mai">
             <HiOutlineGift />
-            <span className="font-bold text-[1.7rem]">Khuyến mại</span>
+            <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Khuyến mại</span>
           </StyledNavLink>
         </li>
         <li>
@@ -180,7 +180,7 @@ function MainNav() {
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineClipboardDocumentList />
-                <span className="font-bold text-[1.7rem]">Chính sách</span>
+                <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Chính sách</span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>

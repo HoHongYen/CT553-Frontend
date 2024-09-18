@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 import { useProduct } from "@/hooks/products/useProduct";
 import { ACTIONS, useCart } from "@/context/CartContext";
 
 import { HiOutlineShoppingCart } from "react-icons/hi2";
-import { Carousel as AntdCarousel, Badge } from "antd";
+import { Carousel as AntdCarousel, Badge, Tag } from "antd";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -18,9 +20,10 @@ import ViewScaleImage from "@/components/products/ViewScaleImage";
 import ImageMagnifier from "@/components/ui/ImageMagnifier";
 import ViewCustomImage from "@/components/products/ViewCustomImage";
 import Select from "@/components/ui/Select";
-import toast from "react-hot-toast";
 import Discount from "@/components/products/Discount";
-import { Link } from "react-router-dom";
+import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
+
+const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
 function ProductDetail() {
   const { product, isLoading } = useProduct();
@@ -35,6 +38,7 @@ function ProductDetail() {
   const [allImages, setAllImages] = useState([]);
 
   const { dispatch } = useCart();
+  const { openCartDrawer } = useShowCartDrawer();
 
   const mediaRef = useRef(null);
 
@@ -74,7 +78,13 @@ function ProductDetail() {
         product: product,
       },
     });
-    toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+
+    toast.success("Đã thêm sản phẩm vào giỏ hàng!", {
+      duration: 900,
+    });
+    setTimeout(() => {
+      openCartDrawer();
+    }, 1000);
   };
 
   if (isLoading) return <Spinner />;
@@ -120,7 +130,7 @@ function ProductDetail() {
                   setCurrentImage(allImages[current]);
                 }}
                 arrows
-                autoplay
+                // autoplay
                 ref={mediaRef}
               >
                 {allImages.map((image) => {
@@ -249,20 +259,27 @@ function ProductDetail() {
               </div>
             </Button>
 
-            <div className="mt-3">
-              <p>
-                <span className="font-bold">Danh mục:</span>{" "}
+            <div className="items-center mt-2">
+              <span className="font-bold mr-2">Danh mục:</span>{" "}
+              <span className="leading-[40px]">
                 {product.categories.map((category, index) => (
                   <Link
                     to={`/${category.category.parent.slug}/${category.category.slug}`}
                     key={category.category.id}
-                    className="ml-2 italic"
                   >
-                    {category.category.name}
-                    {index !== product.categories.length - 1 && ","}
+                    <Tag
+                      style={{
+                        fontSize: "1.4rem",
+                        padding: 4,
+                        fontStyle: "italic",
+                      }}
+                      color={tagColors[index]}
+                    >
+                      {category.category.name}
+                    </Tag>
                   </Link>
                 ))}
-              </p>
+              </span>
             </div>
           </div>
         </div>

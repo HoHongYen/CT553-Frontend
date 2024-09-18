@@ -4,6 +4,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { useEffect, useRef, useState } from "react";
 import GoTop from "../ui/GoTop";
+import CartDrawer from "../cart/CartDrawer";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -51,6 +52,7 @@ function AppLayout() {
 
   return (
     <StyledAppLayout>
+      <CartDrawer />
       <div ref={refScrollUp}> </div>
       <div className="fixed bottom-24 right-10">
         <GoTop showGoTop={showGoTop} scrollUp={handleScrollUp} />

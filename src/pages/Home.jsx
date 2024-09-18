@@ -5,6 +5,7 @@ import Introduce from "@/components//home/Introduce";
 import HomeProducts from "@/components/home/HomeProducts";
 import CategoryMenu from "@/components/home/CategoryMenu";
 import Heading from "@/components/ui/Heading";
+import Slider from "@/components/home/Slider";
 const breadcrumb = [];
 
 const Slogan = styled.div`
@@ -24,26 +25,41 @@ function Home() {
       </Slogan>
       <Carousel />
       <Introduce />
+
+      {/* <Slider /> */}
+
       <div className="flex flex-col gap-10 mt-10">
-        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
+        <Heading
+          as="h2"
+          className="uppercase flex justify-center font-extrabold"
+        >
           Danh mục tranh
         </Heading>
         <CategoryMenu />
       </div>
       <div className="flex flex-col gap-10 mt-10">
-        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
+        <Heading
+          as="h2"
+          className="uppercase flex justify-center font-extrabold"
+        >
           Sản phẩm mới
         </Heading>
         <HomeProducts />
       </div>
       <div className="flex flex-col gap-10 mt-10">
-        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
+        <Heading
+          as="h2"
+          className="uppercase flex justify-center font-extrabold"
+        >
           Sản phẩm nổi bật
         </Heading>
         <HomeProducts />
       </div>
       <div className="flex flex-col gap-10 mt-10">
-        <Heading as="h2" className="uppercase flex justify-center font-extrabold">
+        <Heading
+          as="h2"
+          className="uppercase flex justify-center font-extrabold"
+        >
           Dành cho bạn
         </Heading>
         <HomeProducts />

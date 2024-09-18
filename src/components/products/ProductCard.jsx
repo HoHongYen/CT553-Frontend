@@ -16,7 +16,7 @@ function ProductCard({ product }) {
           // className="p-3 transition ease-out hover:-translate-y-1 hover:scale-105 duration-700"
         />
       </div>
-      <p className="capitalize mt-3">{product.name}</p>
+      <p className="capitalize font-semibold mt-3 hover:text-[var(--color-brand-700)]">{product.name}</p>
       <div>
         {/* {product.isDiscount && (
           <p className="text-[var(--color-grey-400)] line-through">
