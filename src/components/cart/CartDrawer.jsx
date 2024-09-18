@@ -175,7 +175,10 @@ function CartDrawer() {
                             <div className="flex gap-[0.5px]">
                               <Button
                                 onClick={() =>
-                                  decreaseQuantity(cartItem.variant.id)
+                                  dispatch({
+                                    type: "DECREASE_QUANTITY",
+                                    payload: { variantId: cartItem.variant.id },
+                                  })
                                 }
                                 variation="secondary"
                                 size="small"
@@ -187,12 +190,25 @@ function CartDrawer() {
                                 className="w-[70px]"
                                 radius="radius-none"
                                 type="number"
+                                min={1}
+                                max={cartItem.variant.quantity}
                                 value={cartItem.quantity}
-                                // onChange={(e) => setQuantity(e.target.value)}
+                                onChange={(e) =>
+                                  dispatch({
+                                    type: "UPDATE_QUANTITY",
+                                    payload: {
+                                      variantId: cartItem.variant.id,
+                                      quantity: e.target.value,
+                                    },
+                                  })
+                                }
                               />
                               <Button
                                 onClick={() =>
-                                  increaseQuantity(cartItem.variant.id)
+                                  dispatch({
+                                    type: "INCREASE_QUANTITY",
+                                    payload: { variantId: cartItem.variant.id },
+                                  })
                                 }
                                 variation="secondary"
                                 size="small"

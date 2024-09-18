@@ -13,6 +13,8 @@ export const ACTIONS = {
   SET_CART: "SET_CART",
   ADD_TO_CART: "ADD_TO_CART",
   REMOVE_FROM_CART: "REMOVE_FROM_CART",
+  DECREASE_QUANTITY: "DECREASE_QUANTITY",
+  INCREASE_QUANTITY: "INCREASE_QUANTITY",
   UPDATE_QUANTITY: "UPDATE_QUANTITY",
   CLEAR_CART: "CLEAR_CART",
 };
@@ -21,19 +23,32 @@ function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.SET_CART:
       return { ...state, cartItems: action.payload.cartItems };
+
     case ACTIONS.ADD_TO_CART:
       const existingCartItemIndex = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variant.id
       );
       const updatedCartItems = [...state.cartItems];
       if (existingCartItemIndex !== -1) {
-        updatedCartItems[existingCartItemIndex].quantity += Number(
-          action.payload.quantity
-        );
+        // Check if current quantity + added value is less than variant quantity
+        if (
+          updatedCartItems[existingCartItemIndex].quantity +
+            Number(action.payload.quantity) <=
+          updatedCartItems[existingCartItemIndex].variant.quantity
+        )
+          updatedCartItems[existingCartItemIndex].quantity += Number(
+            action.payload.quantity
+          );
+        // If not, set quantity to variant quantity
+        else {
+          updatedCartItems[existingCartItemIndex].quantity =
+            updatedCartItems[existingCartItemIndex].variant.quantity;
+        }
       } else {
         updatedCartItems.push(action.payload);
       }
       return { ...state, cartItems: updatedCartItems };
+
     case ACTIONS.REMOVE_FROM_CART:
       return {
         ...state,
@@ -41,9 +56,41 @@ function reducer(state, action) {
           (item) => item.variant.id !== action.payload.variantId
         ),
       };
+
+    case ACTIONS.INCREASE_QUANTITY:
+      const existingCartItemIndex = state.cartItems.findIndex(
+        (item) => item.variant.id === action.payload.variantId
+      );
+      const updatedCartItems = [...state.cartItems];
+      if (
+        existingCartItemIndex !== -1 &&
+        updatedCartItems[existingCartItemIndex].quantity <
+          state.cartItems[existingCartItemIndex].variant.quantity
+      ) {
+        updatedCartItems[existingCartItemIndex].quantity += 1;
+      }
+      return { ...state, cartItems: updatedCartItems };
+
+    case ACTIONS.DECREASE_QUANTITY:
+      const existingCartItemIndex = state.cartItems.findIndex(
+        (item) => item.variant.id === action.payload.variantId
+      );
+      const updatedCartItems = [...state.cartItems];
+      if (
+        existingCartItemIndex !== -1 &&
+        updatedCartItems[existingCartItemIndex].quantity > 1
+      ) {
+        updatedCartItems[existingCartItemIndex].quantity -= 1;
+      }
+      return { ...state, cartItems: updatedCartItems };
+
     case ACTIONS.UPDATE_QUANTITY:
       const updatedItems = state.cartItems.map((item) => {
-        if (item.variant.id === action.payload.variantId) {
+        if (
+          item.variant.id === action.payload.variantId &&
+          action.payload.quantity > 0 &&
+          action.payload.quantity <= item.variant.quantity
+        ) {
           return { ...item, quantity: Number(action.payload.quantity) };
         }
         return item;

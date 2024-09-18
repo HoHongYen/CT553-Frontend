@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const ShowCartDrawerContext = createContext();
