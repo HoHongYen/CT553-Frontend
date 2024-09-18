@@ -130,7 +130,7 @@ function ProductDetail() {
                   setCurrentImage(allImages[current]);
                 }}
                 arrows
-                // autoplay
+                autoplay
                 ref={mediaRef}
               >
                 {allImages.map((image) => {
@@ -222,7 +222,11 @@ function ProductDetail() {
               <div className="flex gap-4 mt-3">
                 <div className="flex gap-[0.5px]">
                   <Button
-                    onClick={() => setQuantity((q) => q - 1)}
+                    onClick={() => {
+                      if (quantity > 1) {
+                        setQuantity((q) => q - 1);
+                      }
+                    }}
                     variation="secondary"
                     size="small"
                     radius="radius-none"
@@ -233,11 +237,17 @@ function ProductDetail() {
                     className="w-[70px]"
                     radius="radius-none"
                     type="number"
+                    min={1}
+                    max={selectedVariant?.quantity}
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                   />
                   <Button
-                    onClick={() => setQuantity((q) => q + 1)}
+                    onClick={() => {
+                      if (quantity < selectedVariant?.quantity) {
+                        setQuantity((q) => q + 1);
+                      }
+                    }}
                     variation="secondary"
                     size="small"
                     radius="radius-none"

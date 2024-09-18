@@ -32,7 +32,10 @@
 /* carousel button in homepage end */
 
 /* slider in product detail page */
+
 .slick-track {
+  display: flex !important;
+  gap: 1rem !important;
   max-height: 72vh;
   display: flex !important;
   justify-content: center !important;
