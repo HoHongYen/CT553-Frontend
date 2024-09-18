@@ -9,7 +9,7 @@ function BreadCrumb({ breadcrumb }) {
     if (currentItemIndex === 1)
       return `/${breadcrumb[currentItemIndex - 1]?.slug}/${
         breadcrumb[currentItemIndex]?.slug
-      }/tat-ca`;
+      }`;
     let path = "";
     while (currentItemIndex >= 0) {
       path = `/${breadcrumb[currentItemIndex--]?.slug}` + path;

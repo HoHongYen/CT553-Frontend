@@ -23,7 +23,7 @@ const variations = {
     color: var(--color-grey-0);
   `,
   danger: css`
-    color: var(--color-red-700);
+    color: var(--color-red-600);
   `,
   success: css`
     color: var(--color-green-700);

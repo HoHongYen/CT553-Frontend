@@ -25,10 +25,13 @@ export const getToday = function (options = {}) {
   return today.toISOString();
 };
 
+// export const formatCurrency = (value) =>
+//   new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(
+//     value
+//   );
+
 export const formatCurrency = (value) =>
-  new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'VND' }).format(
-    value
-  );
+  new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
 
 export const formatSlugify = (value) =>
   slugify(value, { lower: true, locale: 'vi' });

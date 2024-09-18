@@ -33,11 +33,9 @@ function PageNotFound() {
   return (
     <StyledPageNotFound>
       <Box>
-        <Heading as="h1">
-          The page you are looking for could not be found 😢
-        </Heading>
+        <Heading as="h1">Trang bạn tìm kiếm không tồn tại! 😢</Heading>
         <button onClick={moveBack} size="large">
-          &larr; Go back
+          &larr; Quay về trang chủ
         </button>
       </Box>
     </StyledPageNotFound>

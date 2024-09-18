@@ -22,6 +22,7 @@ import ViewCustomImage from "@/components/products/ViewCustomImage";
 import Select from "@/components/ui/Select";
 import Discount from "@/components/products/Discount";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
+import { formatCurrency } from "@/utils/helpers";
 
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
@@ -70,12 +71,25 @@ function ProductDetail() {
   }, [product]);
 
   const handleAddToCart = () => {
+    let discountPrice;
+    if (!product.productDiscount || product.productDiscount.length === 0) {
+      discountPrice = 0;
+    } else {
+      const { discountType, discountValue } = product.productDiscount[0];
+      if (discountType === "percentage") {
+        discountPrice = (selectedVariant.price * discountValue) / 100;
+      } else {
+        discountPrice = discountValue;
+      }
+    }
+
     dispatch({
       type: ACTIONS.ADD_TO_CART,
       payload: {
         variant: selectedVariant,
         quantity: quantity,
         product: product,
+        finalPricePerOne: selectedVariant.price - discountPrice,
       },
     });
 
@@ -156,15 +170,29 @@ function ProductDetail() {
           <div className="flex flex-col gap-5 ">
             <div className="pb-5 border-b border-[var(---color-grey-900)] flex flex-col gap-5">
               <div className="relative">
-                {product.productDiscount.at(0)?.discountType ===
-                  "percentage" && (
+                {/* discount badge begin */}
+                {product.productDiscount.length > 0 && (
                   <div className="absolute -right-5 -top-8">
-                    <Badge.Ribbon
-                      text={`-${product.productDiscount?.at(0).discountValue}%`}
-                      color="red"
-                    />
+                    {product.productDiscount.at(0)?.discountType ===
+                    "percentage" ? (
+                      <Badge.Ribbon
+                        text={`-${
+                          product.productDiscount?.at(0).discountValue
+                        }%`}
+                        color="red"
+                      />
+                    ) : (
+                      <Badge.Ribbon
+                        text={`-${formatCurrency(
+                          product.productDiscount?.at(0).discountValue
+                        )}`}
+                        color="red"
+                      />
+                    )}
                   </div>
                 )}
+                {/* discount badge end */}
+
                 <Heading as="h1" className="capitalize mt-3">
                   {product.name}
                 </Heading>
@@ -240,7 +268,15 @@ function ProductDetail() {
                     min={1}
                     max={selectedVariant?.quantity}
                     value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value < 1) {
+                        setQuantity(1);
+                      } else if (e.target.value > selectedVariant?.quantity) {
+                        setQuantity(selectedVariant?.quantity);
+                      } else {
+                        setQuantity(e.target.value);
+                      }
+                    }}
                   />
                   <Button
                     onClick={() => {
