@@ -16,14 +16,17 @@ export const ACTIONS = {
   DECREASE_QUANTITY: "DECREASE_QUANTITY",
   INCREASE_QUANTITY: "INCREASE_QUANTITY",
   UPDATE_QUANTITY: "UPDATE_QUANTITY",
+  CHANGE_VARIANT: "CHANGE_VARIANT",
   CLEAR_CART: "CLEAR_CART",
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    // first action
     case ACTIONS.SET_CART:
       return { ...state, cartItems: action.payload.cartItems };
 
+    // second action
     case ACTIONS.ADD_TO_CART:
       const existingCartItemIndex = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variant.id
@@ -49,6 +52,7 @@ function reducer(state, action) {
       }
       return { ...state, cartItems: updatedCartItems };
 
+    // third action
     case ACTIONS.REMOVE_FROM_CART:
       return {
         ...state,
@@ -57,35 +61,38 @@ function reducer(state, action) {
         ),
       };
 
+    // fourth action
     case ACTIONS.INCREASE_QUANTITY:
-      const existingCartItemIndex = state.cartItems.findIndex(
+      const existingCartItemIndex4 = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variantId
       );
-      const updatedCartItems = [...state.cartItems];
+      const updatedCartItems4 = [...state.cartItems];
       if (
-        existingCartItemIndex !== -1 &&
-        updatedCartItems[existingCartItemIndex].quantity <
-          state.cartItems[existingCartItemIndex].variant.quantity
+        existingCartItemIndex4 !== -1 &&
+        updatedCartItems4[existingCartItemIndex4].quantity <
+          state.cartItems[existingCartItemIndex4].variant.quantity
       ) {
-        updatedCartItems[existingCartItemIndex].quantity += 1;
+        updatedCartItems4[existingCartItemIndex4].quantity += 1;
       }
-      return { ...state, cartItems: updatedCartItems };
+      return { ...state, cartItems: updatedCartItems4 };
 
+    // fifth action
     case ACTIONS.DECREASE_QUANTITY:
-      const existingCartItemIndex = state.cartItems.findIndex(
+      const existingCartItemIndex5 = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variantId
       );
-      const updatedCartItems = [...state.cartItems];
+      const updatedCartItems6 = [...state.cartItems];
       if (
-        existingCartItemIndex !== -1 &&
-        updatedCartItems[existingCartItemIndex].quantity > 1
+        existingCartItemIndex5 !== -1 &&
+        updatedCartItems6[existingCartItemIndex5].quantity > 1
       ) {
-        updatedCartItems[existingCartItemIndex].quantity -= 1;
+        updatedCartItems6[existingCartItemIndex5].quantity -= 1;
       }
-      return { ...state, cartItems: updatedCartItems };
+      return { ...state, cartItems: updatedCartItems6 };
 
+    // sixth action
     case ACTIONS.UPDATE_QUANTITY:
-      const updatedItems = state.cartItems.map((item) => {
+      const updatedCartItems7 = state.cartItems.map((item) => {
         if (
           item.variant.id === action.payload.variantId &&
           action.payload.quantity > 0 &&
@@ -95,11 +102,47 @@ function reducer(state, action) {
         }
         return item;
       });
-      return { ...state, cartItems: updatedItems };
+      return { ...state, cartItems: updatedCartItems7 };
+
+    // seventh action
+    case ACTIONS.CHANGE_VARIANT:
+      const existingCartItemIndex8 = state.cartItems.findIndex(
+        (item) => item.variant.id === Number(action.payload.variantId)
+      );
+      console.log("existingCartItemIndex8", existingCartItemIndex8);
+      const updatedCartItems8 = [...state.cartItems];
+      if (existingCartItemIndex8 !== -1) {
+        updatedCartItems8[existingCartItemIndex8].variant = {
+          ...action.payload.newVariant,
+        };
+
+        // let discountPrice;
+        // if (!product.productDiscount || product.productDiscount.length === 0) {
+        //   discountPrice = 0;
+        // } else {
+        //   const { discountType, discountValue } = product.productDiscount[0];
+        //   if (discountType === "percentage") {
+        //     discountPrice = (newVariant.price * discountValue) / 100;
+        //   } else {
+        //     discountPrice = discountValue;
+        //   }
+
+        //   updatedCartItems8[existingCartItemIndex8].finalPricePerOne =
+        //     newVariant.price - discountPrice;
+        // }
+
+        // updatedCartItems8[existingCartItemIndex8].finalPricePerOne =
+        // updatedCartItems8[existingCartItemIndex8].variant.price;
+      }
+      return { ...state, cartItems: updatedCartItems8 };
+    // return { ...state };
+
+    // eighth action
     case ACTIONS.CLEAR_CART:
       return { ...state, cartItems: [] };
+
     default:
-      throw Error("Invalid action");
+      return state;
   }
 }
 
@@ -120,13 +163,17 @@ function CartProvider({ children }) {
 
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrices = cartItems.reduce(
-    (acc, item) => acc + item.variant.price * item.quantity,
+    (acc, item) => acc + item.finalPricePerOne * item.quantity,
     0
   );
 
+  const isProductInCart = (productId) => {
+    return cartItems.some((item) => item.product.id === productId);
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartItems, totalItems, totalPrices, dispatch }}
+      value={{ cartItems, totalItems, totalPrices, dispatch, isProductInCart }}
     >
       {children}
     </CartContext.Provider>

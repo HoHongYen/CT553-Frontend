@@ -24,12 +24,14 @@ function Discount({ product, selectedVariant }) {
 
   return (
     <div className="flex gap-5">
-      <p className="text-4xl font-bold text-[var(--color-brand-700)]">
+      <p className="text-4xl font-bold text-[var(--color-red-600)]">
         {formatCurrency(finalPrice)}{" "}
       </p>
-      <div className="flex items-center gap-2 text-[var(--color-red-700)]">
-        <p className="line-through">{formatCurrency(selectedVariant?.price)}</p>
-        <p>
+      <div className="flex items-center gap-2">
+        <p className="line-through text-[var(--color-grey-400)]">
+          {formatCurrency(selectedVariant?.price)}
+        </p>
+        <p className="text-[var(--color-red-600)]">
           {discountType === "percentage"
             ? `-${discountValue}%`
             : `-${formatCurrency(discountValue)}`}
