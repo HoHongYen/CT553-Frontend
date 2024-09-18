@@ -79,8 +79,8 @@ function Header() {
               <ButtonIcon onClick={() => setIsSearchOpen(true)}>
                 <HiMagnifyingGlass />
               </ButtonIcon>
-              <Dictaphone />
               <ProductSearchImage setIsSearchOpen={setIsSearchOpen} />
+              <Dictaphone />
               <ButtonIcon onClick={() => setIsSearchOpen(false)}>
                 <HiXMark />
               </ButtonIcon>

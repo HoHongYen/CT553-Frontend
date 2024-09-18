@@ -12,7 +12,7 @@ import ProductCard from "@/components/products/ProductCard";
 function ProductSearch() {
   const [breadcrumb, setBreadcrumb] = useState([{ name: "" }]);
   const [searchParams] = useSearchParams();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
 
   const [isImageSearch, setIsImageSearch] = useState(false);
 
@@ -33,6 +33,15 @@ function ProductSearch() {
       console.log("products as imageSearchResult", products);
     } else {
       setProducts([...fullTextSearchResult, ...semanticSearchResult]);
+    }
+
+    if (
+      imageSearchResult.length +
+        fullTextSearchResult.length +
+        semanticSearchResult.length ===
+      0
+    ) {
+      setProducts(null);
     }
 
     setIsImageSearch(isImageSearching);
