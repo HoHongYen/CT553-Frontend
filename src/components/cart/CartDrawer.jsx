@@ -82,10 +82,7 @@ function CartDrawer() {
       //       Tiến hành đặt hàng
       //     </Button>
       //     <Button
-      //       onClick={() => {
-      //         navigate("/gio-hang");
-      //         closeCartDrawer();
-      //       }}
+      //       onClick={() => navigate("/gio-hang");}
       //     >
       //       Đến trang giỏ hàng &rarr;
       //     </Button>
@@ -255,10 +252,7 @@ function CartDrawer() {
                   Tiến hành đặt hàng
                 </Button>
                 <Button
-                  onClick={() => {
-                    navigate("/gio-hang");
-                    closeCartDrawer();
-                  }}
+                  onClick={() => navigate("/gio-hang")}
                   variation="secondary"
                   size="large"
                   className="w-full"
