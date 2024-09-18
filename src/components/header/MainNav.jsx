@@ -129,7 +129,7 @@ function MainNav() {
             to={formatSlugify(policy.title)}
             className="capitalize flex items-center"
           >
-            <policy.icon className="w-[2.4rem] h-[2.4rem]" />
+            <policy.icon className="w-[2.4rem] h-[2.4rem] mr-3" />
             {policy.title}
           </Link>
         </div>

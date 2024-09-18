@@ -1,10 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { ConfigProvider } from "antd";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import { CartProvider } from "./context/CartContext";
-import { ConfigProvider } from "antd";
+import { ShowCartDrawerProvider } from "./context/ShowCartDrawerContext";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import AppLayout from "./components/layouts/AppLayout";
@@ -12,7 +13,6 @@ import PolicyLayout from "./components/layouts/PolicyLayout";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import SuspenseWrapper from "./components/ui/SuspenseWrapper";
-import { ShowCartDrawerProvider } from "./context/ShowCartDrawerContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {

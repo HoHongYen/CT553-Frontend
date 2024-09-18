@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { formatCurrency } from "@/utils/helpers";
 import Swal from "sweetalert2";
 
-import { useCart } from "@/context/CartContext";
+import { ACTIONS, useCart } from "@/context/CartContext";
 
 import { HiOutlineTrash } from "react-icons/hi2";
 import BreadCrumb from "@/components/ui/BreadCrumb";
@@ -12,20 +12,26 @@ import ButtonIcon from "@/components/ui/ButtonIcon";
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import Select from "@/components/ui/Select";
-import Input from "@/components/ui/Input";
+import CartSummary from "@/components/cart/CartSummary";
+import CartItemQuantity from "@/components/cart/CartItemQuantity";
+import DiscountBadge from "@/components/cart/DiscountBadge";
+import DiscountPrice from "@/components/cart/DiscountPrice";
+import { set } from "date-fns";
+import SelectSize from "@/components/cart/SelectSize";
 
 function Cart() {
   const navigate = useNavigate();
   const [breadcrumb, setBreadcrumb] = useState([{ name: "" }]);
 
-  const { cartItems, totalPrices, dispatch } = useCart();
+  const { cartItems, dispatch } = useCart();
 
-  const handleRemoveVariant = (variantId) => () => {
-    console.log("variantId", variantId);
+  const [currentVariantId, setCurrentVariantId] = useState();
+
+  const handleRemoveVariant = (variantId, productName) => () => {
     Swal.fire({
       width: 400,
       size: "lg",
-      title: `Bạn có chắc chắc muốn xóa ${variantId} khỏi giỏ hàng?`,
+      title: `Bạn có chắc chắc muốn xóa ${productName} khỏi giỏ hàng?`,
       showDenyButton: true,
       showCancelButton: true,
       showConfirmButton: false,
@@ -38,7 +44,10 @@ function Cart() {
       },
     }).then((result) => {
       if (result.isDenied) {
-        dispatch({ type: "REMOVE_FROM_CART", payload: { variantId } });
+        dispatch({
+          type: ACTIONS.REMOVE_FROM_CART,
+          payload: { variantId },
+        });
         Swal.fire("Đã xóa sản phẩm khỏi giỏ hàng", "", "success");
       }
     });
@@ -72,12 +81,12 @@ function Cart() {
       </div>
       <Row>
         <div className="grid md:grid-cols-3 gap-5">
-          {/* order items begin */}
-          <div className="md:col-span-2 space-y-4">
+          {/* cart items begin */}
+          <div className="md:col-span-2 space-y-8">
             {cartItems.map((cartItem, index) => (
               <div
                 key={index}
-                className="flex flex-col gap-4 bg-[var(--color-grey-0)] px-6 py-6 rounded-md shadow-[0_2px_12px_-3px_var(--color-blue-700)]"
+                className="relative flex flex-col gap-4 bg-[var(--color-grey-0)] px-6 py-6 rounded-md shadow-[0_2px_12px_-3px_var(--color-blue-700)]"
               >
                 <div className="flex gap-7">
                   {/* image begin */}
@@ -88,6 +97,10 @@ function Cart() {
                     />
                   </div>
                   {/* image end */}
+
+                  {/* discount badge begin */}
+                  <DiscountBadge cartItem={cartItem} />
+                  {/* discount badge end */}
 
                   <div className="flex flex-col gap-2 w-full">
                     <div className="flex justify-between items-center">
@@ -100,7 +113,10 @@ function Cart() {
                         </Heading>
                       </Link>
                       <ButtonIcon
-                        onClick={handleRemoveVariant(cartItem.variant.id)}
+                        onClick={handleRemoveVariant(
+                          cartItem.variant.id,
+                          cartItem.product.name
+                        )}
                         variation="danger"
                         size="large"
                       >
@@ -114,83 +130,46 @@ function Cart() {
                     </div>
                     <div className="flex gap-4 items-center">
                       <span className="font-semibold mr-3">Kích thước:</span>{" "}
-                      <div className="flex gap-4 mt-3">
-                        <Select
-                          options={cartItem.product.variants.map((variant) => {
-                            return {
-                              label: variant.size,
-                              value: variant.id,
-                            };
-                          })}
-                          value={cartItem.variant.id}
-                        />
-                      </div>
+                      <SelectSize cartItem={cartItem} />
                     </div>
 
                     <div className="mt-3">
                       <p className="font-semibold">Số lượng:</p>
-                      <div className="flex gap-4 mt-3">
-                        <div className="flex gap-[0.5px]">
-                          <Button
-                            onClick={() =>
-                              dispatch({
-                                type: "DECREASE_QUANTITY",
-                                payload: { variantId: cartItem.variant.id },
-                              })
-                            }
-                            variation="secondary"
-                            size="small"
-                            radius="radius-none"
-                          >
-                            -
-                          </Button>
-                          <Input
-                            className="w-[70px]"
-                            radius="radius-none"
-                            type="number"
-                            min={1}
-                            max={cartItem.variant.quantity}
-                            value={cartItem.quantity}
-                            onChange={(e) =>
-                              dispatch({
-                                type: "UPDATE_QUANTITY",
-                                payload: {
-                                  variantId: cartItem.variant.id,
-                                  quantity: e.target.value,
-                                },
-                              })
-                            }
-                          />
-                          <Button
-                            onClick={() =>
-                              dispatch({
-                                type: "INCREASE_QUANTITY",
-                                payload: { variantId: cartItem.variant.id },
-                              })
-                            }
-                            variation="secondary"
-                            size="small"
-                            radius="radius-none"
-                          >
-                            +
-                          </Button>
-                        </div>
-                      </div>
+                      <CartItemQuantity cartItem={cartItem} />
                     </div>
+
+                    {/* dicount price begin */}
+                    <div className="mt-3">
+                      <DiscountPrice cartItem={cartItem} />
+                    </div>
+                    {/* dicount price end */}
 
                     <div className="flex items-center">
                       <div className="mt-3 flex">
-                        <span className="font-semibold mr-3">Giá:</span>{" "}
-                        <h3 className="font-bold mt-auto">
-                          {formatCurrency(cartItem.variant.price)}
-                        </h3>
+                        {cartItem.product.productDiscount.length > 0 ? (
+                          <>
+                            <span className="font-semibold mr-3">
+                              Giảm còn:
+                            </span>
+                            <h3 className="text-[var(--color-red-600)] font-bold mt-auto">
+                              {formatCurrency(cartItem.finalPricePerOne)}
+                            </h3>
+                          </>
+                        ) : (
+                          <>
+                            <span className="font-semibold mr-3">Giá:</span>
+                            <h3 className="text-[var(--color-brand-700)] font-bold mt-auto">
+                              {formatCurrency(cartItem.finalPricePerOne)}
+                            </h3>
+                          </>
+                        )}
                       </div>
 
                       <div className="flex ml-auto">
                         <span className="font-bold mr-3">Thành tiền:</span>
                         <div className="font-bold text-[var(--color-brand-700)]">
                           {formatCurrency(
-                            cartItem.variant.price * cartItem.quantity
+                            cartItem.finalPricePerOne * cartItem.quantity
                           )}
                         </div>
                       </div>
@@ -200,50 +179,11 @@ function Cart() {
               </div>
             ))}
           </div>
-          {/* order items end */}
+          {/* cart items end */}
 
-          {/* order summary begin */}
-          <div className="bg-[var(--color-grey-0)] rounded-md px-6 py-6 h-max shadow-[0_2px_12px_-3px_var(--color-blue-700)]">
-            <div className="flex justify-center mb-8">
-              <Heading as="h2">Tóm tắt giỏ hàng</Heading>
-            </div>
-            <ul className="space-y-4">
-              <li className="flex flex-wrap gap-4">
-                Tổng tiền hàng{" "}
-                <span className="ml-auto font-bold">
-                  {formatCurrency(totalPrices)}
-                </span>
-              </li>
-              <li className="flex flex-wrap gap-4 ">
-                Phí giao hàng{" "}
-                <span className="ml-auto font-bold">
-                  {formatCurrency(10000)}
-                </span>
-              </li>
-              <hr className="border-[var(--color-grey-300)]" />
-              <li className="flex flex-wrap gap-4 font-bold">
-                Tổng tiền{" "}
-                <span className="text-[var(--color-brand-700)] font-bold ml-auto">
-                  {formatCurrency(totalPrices + 10000)}
-                </span>
-              </li>
-            </ul>
-
-            <div className="mt-8 space-y-2">
-              <Button variation="primary" size="large" className="w-full">
-                Tiến hành đặt hàng
-              </Button>
-              <Button
-                onClick={() => navigate(-2)}
-                variation="secondary"
-                size="large"
-                className="w-full"
-              >
-                Tiếp tục xem sản phẩm &rarr;
-              </Button>
-            </div>
-          </div>
-          {/* order summary end */}
+          {/* cart summary begin */}
+          <CartSummary />
+          {/* cart summary end */}
         </div>
       </Row>
     </>

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { getHomeProducts } from "@/services/apiProducts";
 import { PRODUCT_NEWEST } from "@/utils/constants";
 
-import ProductCard from "@/components/products/ProductCard";
 import { Skeleton } from "antd";
+import ProductCard from "@/components/products/ProductCard";
 
 function HomeProducts() {
   const [newestProducts, setNewestProducts] = useState([]);
