@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { createContext, useContext, useEffect } from "react";
 import { useReducer } from "react";
+import { get } from "react-hook-form";
 
 const CartContext = createContext();
 
@@ -18,6 +19,7 @@ export const ACTIONS = {
   UPDATE_QUANTITY: "UPDATE_QUANTITY",
   CHANGE_VARIANT: "CHANGE_VARIANT",
   CLEAR_CART: "CLEAR_CART",
+  CHECK_ITEM: "CHECK_ITEM",
 };
 
 function reducer(state, action) {
@@ -107,39 +109,54 @@ function reducer(state, action) {
     // seventh action
     case ACTIONS.CHANGE_VARIANT:
       const existingCartItemIndex8 = state.cartItems.findIndex(
-        (item) => item.variant.id === Number(action.payload.variantId)
+        (item) => item.variant.id === action.payload.variantId
       );
-      console.log("existingCartItemIndex8", existingCartItemIndex8);
+
+      const product = state.cartItems.find(
+        (item) => item.variant.id === action.payload.variantId
+      ).product;
+
+      const newVariant = product.variants.find(
+        (variant) => variant.id === action.payload.newVariantId
+      );
+
+      let discountPrice = 0;
+      if (product.productDiscount.length > 0) {
+        const { discountType, discountValue } = product.productDiscount[0];
+        discountPrice =
+          discountType === "percentage"
+            ? newVariant.price * (discountValue / 100)
+            : discountValue;
+      }
+
+      const newPricePerOne = newVariant.price - discountPrice;
+
       const updatedCartItems8 = [...state.cartItems];
       if (existingCartItemIndex8 !== -1) {
-        updatedCartItems8[existingCartItemIndex8].variant = {
-          ...action.payload.newVariant,
+        updatedCartItems8[existingCartItemIndex8] = {
+          ...updatedCartItems8[existingCartItemIndex8],
+          variant: newVariant,
+          finalPricePerOne: newPricePerOne,
         };
-
-        // let discountPrice;
-        // if (!product.productDiscount || product.productDiscount.length === 0) {
-        //   discountPrice = 0;
-        // } else {
-        //   const { discountType, discountValue } = product.productDiscount[0];
-        //   if (discountType === "percentage") {
-        //     discountPrice = (newVariant.price * discountValue) / 100;
-        //   } else {
-        //     discountPrice = discountValue;
-        //   }
-
-        //   updatedCartItems8[existingCartItemIndex8].finalPricePerOne =
-        //     newVariant.price - discountPrice;
-        // }
-
-        // updatedCartItems8[existingCartItemIndex8].finalPricePerOne =
-        // updatedCartItems8[existingCartItemIndex8].variant.price;
       }
+
       return { ...state, cartItems: updatedCartItems8 };
-    // return { ...state };
 
     // eighth action
     case ACTIONS.CLEAR_CART:
       return { ...state, cartItems: [] };
+
+    // ninth action
+    case ACTIONS.CHECK_ITEM:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item.variant.id === action.payload.variantId) {
+            return { ...item, isChecked: !item.isChecked };
+          }
+          return item;
+        }),
+      };
 
     default:
       return state;
@@ -151,21 +168,23 @@ function CartProvider({ children }) {
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    console.log("cartItems", cartItems);
-    if (cartItems && cartItems.length > 0)
+    if (cartItems && cartItems.length > 0) {
       dispatch({ type: "SET_CART", payload: { cartItems } });
+    }
   }, []);
 
   useEffect(() => {
-    console.log("cartItems Change", cartItems);
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrices = cartItems.reduce(
-    (acc, item) => acc + item.finalPricePerOne * item.quantity,
+  const totalItems = cartItems.reduce(
+    (acc, item) => acc + (item.isChecked ? item.quantity : 0),
     0
   );
+
+  const totalPrices = cartItems.reduce((acc, item) => {
+    return acc + (item.isChecked ? item.finalPricePerOne * item.quantity : 0);
+  }, 0);
 
   const isProductInCart = (productId) => {
     return cartItems.some((item) => item.product.id === productId);

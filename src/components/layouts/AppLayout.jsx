@@ -1,11 +1,11 @@
 import styled from "styled-components";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
-import { useEffect, useRef, useState } from "react";
 import GoTop from "../ui/GoTop";
 import CartDrawer from "../cart/CartDrawer";
-import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 
 const StyledAppLayout = styled.div`
   display: grid;

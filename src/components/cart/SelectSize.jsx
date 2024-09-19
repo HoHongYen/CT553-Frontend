@@ -3,33 +3,13 @@ import Select from "../ui/Select";
 import { ACTIONS, useCart } from "@/context/CartContext";
 
 function SelectSize({ cartItem }) {
-  const { cartItems, dispatch } = useCart();
+  const { dispatch } = useCart();
   const [variantId, setVariantId] = useState(cartItem.variant.id);
 
   const handleChangeVariantId = (value) => {
-    console.log("dispatch", value);
-
-    const existedCartItemIndex = cartItems.findIndex(
-      (item) => item.variant.id === variantId
-    );
-
-    console.log("existedCartItemIndex", existedCartItemIndex);
-
-    const newVariant = cartItem.product.variants[existedCartItemIndex];
-
-    console.log("newVariant", newVariant);
-
-    let newCartItems = [...cartItems];
-    newCartItems[existedCartItemIndex].variant = { ...newVariant };
-
-    // dispatch({
-    //   type: ACTIONS.SET_CART,
-    //   payload: { cartItems: newCartItems },
-    // });
-
     dispatch({
       type: ACTIONS.CHANGE_VARIANT,
-      payload: { variantId, newVariant },
+      payload: { variantId: +variantId, newVariantId: +value },
     });
     setVariantId(value);
   };

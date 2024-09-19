@@ -9,8 +9,11 @@ function Sidebar({ categories }) {
   const { slug } = useParams();
 
   return (
-    <div className="flex flex-col gap-[3.2rem] px-[2.4rem] bg-[var(--color-grey-100)] border-r-[var(--color_grey_100)]">
-      <Heading as="h2" className="text-center">
+    <div className="flex flex-col gap-[3.2rem] pb-8 mb-auto rounded-[25px] px-[2.4rem] bg-[var(--color-grey-100)] border-r-[var(--color_grey_100)]">
+      <Heading
+        as="h2"
+        className="text-center mt-8 pb-5 border-b border-[var(---color-grey-900)] "
+      >
         Danh mục sản phẩm
       </Heading>
       {categories.map((category) => (
