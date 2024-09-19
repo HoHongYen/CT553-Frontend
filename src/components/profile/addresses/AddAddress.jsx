@@ -7,7 +7,7 @@ function AddAddress() {
     <div>
       <Modal>
         <Modal.Open opens="address-form">
-          <Button>Thêm địa chỉ mới</Button>
+          <Button><span className="mr-2">+</span> Thêm địa chỉ mới</Button>
         </Modal.Open>
         <Modal.Window name="address-form">
           <CreateAddressForm />

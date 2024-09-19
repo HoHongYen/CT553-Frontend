@@ -133,6 +133,10 @@ function App() {
                       />
                       <Route element={<ProtectedRoute />}>
                         <Route
+                          path="dat-hang"
+                          element={<SuspenseWrapper path="Order" />}
+                        />
+                        <Route
                           path="tai-khoan/thong-tin-ca-nhan"
                           element={
                             <SuspenseWrapper level1="profile" path="UserInfo" />

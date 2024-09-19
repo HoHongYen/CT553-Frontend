@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Select from "../ui/Select";
-import { ACTIONS, useCart } from "@/context/CartContext";
+import { CART_ACTIONS, useCart } from "@/context/CartContext";
 
 function SelectSize({ cartItem }) {
   const { dispatch } = useCart();
@@ -8,7 +8,7 @@ function SelectSize({ cartItem }) {
 
   const handleChangeVariantId = (value) => {
     dispatch({
-      type: ACTIONS.CHANGE_VARIANT,
+      type: CART_ACTIONS.CHANGE_VARIANT,
       payload: { variantId: +variantId, newVariantId: +value },
     });
     setVariantId(value);

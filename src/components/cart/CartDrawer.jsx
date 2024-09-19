@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { ACTIONS, useCart } from "@/context/CartContext";
+import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import { formatCurrency } from "@/utils/helpers";
 
@@ -34,14 +34,14 @@ function CartDrawer() {
       denyButtonText: "Chắc chắn",
       cancelButtonText: "Hủy",
       customClass: {
-        actions: "my-actions",
+        CART_ACTIONS: "my-CART_ACTIONS",
         denyButton: "order-1",
         cancelButton: "order-2",
       },
     }).then((result) => {
       if (result.isDenied) {
         dispatch({
-          type: ACTIONS.REMOVE_FROM_CART,
+          type: CART_ACTIONS.REMOVE_FROM_CART,
           payload: { variantId },
         });
         toast.success("Đã xóa sản phẩm khỏi giỏ hàng!");
@@ -96,7 +96,7 @@ function CartDrawer() {
                   <div
                     onClick={() =>
                       dispatch({
-                        type: ACTIONS.CHECK_ITEM,
+                        type: CART_ACTIONS.CHECK_ITEM,
                         payload: { variantId: cartItem.variant.id },
                       })
                     }

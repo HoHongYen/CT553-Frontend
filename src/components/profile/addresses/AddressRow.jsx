@@ -1,5 +1,6 @@
 import { useUpdateAddress } from "@/hooks/profile/addresses/useUpdateAddress";
 import { useDeleteAddress } from "@/hooks/profile/addresses/useDeleteAddress";
+import { ORDER_ACTIONS, useOrder } from "@/context/OrderContext";
 
 import styled from "styled-components";
 import { HiKey, HiPencil, HiTrash } from "react-icons/hi2";
@@ -10,6 +11,8 @@ import Table from "@/components/ui/Table";
 import Menus from "@/components/ui/Menus";
 import Tag from "@/components/ui/Tag";
 import CreateAddressForm from "./CreateAddressForm";
+import TickRoundIcon from "@/components/icons/TickRoundIcon";
+import EmptyRoundBoxIcon from "@/components/icons/EmptyRoundBoxIcon";
 
 const StyledButton = styled.button`
   width: 100%;
@@ -36,9 +39,11 @@ const StyledButton = styled.button`
   }
 `;
 
-function AddressRow({ address }) {
+function AddressRow({ address, isAddressInOrderPage }) {
   const { isLoading: isUpdating, updateAddress } = useUpdateAddress();
   const { isLoading: isDeleting, deleteAddress } = useDeleteAddress();
+
+  const { address: addressToOrder, dispatch } = useOrder();
 
   const {
     id: addressId,
@@ -56,8 +61,6 @@ function AddressRow({ address }) {
   } = address;
 
   const handleSetDefault = () => {
-    console.log("handleSetDefault");
-
     updateAddress({
       addressId,
       updatedAddress: { ...address, isDefault: true },
@@ -72,6 +75,23 @@ function AddressRow({ address }) {
   return (
     <>
       <Table.Row>
+        {isAddressInOrderPage && (
+          <div
+            onClick={() =>
+              dispatch({
+                type: ORDER_ACTIONS.SET_ADDRESS,
+                payload: { address: address },
+              })
+            }
+            className="flex cursor-pointer items-center w-8"
+          >
+            {addressToOrder?.id === addressId ? (
+              <TickRoundIcon />
+            ) : (
+              <EmptyRoundBoxIcon />
+            )}
+          </div>
+        )}
         <div className="flex flex-col gap-3">
           {contactName}{" "}
           {isDeleted && (
