@@ -1,10 +1,12 @@
 import { useCart } from "@/context/CartContext";
+import { useOrder } from "@/context/OrderContext";
 import { formatCurrency } from "@/utils/helpers";
 import { HiOutlineNewspaper } from "react-icons/hi2";
 import Heading from "../ui/Heading";
 
 function OrderSummary() {
   const { totalItems, totalPrices } = useCart();
+  const { shippingFee } = useOrder();
 
   return (
     <div className="bg-[var(--color-grey-0)] rounded-md px-6 py-6 h-max shadow-[0_2px_12px_-3px_var(--color-blue-700)]">
@@ -29,7 +31,10 @@ function OrderSummary() {
           </span>
         </li>
         <li className="flex flex-wrap gap-4 ">
-          Phí giao hàng <span className="ml-auto font-bold">Chưa tính</span>
+          Phí giao hàng{" "}
+          <span className="ml-auto font-bold">
+            {formatCurrency(shippingFee)}
+          </span>
         </li>
         <hr className="border-[var(--color-grey-300)]" />
         <li className="flex flex-wrap gap-4 font-bold">

@@ -77,12 +77,13 @@ function AddressRow({ address, isAddressInOrderPage }) {
       <Table.Row>
         {isAddressInOrderPage && (
           <div
-            onClick={() =>
+            onClick={() => {
+              console.log("set address", address.id);
               dispatch({
                 type: ORDER_ACTIONS.SET_ADDRESS,
                 payload: { address: address },
-              })
-            }
+              });
+            }}
             className="flex cursor-pointer items-center w-8"
           >
             {addressToOrder?.id === addressId ? (

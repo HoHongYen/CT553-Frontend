@@ -1,83 +1,21 @@
 import { useAddresses } from "@/hooks/profile/addresses/useAddresses";
 
-import Spinner from "@/components/ui/Spinner";
 import Table from "@/components/ui/Table";
 import Menus from "@/components/ui/Menus";
 import AddressRow from "./AddressRow";
 
-function AddressTable() {
-  // const { isLoading, categories } = useCategories();
-  const { isLoading, addresses } = useAddresses();
+function AddressTable({ isAddressInOrderPage = false }) {
+  const { addresses } = useAddresses();
 
-  // if (isLoading) return <Spinner />;
-  // if (!categories.length) return <Empty resourceName="categories" />;
-
-  // 1. Filter
-  // const filterValue = searchParams.get("discount") || "all";
-  // let filteredCabins;
-  // if (filterValue === "all") filteredCabins = cabins;
-  // if (filterValue === "no-discount")
-  //   filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
-  // if (filterValue === "with-discount")
-  //   filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
-
-  // 2. Sort
-  // const sortBy = searchParams.get("sortBy") || "create_at-asc";
-  // const [field, direction] = sortBy.split("-");
-  // const modifier = direction === "asc" ? 1 : -1;
-  // const sortedCabins = filteredCabins.sort(
-  //   (a, b) => (a[field] - b[field]) * modifier
-  // );
-
-  // const addresses = [
-  //   {
-  //     id: uuidv4(),
-  //     provinceId: "1",
-  //     provinceName: "Hà Nội",
-  //     districtId: "2",
-  //     districtName: "Ba Đình",
-  //     wardId: "3",
-  //     wardName: "Cống Vị",
-  //     detailAddress: "Số 1, ngõ 1, phố 1",
-  //     contactName: "Nguyễn Văn A",
-  //     contactPhone: "0987654321",
-  //     isDefault: true,
-  //     isDeleted: false,
-  //   },
-  //   {
-  //     id: uuidv4(),
-  //     provinceId: "1",
-  //     provinceName: "Cà Mau",
-  //     districtId: "2",
-  //     districtName: "Phú Tân",
-  //     wardId: "3",
-  //     wardName: "Việt Thắng",
-  //     detailAddress: "Số 1",
-  //     contactName: "Nguyễn Văn B",
-  //     contactPhone: "0987654321",
-  //     isDefault: false,
-  //     isDeleted: false,
-  //   },
-  //   {
-  //     id: uuidv4(),
-  //     provinceId: "1",
-  //     provinceName: "Cần Thơ",
-  //     districtId: "2",
-  //     districtName: "Phú Tân",
-  //     wardId: "3",
-  //     wardName: "Việt Thắng",
-  //     detailAddress: "Số 1",
-  //     contactName: "Nguyễn Văn C",
-  //     contactPhone: "0987654321",
-  //     isDefault: false,
-  //     isDeleted: true,
-  //   },
-  // ];
+  const columns = isAddressInOrderPage
+    ? "0.5fr 2fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr"
+    : "2fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr";
 
   return (
     <Menus>
-      <Table columns="2fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr">
+      <Table columns={columns}>
         <Table.Header>
+          {isAddressInOrderPage && <div></div>}
           <div>Tên người nhận</div>
           <div>Số điện thoại</div>
           <div>Tỉnh / thành phố</div>
@@ -86,13 +24,16 @@ function AddressTable() {
           <div>Chi tiết</div>
           <div></div>
         </Table.Header>
-        <Table.Body
-          // data={sortedCabins}
-          data={addresses}
-          render={(address) => (
-            <AddressRow key={address.id} address={address} />
-          )}
-        />
+          <Table.Body
+            data={addresses}
+            render={(address) => (
+              <AddressRow
+                isAddressInOrderPage={isAddressInOrderPage}
+                key={address.id}
+                address={address}
+              />
+            )}
+          />
       </Table>
     </Menus>
   );
