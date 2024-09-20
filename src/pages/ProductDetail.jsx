@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 import { useProduct } from "@/hooks/products/useProduct";
-import { ACTIONS, useCart } from "@/context/CartContext";
+import { CART_ACTIONS, useCart } from "@/context/CartContext";
 
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { Carousel as AntdCarousel, Badge, Tag } from "antd";
@@ -84,10 +84,11 @@ function ProductDetail() {
     }
 
     dispatch({
-      type: ACTIONS.ADD_TO_CART,
+      type: CART_ACTIONS.ADD_TO_CART,
       payload: {
         variant: selectedVariant,
         quantity: quantity,
+        isChecked: true,
         product: product,
         finalPricePerOne: selectedVariant.price - discountPrice,
       },
@@ -152,8 +153,8 @@ function ProductDetail() {
                     <ImageMagnifier
                       src={image.path}
                       key={image.path}
-                      magnifierHeight={200}
-                      magnifierWidth={200}
+                      magnifierHeight={300}
+                      magnifierWidth={300}
                       zoomLevel={2}
                     />
                   );

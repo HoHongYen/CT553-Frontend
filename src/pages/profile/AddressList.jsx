@@ -18,7 +18,6 @@ const StyledPolicyLayout = styled.div`
 `;
 
 function AddressList() {
-
   return (
     <>
       <BreadCrumb breadcrumb={breadcrumb} />
@@ -26,10 +25,10 @@ function AddressList() {
         <Sidebar />
         <Row>
           <Heading as="h1">Sổ địa chỉ</Heading>
+          <AddressTable />
           <div className="flex justify-end">
             <AddAddress />
           </div>
-          <AddressTable />
         </Row>
       </StyledPolicyLayout>
     </>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-300);
-
+  /* box-shadow: 0 2px 12px -3px var(--color-blue-700); */
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;

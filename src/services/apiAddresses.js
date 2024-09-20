@@ -8,7 +8,6 @@ export async function getProvinces() {
     return provinces;
 }
 
-
 export async function getDistricts(provinceId) {
     const districts = (await api.get("/districts?provinceId=" + provinceId)).data;
     return districts;

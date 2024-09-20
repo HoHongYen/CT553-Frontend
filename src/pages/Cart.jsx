@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ACTIONS, useCart } from "@/context/CartContext";
+import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { formatCurrency } from "@/utils/helpers";
 
 import Swal from "sweetalert2";
@@ -37,14 +37,14 @@ function Cart() {
       denyButtonText: "Chắc chắn",
       cancelButtonText: "Hủy",
       customClass: {
-        actions: "my-actions",
+        CART_ACTIONS: "my-CART_ACTIONS",
         denyButton: "order-1",
         cancelButton: "order-2",
       },
     }).then((result) => {
       if (result.isDenied) {
         dispatch({
-          type: ACTIONS.REMOVE_FROM_CART,
+          type: CART_ACTIONS.REMOVE_FROM_CART,
           payload: { variantId },
         });
         toast.success("Đã xóa sản phẩm khỏi giỏ hàng!");
@@ -87,7 +87,7 @@ function Cart() {
                 <div
                   onClick={() =>
                     dispatch({
-                      type: ACTIONS.CHECK_ITEM,
+                      type: CART_ACTIONS.CHECK_ITEM,
                       payload: { variantId: cartItem.variant.id },
                     })
                   }
@@ -137,11 +137,11 @@ function Cart() {
                       </div>
 
                       <div className="flex items-center gap-2 mt-3">
-                        <span className="font-semibold mr-3">Mã sản phẩm:</span>{" "}
+                        <span className="font-semibold mr-2">Mã sản phẩm:</span>{" "}
                         {cartItem.product.id}
                       </div>
                       <div className="flex gap-4 items-center">
-                        <span className="font-semibold mr-3">Kích thước:</span>{" "}
+                        <span className="font-semibold mr-2">Kích thước:</span>{" "}
                         <SelectSize cartItem={cartItem} />
                       </div>
 
@@ -160,7 +160,7 @@ function Cart() {
                         <div className="mt-3 flex">
                           {cartItem.product.productDiscount.length > 0 ? (
                             <>
-                              <span className="font-semibold mr-3">
+                              <span className="font-semibold mr-2">
                                 Giảm còn:
                               </span>
                               <h3 className="text-[var(--color-red-600)] font-bold mt-auto">
@@ -169,7 +169,7 @@ function Cart() {
                             </>
                           ) : (
                             <>
-                              <span className="font-semibold mr-3">Giá:</span>
+                              <span className="font-semibold mr-2">Giá:</span>
                               <h3 className="text-[var(--color-brand-700)] font-bold mt-auto">
                                 {formatCurrency(cartItem.finalPricePerOne)}
                               </h3>
@@ -178,7 +178,7 @@ function Cart() {
                         </div>
 
                         <div className="flex ml-auto">
-                          <span className="font-bold mr-3">Thành tiền:</span>
+                          <span className="font-bold mr-2">Thành tiền:</span>
                           <div className="font-bold text-[var(--color-brand-700)]">
                             {formatCurrency(
                               cartItem.finalPricePerOne * cartItem.quantity

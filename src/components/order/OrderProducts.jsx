@@ -6,11 +6,11 @@ import DiscountPrice from "../cart/DiscountPrice";
 import { formatCurrency } from "@/utils/helpers";
 
 function OrderProducts() {
-  const { cartItems } = useCart();
+  const { choosedItems } = useCart();
 
   return (
     <>
-      {cartItems.map((cartItem, index) => (
+      {choosedItems.map((cartItem, index) => (
         <div
           key={index}
           className="relative flex flex-col gap-4 bg-[var(--color-grey-0)] px-6 py-6 rounded-md shadow-[0_2px_12px_-3px_var(--color-blue-700)]"

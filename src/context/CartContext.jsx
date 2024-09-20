@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { createContext, useContext, useEffect } from "react";
 import { useReducer } from "react";
-import { get } from "react-hook-form";
 
 const CartContext = createContext();
 
@@ -10,7 +9,7 @@ const initialState = {
   cartItems: [],
 };
 
-export const ACTIONS = {
+export const CART_ACTIONS = {
   SET_CART: "SET_CART",
   ADD_TO_CART: "ADD_TO_CART",
   REMOVE_FROM_CART: "REMOVE_FROM_CART",
@@ -25,11 +24,11 @@ export const ACTIONS = {
 function reducer(state, action) {
   switch (action.type) {
     // first action
-    case ACTIONS.SET_CART:
+    case CART_ACTIONS.SET_CART:
       return { ...state, cartItems: action.payload.cartItems };
 
     // second action
-    case ACTIONS.ADD_TO_CART:
+    case CART_ACTIONS.ADD_TO_CART:
       const existingCartItemIndex = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variant.id
       );
@@ -55,7 +54,7 @@ function reducer(state, action) {
       return { ...state, cartItems: updatedCartItems };
 
     // third action
-    case ACTIONS.REMOVE_FROM_CART:
+    case CART_ACTIONS.REMOVE_FROM_CART:
       return {
         ...state,
         cartItems: state.cartItems.filter(
@@ -64,7 +63,7 @@ function reducer(state, action) {
       };
 
     // fourth action
-    case ACTIONS.INCREASE_QUANTITY:
+    case CART_ACTIONS.INCREASE_QUANTITY:
       const existingCartItemIndex4 = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variantId
       );
@@ -79,7 +78,7 @@ function reducer(state, action) {
       return { ...state, cartItems: updatedCartItems4 };
 
     // fifth action
-    case ACTIONS.DECREASE_QUANTITY:
+    case CART_ACTIONS.DECREASE_QUANTITY:
       const existingCartItemIndex5 = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variantId
       );
@@ -93,7 +92,7 @@ function reducer(state, action) {
       return { ...state, cartItems: updatedCartItems6 };
 
     // sixth action
-    case ACTIONS.UPDATE_QUANTITY:
+    case CART_ACTIONS.UPDATE_QUANTITY:
       const updatedCartItems7 = state.cartItems.map((item) => {
         if (
           item.variant.id === action.payload.variantId &&
@@ -107,7 +106,7 @@ function reducer(state, action) {
       return { ...state, cartItems: updatedCartItems7 };
 
     // seventh action
-    case ACTIONS.CHANGE_VARIANT:
+    case CART_ACTIONS.CHANGE_VARIANT:
       const existingCartItemIndex8 = state.cartItems.findIndex(
         (item) => item.variant.id === action.payload.variantId
       );
@@ -143,11 +142,11 @@ function reducer(state, action) {
       return { ...state, cartItems: updatedCartItems8 };
 
     // eighth action
-    case ACTIONS.CLEAR_CART:
+    case CART_ACTIONS.CLEAR_CART:
       return { ...state, cartItems: [] };
 
     // ninth action
-    case ACTIONS.CHECK_ITEM:
+    case CART_ACTIONS.CHECK_ITEM:
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
@@ -186,13 +185,22 @@ function CartProvider({ children }) {
     return acc + (item.isChecked ? item.finalPricePerOne * item.quantity : 0);
   }, 0);
 
+  const choosedItems = cartItems.filter((item) => item.isChecked);
+
   const isProductInCart = (productId) => {
     return cartItems.some((item) => item.product.id === productId);
   };
 
   return (
     <CartContext.Provider
-      value={{ cartItems, totalItems, totalPrices, dispatch, isProductInCart }}
+      value={{
+        cartItems,
+        totalItems,
+        totalPrices,
+        choosedItems,
+        dispatch,
+        isProductInCart,
+      }}
     >
       {children}
     </CartContext.Provider>
