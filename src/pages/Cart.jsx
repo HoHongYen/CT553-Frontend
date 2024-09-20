@@ -79,7 +79,7 @@ function Cart() {
         <Heading as="h1">Giỏ hàng của bạn </Heading>
       </div>
       <Row>
-        <div className="-ml-12 grid md:grid-cols-3 gap-5">
+        <div className="-ml-12 grid md:grid-cols-3 gap-10">
           {/* cart items begin */}
           <div className="md:col-span-2 space-y-8">
             {cartItems.map((cartItem, index) => (

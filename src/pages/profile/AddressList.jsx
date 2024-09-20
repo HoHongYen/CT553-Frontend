@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { OrderProvider } from "@/context/OrderContext";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -19,7 +20,7 @@ const StyledPolicyLayout = styled.div`
 
 function AddressList() {
   return (
-    <>
+    <OrderProvider>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />
@@ -31,7 +32,7 @@ function AddressList() {
           </div>
         </Row>
       </StyledPolicyLayout>
-    </>
+    </OrderProvider>
   );
 }
 

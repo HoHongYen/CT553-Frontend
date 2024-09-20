@@ -74,7 +74,9 @@ function AddressRow({ address, isAddressInOrderPage }) {
 
   return (
     <>
-      <Table.Row>
+      <Table.Row
+        isChoosed={isAddressInOrderPage && address?.id === addressToOrder?.id}
+      >
         {isAddressInOrderPage && (
           <div
             onClick={() => {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRegister } from "@/hooks/auth/useRegister";
+import { toCamelCase } from "@/utils/helpers";
 
 import { Link } from "react-router-dom";
 
@@ -33,6 +34,7 @@ function RegisterForm() {
     handleSubmit,
     getValues,
     formState: { errors },
+    setValue,
   } = useForm();
 
   function onSubmit({ fullName, email, password, phone, birthday }) {
@@ -54,6 +56,7 @@ function RegisterForm() {
           id="fullName"
           disabled={isLoading}
           {...register("fullName", { required: "Không được để trống" })}
+          onChange={(e) => setValue("fullName", toCamelCase(e.target.value))}
         />
       </FormRow>
 

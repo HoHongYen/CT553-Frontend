@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { toCamelCase } from "@/utils/helpers";
 
 import { useCreateAddress } from "@/hooks/profile/addresses/useCreateAddress";
 import { useUpdateAddress } from "@/hooks/profile/addresses/useUpdateAddress";
@@ -97,7 +98,6 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
     helper(districtId);
   }, [provinceId, districtId]);
 
-
   const { createAddress, isLoading: isCreating } = useCreateAddress();
   const { updateAddress, isLoading: isUpdating } = useUpdateAddress();
 
@@ -118,6 +118,7 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
@@ -187,6 +188,7 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
           {...register("contactName", {
             required: "Không được bỏ trống!",
           })}
+          onChange={(e) => setValue("contactName", toCamelCase(e.target.value))}
         />
       </FormRow>
 

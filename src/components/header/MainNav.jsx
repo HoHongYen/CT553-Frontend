@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Link, NavLink } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, message } from "antd";
+import { Dropdown } from "antd";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 

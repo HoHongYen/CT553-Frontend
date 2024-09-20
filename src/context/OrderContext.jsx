@@ -44,11 +44,17 @@ function OrderProvider({ children }) {
   useEffect(() => {
     if (addresses && addresses.length > 0) {
       const defaultAddress = addresses.find((address) => address.isDefault);
+      if (!defaultAddress) {
+        dispatch({
+          type: ORDER_ACTIONS.SET_ADDRESS,
+          payload: { address: addresses[0] },
+        });
+      }
       dispatch({
         type: ORDER_ACTIONS.SET_ADDRESS,
         payload: { address: defaultAddress },
       });
-    }
+    } 
   }, [addresses]);
 
   useEffect(() => {

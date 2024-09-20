@@ -32,7 +32,7 @@ export const profileLinks = [
     },
     {
         icon: HiOutlineGift,
-        title: "Kho voucher",
+        title: "Coupon",
     },
 ];
 

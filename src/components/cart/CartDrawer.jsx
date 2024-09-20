@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import { formatCurrency } from "@/utils/helpers";
 
 import Swal from "sweetalert2";
-import toast from "react-hot-toast";
 import { Drawer } from "antd";
 import { HiOutlineShoppingCart, HiOutlineTrash } from "react-icons/hi2";
 
@@ -51,7 +51,7 @@ function CartDrawer() {
 
   return (
     <Drawer
-      width={cartItems.length > 0 ? 550 : 400}
+      width={cartItems.length > 0 ? 600 : 400}
       closable
       destroyOnClose
       title={
@@ -110,7 +110,7 @@ function CartDrawer() {
                   </div>
                   <div
                     key={index}
-                    className="relative w-full first-letter:flex flex-col bg-[var(--color-grey-0)] px-6 py-6 rounded-md shadow-[0_2px_12px_-3px_var(--color-blue-700)]"
+                    className="relative w-[95%] first-letter:flex flex-col bg-[var(--color-grey-0)] px-6 py-6 rounded-md shadow-[0_2px_12px_-3px_var(--color-blue-700)]"
                   >
                     <div className="flex">
                       {/* discount badge begin */}

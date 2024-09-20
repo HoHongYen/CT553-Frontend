@@ -34,6 +34,9 @@ const StyledRow = styled(CommonRow)`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-200);
   }
+
+  background-color: ${(props) =>
+    props.isChoosed ? "var(--color-yellow-100)" : "transparent"};
 `;
 
 const StyledBody = styled.section`
@@ -78,10 +81,10 @@ function Header({ children }) {
   );
 }
 
-function Row({ children }) {
+function Row({ children, isChoosed = false }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledRow role="row" columns={columns}>
+    <StyledRow role="row" columns={columns} isChoosed={isChoosed}>
       {children}
     </StyledRow>
   );

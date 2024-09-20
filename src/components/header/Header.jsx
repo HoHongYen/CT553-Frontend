@@ -47,7 +47,7 @@ function Header() {
   const { isAuthenticated } = useUser();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { totalItems } = useCart();
+  const { cartItems } = useCart();
   const { openCartDrawer } = useShowCartDrawer();
 
   return (
@@ -104,7 +104,7 @@ function Header() {
           onClick={() => navigate("/gio-hang")}
           onMouseOver={openCartDrawer}
         >
-          <Badge size="small" count={totalItems}>
+          <Badge size="small" count={cartItems.length}>
             <HiOutlineShoppingCart />
           </Badge>
         </ButtonIcon>
