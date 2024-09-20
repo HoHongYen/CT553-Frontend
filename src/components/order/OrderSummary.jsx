@@ -40,7 +40,7 @@ function OrderSummary() {
         <li className="flex flex-wrap gap-4 font-bold">
           Tổng tiền cần thanh toán{" "}
           <span className="text-[var(--color-brand-700)] font-bold ml-auto">
-            {formatCurrency(totalPrices)}
+            {formatCurrency(totalPrices + shippingFee)}
           </span>
         </li>
       </ul>
