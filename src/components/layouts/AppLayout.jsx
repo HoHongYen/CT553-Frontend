@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { useUser } from "@/hooks/profile/useUser";
+import { OrderProvider } from "@/context/OrderContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
@@ -29,6 +31,7 @@ const Container = styled.div`
 function AppLayout() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showGoTop, setShowGoTop] = useState(false);
+  const { isAuthenticated } = useUser();
 
   const { open, closeCartDrawer } = useShowCartDrawer();
 
@@ -69,7 +72,14 @@ function AppLayout() {
       <Header />
       <Main>
         <Container>
-          <Outlet />
+          {!isAuthenticated ? (
+            <Outlet />
+          ) : (
+            <OrderProvider>
+              {" "}
+              <Outlet />{" "}
+            </OrderProvider>
+          )}
         </Container>
       </Main>
       <Footer />

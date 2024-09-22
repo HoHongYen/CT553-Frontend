@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
@@ -18,8 +18,10 @@ import DiscountPrice from "./DiscountPrice";
 import SelectSize from "./SelectSize";
 import TickRoundIcon from "../icons/TickRoundIcon";
 import EmptyRoundBoxIcon from "../icons/EmptyRoundBoxIcon";
+import Button from "../ui/Button";
 
 function CartDrawer() {
+  const navigate = useNavigate();
   const { open, closeCartDrawer } = useShowCartDrawer();
   const { cartItems, dispatch } = useCart();
 
@@ -73,7 +75,7 @@ function CartDrawer() {
       //       Tiến hành đặt hàng
       //     </Button>
       //     <Button
-      //       onClick={() => navigate("/gio-hang");}
+      //       onClick={() => navigate("/gio-hang")}
       //     >
       //       Đến trang giỏ hàng &rarr;
       //     </Button>
@@ -84,6 +86,14 @@ function CartDrawer() {
         {cartItems.length === 0 && (
           <div className="flex flex-col gap-5 items-center justify-center h-[calc(100vh-200px)]">
             <p>Bạn chưa thêm sản phẩm nào vào giỏ hàng!</p>
+            <Button
+              onClick={() => navigate("/trang-chu")}
+              variation="primary"
+              size="large"
+              className="ml-4"
+            >
+              &larr; Quay lại trang chủ
+            </Button>
           </div>
         )}
 

@@ -1,10 +1,11 @@
 /* eslint-disable */
 import { Link, NavLink } from "react-router-dom";
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown } from "antd";
-import styled from "styled-components";
+import { useCategories } from "@/hooks/categories/useCategories";
 import { v4 as uuidv4 } from "uuid";
 
+import styled from "styled-components";
+import { Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import {
   HiOutlineHome,
   HiOutlineCalendarDays,
@@ -15,7 +16,6 @@ import {
 } from "react-icons/hi2";
 
 import RoundImage from "@/components/ui/RoundImage";
-import { useCategories } from "@/hooks/categories/useCategories";
 import { policies } from "@/utils/constants";
 import { formatSlugify } from "@/utils/helpers";
 
@@ -42,15 +42,14 @@ const StyledNavLink = styled(NavLink)`
   &:active,
   &.active:link,
   &.active:visited {
-    color: var(--color-blue-800);
-    background-color: var(--color-blue-50);
+    color: var(--color-brand-600);
     border-radius: var(--border-radius-sm);
   }
 
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    color: var(--color-blue-400);
+    color: var(--color-brand-400);
     transition: all 0.3s;
   }
 
@@ -77,7 +76,6 @@ const StyledMenuNavLink = styled(NavLink)`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* color: var(--color-blue-400); */
     transition: all 0.3s;
   }
 `;
@@ -143,7 +141,9 @@ function MainNav() {
         <li>
           <StyledNavLink to="/">
             <HiOutlineHome />
-            <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Trang chủ</span>
+            <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">
+              Trang chủ
+            </span>
           </StyledNavLink>
         </li>
         <li>
@@ -157,7 +157,9 @@ function MainNav() {
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineCalendarDays />
-                <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Sản phẩm</span>
+                <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">
+                  Sản phẩm
+                </span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>
@@ -166,7 +168,9 @@ function MainNav() {
         <li>
           <StyledNavLink to="/khuyen-mai">
             <HiOutlineGift />
-            <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Khuyến mại</span>
+            <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">
+              Khuyến mại
+            </span>
           </StyledNavLink>
         </li>
         <li>
@@ -180,7 +184,9 @@ function MainNav() {
             <a onClick={(e) => e.preventDefault()}>
               <StyledMenuNavLink>
                 <HiOutlineClipboardDocumentList />
-                <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">Chính sách</span>
+                <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">
+                  Chính sách
+                </span>
                 <DownOutlined className="w-6 h-6" />
               </StyledMenuNavLink>
             </a>

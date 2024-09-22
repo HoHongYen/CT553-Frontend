@@ -26,10 +26,10 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <>
-      <DarkModeProvider>
-        <CartProvider>
-          <ShowCartDrawerProvider>
-            <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <DarkModeProvider>
+          <CartProvider>
+            <ShowCartDrawerProvider>
               <ConfigProvider
                 theme={{
                   token: {
@@ -124,6 +124,10 @@ function App() {
                         />
                       </Route>
                       <Route
+                        path="khuyen-mai"
+                        element={<SuspenseWrapper path="HotDeals" />}
+                      />
+                      <Route
                         path="lien-he"
                         element={<SuspenseWrapper path="Contact" />}
                       />
@@ -170,11 +174,11 @@ function App() {
                           }
                         />
                         <Route
-                          path="tai-khoan/kho-voucher"
+                          path="tai-khoan/coupon"
                           element={
                             <SuspenseWrapper
                               level1="profile"
-                              path="VoucherList"
+                              path="CouponList"
                             />
                           }
                         />
@@ -215,10 +219,10 @@ function App() {
                   }}
                 />
               </ConfigProvider>
-            </QueryClientProvider>
-          </ShowCartDrawerProvider>
-        </CartProvider>
-      </DarkModeProvider>
+            </ShowCartDrawerProvider>
+          </CartProvider>
+        </DarkModeProvider>
+      </QueryClientProvider>
     </>
   );
 }

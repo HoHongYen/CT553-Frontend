@@ -32,7 +32,6 @@ function HomeProducts() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <div className="mt-10"></div>
     </>
   );
 }

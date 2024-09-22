@@ -24,7 +24,7 @@ import SecurityPolicy from "./pages/policy/SecurityPolicy";
 import ChangePassword from "./pages/profile/ChangePassword";
 import OrderList from "./pages/profile/OrderList";
 import AddressList from "./pages/profile/AddressList";
-import VoucherList from "./pages/profile/VoucherList";
+import CouponList from "./pages/profile/CouponList";
 import MainCategory from "./pages/MainCategory";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
@@ -102,10 +102,7 @@ function App() {
                     path="tai-khoan/so-dia-chi"
                     element={<AddressList />}
                   />
-                  <Route
-                    path="tai-khoan/kho-voucher"
-                    element={<VoucherList />}
-                  />
+                  <Route path="tai-khoan/coupon" element={<CouponList />} />
                 </Route>
               </Route>
               <Route path="dang-nhap" element={<Login />} />

@@ -39,3 +39,12 @@ export const formatSlugify = (value) =>
 export const formatDate = (date) => {
   return moment(date).format("DD/MM/YYYY");
 };
+
+export const toCamelCase = (str) => {
+  return str
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+}

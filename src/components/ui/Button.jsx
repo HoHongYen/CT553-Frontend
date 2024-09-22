@@ -31,6 +31,7 @@ const variations = {
     }
   `,
   secondary: css`
+    border: 1px solid var(--color-grey-300);
     color: var(--color-grey-600);
     background-color: var(--color-grey-0);
 
@@ -80,7 +81,6 @@ const radius = {
 
 const Button = styled.button`
   /* border: none; */
-  border: 1px solid var(--color-grey-300);
   box-shadow: var(--shadow-sm);
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}

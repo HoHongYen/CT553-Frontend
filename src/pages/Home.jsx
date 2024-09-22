@@ -8,7 +8,7 @@ import Heading from "@/components/ui/Heading";
 import Slider from "@/components/home/Slider";
 const breadcrumb = [];
 
-const Slogan = styled.div`
+export const Slogan = styled.div`
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-optical-sizing: auto;
   font-weight: 469;
