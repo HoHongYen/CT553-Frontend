@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { useUser } from "@/hooks/profile/useUser";
+import { useOrders } from "@/hooks/orders/useOrders";
 
-import UpdatePasswordForm from "@/components/profile/UpdatePasswordForm";
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import BreadCrumb from "@/components/ui/BreadCrumb";
@@ -18,7 +17,7 @@ const StyledPolicyLayout = styled.div`
 `;
 
 function OrderList() {
-  const { user } = useUser();
+  const { orders } = useOrders();
 
   return (
     <>
@@ -27,11 +26,13 @@ function OrderList() {
         <Sidebar />
         <Row>
           <Heading as="h1">Quản lý đơn hàng</Heading>
-          {!user.isGoogleLogin && (
-            <Row>
-              <UpdatePasswordForm />
-            </Row>
-          )}
+          {orders?.map((order) => (
+            <div key={order.id}>
+              <p>{order.id}</p>
+              <p>{order.totalPrice}</p>
+              <p>{order.status}</p>
+            </div>
+          ))}
         </Row>
       </StyledPolicyLayout>
     </>

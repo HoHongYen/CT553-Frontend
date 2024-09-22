@@ -20,9 +20,6 @@ function OrderPayment() {
     window.open(redirectUrl.metadata.redirectUrl, "_blank");
   };
 
-  if (!paymentMethods || paymentMethods.length == 0 || !paymentMethod)
-    return <SpinnerMini />;
-
   return (
     <div className="bg-[var(--color-grey-0)] rounded-md px-6 py-6 h-max shadow-[0_2px_12px_-3px_var(--color-blue-700)]">
       <div className="flex justify-center mb-8">

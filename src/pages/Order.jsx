@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useCart } from "@/context/CartContext";
-import { useOrder } from "@/context/OrderContext";
+import { useNavigate } from "react-router-dom";
+import { CART_ACTIONS, useCart } from "@/context/CartContext";
+import { ORDER_ACTIONS, useOrder } from "@/context/OrderContext";
+import { useCreateOrder } from "@/hooks/orders/useCreateOrder";
 import { formatCurrency } from "@/utils/helpers";
 
 import BreadCrumb from "@/components/ui/BreadCrumb";
@@ -16,13 +17,78 @@ import {
 import AddAddress from "@/components/profile/addresses/AddAddress";
 import OrderPayment from "@/components/order/OrderPayment";
 import OrderSummary from "@/components/order/OrderSummary";
-import OrderCoupon from "@/components/order/OrderCoupon";
+import OrderCoupons from "@/components/order/OrderCoupons";
+import Button from "@/components/ui/Button";
 
 const breadcrumb = [{ name: "Đặt hàng" }];
 
-function Cart() {
-  const { totalItems, totalPrices } = useCart();
-  const { address: addressToOrder } = useOrder();
+function Order() {
+  const navigate = useNavigate();
+  const {
+    totalItems,
+    totalPrice,
+    cartItems,
+    dispatch: cartDispatch,
+  } = useCart();
+  const { dispatch: orderDispatch } = useOrder();
+
+  const {
+    paymentMethods,
+    address: addressToOrder,
+    shippingFee,
+    totalDiscount,
+    finalPrice,
+    paymentMethod,
+    appliedCoupon,
+  } = useOrder();
+
+  const { createOrder } = useCreateOrder();
+
+  const handleCreateOrder = async () => {
+    const order = {
+      totalPrice,
+      totalDiscount,
+      finalPrice,
+      shippingFee,
+      deliveryAddressId: addressToOrder.id,
+      paymentMethodId: paymentMethod.id,
+      usedCouponId: appliedCoupon ? appliedCoupon.couponId : null,
+      items: cartItems.map((item) => ({
+        variantId: item.variant.id,
+        productId: item.product.id,
+        quantity: item.quantity,
+        price: item.finalPricePerOne,
+        productDiscount: item.variant.price - item.finalPricePerOne,
+      })),
+    };
+
+    console.log(order);
+
+    createOrder(order);
+    // reset cart
+    cartDispatch({ type: CART_ACTIONS.RESET });
+    // reset order
+    orderDispatch({
+      type: ORDER_ACTIONS.RESET,
+      payload: { paymentMethod: paymentMethods[0] },
+    });
+  };
+
+  if (totalItems === 0) {
+    return (
+      <div className="flex flex-col gap-5 items-center justify-center h-[calc(100vh-200px)]">
+        <Heading as="h2">Bạn chưa thêm sản phẩm nào vào giỏ hàng!</Heading>
+        <Button
+          onClick={() => navigate("/trang-chu")}
+          variation="primary"
+          size="large"
+          className="ml-4"
+        >
+          &larr; Quay lại trang chủ
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -45,9 +111,6 @@ function Cart() {
                 </Heading>
               </div>
               <AddressTable isAddressInOrderPage={true} />
-              {/* <div className="flex justify-end">
-                <AddAddress />
-              </div> */}
               <div className="flex w-full items-center justify-between">
                 {addressToOrder && (
                   <div className="max-w-[75%]">
@@ -88,7 +151,7 @@ function Cart() {
                 <div>
                   <span className="font-semibold italic">Tổng tiền hàng: </span>
                   <span className="font-bold italic ml-3 text-3xl text-[var(--color-green-700)]">
-                    {formatCurrency(totalPrices)}
+                    {formatCurrency(totalPrice)}
                   </span>
                 </div>
               </div>
@@ -104,23 +167,36 @@ function Cart() {
                 >
                   <HiOutlineGift />
                   <span className="font-bold">Áp dụng coupon (nếu có)</span>
+                  {appliedCoupon && (
+                    <span className="text-[var(--color-green-700)]">
+                      (Đã áp dụng mã giảm giá) {appliedCoupon.coupon.code}
+                    </span>
+                  )}
                 </Heading>
               </div>
-              <OrderCoupon />
+              <OrderCoupons />
             </div>
             {/* voucher end */}
           </div>
 
-          {/* cart summary begin */}
+          {/* order summary begin */}
           <div className="flex flex-col gap-8">
             <OrderSummary />
             <OrderPayment />
+
+            <Button
+              onClick={handleCreateOrder}
+              variation="success"
+              className="uppercase font-bold w-full"
+            >
+              Đặt hàng
+            </Button>
           </div>
-          {/* cart summary end */}
+          {/* order summary end */}
         </div>
       </Row>
     </>
   );
 }
 
-export default Cart;
+export default Order;

@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
+import { formatCurrency } from "@/utils/helpers";
 import DiscountBadge from "../cart/DiscountBadge";
 import Heading from "../ui/Heading";
-import { Link } from "react-router-dom";
 import DiscountPrice from "../cart/DiscountPrice";
-import { formatCurrency } from "@/utils/helpers";
 
 function OrderProducts() {
   const { choosedItems } = useCart();

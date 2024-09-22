@@ -19,6 +19,7 @@ export const CART_ACTIONS = {
   CHANGE_VARIANT: "CHANGE_VARIANT",
   CLEAR_CART: "CLEAR_CART",
   CHECK_ITEM: "CHECK_ITEM",
+  RESET: "RESET",
 };
 
 function reducer(state, action) {
@@ -157,6 +158,9 @@ function reducer(state, action) {
         }),
       };
 
+    case CART_ACTIONS.RESET:
+      return { ...initialState };
+
     default:
       return state;
   }
@@ -181,7 +185,7 @@ function CartProvider({ children }) {
     0
   );
 
-  const totalPrices = cartItems.reduce((acc, item) => {
+  const totalPrice = cartItems.reduce((acc, item) => {
     return acc + (item.isChecked ? item.finalPricePerOne * item.quantity : 0);
   }, 0);
 
@@ -196,7 +200,7 @@ function CartProvider({ children }) {
       value={{
         cartItems,
         totalItems,
-        totalPrices,
+        totalPrice,
         choosedItems,
         dispatch,
         isProductInCart,

@@ -7,7 +7,7 @@ import { HiOutlineNewspaper } from "react-icons/hi2";
 
 function CartSummary({ isCartDrawer = false }) {
   const navigate = useNavigate();
-  const { totalItems, totalPrices } = useCart();
+  const { totalItems, totalPrice } = useCart();
 
   return (
     <div className="bg-[var(--color-grey-0)] rounded-md px-6 py-6 h-max shadow-[0_2px_12px_-3px_var(--color-blue-700)]">
@@ -31,7 +31,7 @@ function CartSummary({ isCartDrawer = false }) {
         <li className="flex flex-wrap gap-4">
           Tổng tiền hàng{" "}
           <span className="ml-auto font-bold">
-            {formatCurrency(totalPrices)}
+            {formatCurrency(totalPrice)}
           </span>
         </li>
         <li className="flex flex-wrap gap-4 ">
@@ -41,7 +41,7 @@ function CartSummary({ isCartDrawer = false }) {
         <li className="flex flex-wrap gap-4 font-bold">
           Tạm tính{" "}
           <span className="text-[var(--color-brand-700)] font-bold ml-auto">
-            {formatCurrency(totalPrices)}
+            {formatCurrency(totalPrice)}
           </span>
         </li>
       </ul>

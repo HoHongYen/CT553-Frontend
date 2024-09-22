@@ -5,8 +5,8 @@ import { HiOutlineNewspaper } from "react-icons/hi2";
 import Heading from "../ui/Heading";
 
 function OrderSummary() {
-  const { totalItems, totalPrices } = useCart();
-  const { shippingFee } = useOrder();
+  const { totalItems, totalPrice } = useCart();
+  const { shippingFee, appliedCoupon, totalDiscount, finalPrice } = useOrder();
 
   return (
     <div className="bg-[var(--color-grey-0)] rounded-md px-6 py-6 h-max shadow-[0_2px_12px_-3px_var(--color-blue-700)]">
@@ -27,9 +27,17 @@ function OrderSummary() {
         <li className="flex flex-wrap gap-4">
           Tổng tiền hàng{" "}
           <span className="ml-auto font-bold">
-            {formatCurrency(totalPrices)}
+            {formatCurrency(totalPrice)}
           </span>
         </li>
+        {appliedCoupon && (
+          <li className="flex flex-wrap gap-4">
+            Áp dụng coupon{" "}
+            <span className="ml-auto font-bold">
+              -{formatCurrency(totalDiscount)}
+            </span>
+          </li>
+        )}
         <li className="flex flex-wrap gap-4 ">
           Phí giao hàng{" "}
           <span className="ml-auto font-bold">
@@ -40,7 +48,7 @@ function OrderSummary() {
         <li className="flex flex-wrap gap-4 font-bold">
           Tổng tiền cần thanh toán{" "}
           <span className="text-[var(--color-brand-700)] font-bold ml-auto">
-            {formatCurrency(totalPrices + shippingFee)}
+            {formatCurrency(finalPrice)}
           </span>
         </li>
       </ul>
