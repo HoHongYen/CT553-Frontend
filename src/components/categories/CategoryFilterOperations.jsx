@@ -6,25 +6,25 @@ function CategoryFilterOperations() {
   return (
     <TableOperations>
       <Filter
-        filterField="discount"
+        filterField="trang-thai"
         options={[
-          { value: "all", label: "Tất cả" },
-          { value: "no-discount", label: "Không giảm giá" },
-          { value: "with-discount", label: "Đang giảm giá" },
+          { value: "tat-ca", label: "Tất cả" },
+          { value: "dang-giam-gia", label: "Đang giảm giá" },
+          { value: "khong-giam-gia", label: "Không giảm giá" },
         ]}
       />
       <SortBy
         options={[
-          { value: "createdAt-desc", label: "Hàng mới nhất" },
-          { value: "createdAt-asc", label: "Hàng cũ nhất" },
-          { value: "name-asc", label: "Xếp theo tên (A-Z)" },
-          { value: "name-desc", label: "Xếp theo tên (Z-A)" },
+          { value: "moi-nhat", label: "Hàng mới nhất" },
+          { value: "cu-nhat", label: "Hàng cũ nhất" },
+          { value: "ten-tang-dan", label: "Xếp theo tên (A-Z)" },
+          { value: "ten-giam-dan", label: "Xếp theo tên (Z-A)" },
           {
-            value: "price-asc",
+            value: "gia-tang-dan",
             label: "Xếp theo giá tăng dần",
           },
           {
-            value: "price-desc",
+            value: "gia-giam-dan",
             label: "Xếp theo giá giảm dần",
           },
         ]}

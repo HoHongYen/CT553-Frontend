@@ -86,9 +86,9 @@ const PageButton = styled.button`
 
 function Pagination({ count, totalPages }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = !searchParams.get("page")
+  const currentPage = !searchParams.get("trang")
     ? 1
-    : Number(searchParams.get("page"));
+    : Number(searchParams.get("trang"));
 
   const limitOptions = [
     { label: "Hiển thị 4 sản phẩm", value: 4 },
@@ -99,24 +99,24 @@ function Pagination({ count, totalPages }) {
   ];
 
   const [limitId, setLimitId] = useState(
-    searchParams.get("limit") || PAGE_SIZE
+    searchParams.get("gioi-han") || PAGE_SIZE
   );
 
   function handleLimitChange(e) {
     setLimitId(e.target.value);
-    searchParams.set("limit", e.target.value);
+    searchParams.set("gioi-han", e.target.value);
     setSearchParams(searchParams);
   }
 
   function prevPage() {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
-    searchParams.set("page", prev);
+    searchParams.set("trang", prev);
     setSearchParams(searchParams);
   }
 
   function nextPage() {
     const next = currentPage === totalPages ? currentPage : currentPage + 1;
-    searchParams.set("page", next);
+    searchParams.set("trang", next);
     setSearchParams(searchParams);
   }
 
@@ -144,7 +144,7 @@ function Pagination({ count, totalPages }) {
               key={page}
               active={page === currentPage}
               onClick={() => {
-                searchParams.set("page", page);
+                searchParams.set("trang", page);
                 setSearchParams(searchParams);
               }}
             >

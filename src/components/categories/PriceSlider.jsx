@@ -4,13 +4,13 @@ import { formatCurrency } from "@/utils/helpers";
 
 function PriceSlider() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentMinPriceFilter = searchParams.get("minPrice") || 0;
-  const currentMaxPriceFilter = searchParams.get("maxPrice") || 5000000;
+  const currentMinPriceFilter = searchParams.get("gia-toi-thieu") || 0;
+  const currentMaxPriceFilter = searchParams.get("gia-toi-da") || 5000000;
 
   function handleSlide(value) {
-    searchParams.set("minPrice", value[0] * 50000);
-    searchParams.set("maxPrice", value[1] * 50000);
-    if (searchParams.get("page")) searchParams.set("page", 1);
+    searchParams.set("gia-toi-thieu", value[0] * 50000);
+    searchParams.set("gia-toi-da", value[1] * 50000);
+    if (searchParams.get("trang")) searchParams.set("trang", 1);
     setSearchParams(searchParams);
   }
 
