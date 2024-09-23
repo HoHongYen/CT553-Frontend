@@ -41,7 +41,7 @@ function OrderProducts() {
 
               <div className="flex items-center gap-2 mt-3">
                 <span className="font-semibold mr-2">Mã sản phẩm:</span>{" "}
-                {cartItem.product.id}
+                #{cartItem.product.id}
               </div>
 
               <div className="flex items-center gap-2 mt-3">

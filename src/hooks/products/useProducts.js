@@ -22,32 +22,43 @@ export function useProducts() {
     const category = subCategoryObject || mainCategoryObject;
 
     // FILTER
-    const filterValue = searchParams.get("discount") || "all";
-    const filter = !filterValue || filterValue === "all" ? null : { field: "discount", value: filterValue };
+    const filterValue = searchParams.get("trang-thai") || "tat-ca";
+    const filter = !filterValue || filterValue === "tat-ca" ? null : { field: "trang-thai", value: filterValue };
 
-    const filterMinPriceValue = Number(searchParams.get("minPrice"));
-    const filterMinPrice = !filterMinPriceValue ? null : { field: "minPrice", value: filterMinPriceValue };
+    const filterMinPriceValue = Number(searchParams.get("gia-toi-thieu"));
+    const filterMinPrice = !filterMinPriceValue ? null : { field: "gia-toi-thieu", value: filterMinPriceValue };
 
-    const filterMaxPriceValue = Number(searchParams.get("maxPrice"));
-    const filterMaxPrice = !filterMaxPriceValue ? null : { field: "maxPrice", value: filterMaxPriceValue };
+    const filterMaxPriceValue = Number(searchParams.get("gia-toi-da"));
+    const filterMaxPrice = !filterMaxPriceValue ? null : { field: "gia-toi-da", value: filterMaxPriceValue };
 
     // SORT
-    const sortByRaw = searchParams.get("sortBy") || "createdAt-desc";
-    const [field, direction] = sortByRaw.split("-");
-    const sortBy = { field, direction };
+    const sortByRaw = searchParams.get("thu-tu") || "moi-nhat";
+    let sortBy = { field: "createdAt", direction: "desc" };
+    if (sortByRaw === "cu-nhat") {
+        sortBy = { field: "createdAt", direction: "asc" };
+    } else if (sortByRaw === "ten-tang-dan") {
+        sortBy = { field: "name", direction: "asc" };
+    } else if (sortByRaw === "ten-giam-dan") {
+        sortBy = { field: "name", direction: "desc" };
+    }
+    // else if (sortByRaw === "gia-tang-dan") {
+    //     sortBy = { field: "finalPrice", direction: "asc" };
+    // } else if (sortByRaw === "gia-giam-dan") {
+    //     sortBy = { field: "finalPrice", direction: "desc" };
+    // }
 
     // PAGINATION
-    const page = !searchParams.get("page")
+    const page = !searchParams.get("trang")
         ? 1
-        : Number(searchParams.get("page"));
+        : Number(searchParams.get("trang"));
 
-    const limit = searchParams.get("limit") || PAGE_SIZE;
+    const limit = searchParams.get("gioi-han") || PAGE_SIZE;
 
     // QUERY
     const {
         isLoading,
         data: { metadata: { products, pagination: { totalProducts, totalPages } } } = { metadata: { products: [], pagination: { totalProducts: 0, totalPages: 0 } } },
-        error,  
+        error,
     } = useQuery({
         queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page, limit, mainCategory, subCategory],
         queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, page, limit }),

@@ -2,8 +2,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { createOrder as createOrderApi } from "@/services/apiOrders";
+import { useOrder } from "@/context/OrderContext";
+import { getRedirectUrlVNPAY } from "@/services/apiPayments";
 
 export function useCreateOrder() {
+
+    const { paymentMethods } = useOrder();
+
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const { mutate: createOrder, isLoading } = useMutation({

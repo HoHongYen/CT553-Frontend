@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { ORDER_ACTIONS, useOrder } from "@/context/OrderContext";
 import { useCreateOrder } from "@/hooks/orders/useCreateOrder";
+import { useCreateRedirectUrlVNPAY } from "@/hooks/orders/useCreateRedirectUrlVNPAY";
 import { formatCurrency } from "@/utils/helpers";
 
 import BreadCrumb from "@/components/ui/BreadCrumb";
@@ -28,6 +29,7 @@ function Order() {
     totalItems,
     totalPrice,
     cartItems,
+    choosedItems,
     dispatch: cartDispatch,
   } = useCart();
   const { dispatch: orderDispatch } = useOrder();
@@ -43,6 +45,7 @@ function Order() {
   } = useOrder();
 
   const { createOrder } = useCreateOrder();
+  const { createRedirectUrlVNPAY } = useCreateRedirectUrlVNPAY();
 
   const handleCreateOrder = async () => {
     const order = {
@@ -53,7 +56,7 @@ function Order() {
       deliveryAddressId: addressToOrder.id,
       paymentMethodId: paymentMethod.id,
       usedCouponId: appliedCoupon ? appliedCoupon.couponId : null,
-      items: cartItems.map((item) => ({
+      items: choosedItems.map((item) => ({
         variantId: item.variant.id,
         productId: item.product.id,
         quantity: item.quantity,
@@ -61,16 +64,34 @@ function Order() {
         productDiscount: item.variant.price - item.finalPricePerOne,
       })),
     };
-
     console.log(order);
 
-    createOrder(order);
-    // reset cart
-    cartDispatch({ type: CART_ACTIONS.RESET });
-    // reset order
-    orderDispatch({
-      type: ORDER_ACTIONS.RESET,
-      payload: { paymentMethod: paymentMethods[0] },
+    // call api to create order
+    createOrder(order, {
+      onSuccess: ({ metadata: order }) => {
+        // open new tab to redirect to VNPAY
+        console.log("orderPaymentMethodId", order.paymentMethod.id);
+        console.log("paymentMethods[1].id", paymentMethods[1].id);
+        if (order.paymentMethod.id === paymentMethods[1].id) {
+          console.log("VNPAY payment branch");
+          createRedirectUrlVNPAY({
+            orderId: order.id,
+            amount: order.finalPrice,
+          });
+        }
+
+        // remove selected item in cart
+        const unCheckedItems = cartItems.filter((item) => !item.isChecked);
+        cartDispatch({
+          type: CART_ACTIONS.SET_CART,
+          payload: { cartItems: unCheckedItems },
+        });
+        // reset order
+        orderDispatch({
+          type: ORDER_ACTIONS.RESET,
+          payload: { paymentMethod: paymentMethods[0] },
+        });
+      },
     });
   };
 
