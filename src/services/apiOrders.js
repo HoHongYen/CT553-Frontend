@@ -15,16 +15,8 @@ export async function getAllOrderStatus() {
     return (await api.get("/status-all")).data;
 }
 
-export async function getOrdersByStatus(orderStatusId) {
-    return (await api.get("/?orderStatusId=" + orderStatusId)).data;
-}
-
-export async function getAllOrdersByUser() {
-    console.log("getAllOrdersByUser");
-    const res = await (await api.get("/?orderStatusId=0")).data;
-    console.log(res);
-    return res;
-    // return (await api.get("/?orderStatusId=0")).data;
+export async function getOrdersByStatus({ orderStatusId, sortBy, page, limit }) {
+    return (await api.get("/", { params: { orderStatusId, sortBy, page, limit } })).data;
 }
 
 export async function getOrderById(orderId) {
