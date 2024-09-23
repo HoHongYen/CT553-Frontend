@@ -84,19 +84,17 @@ const PageButton = styled.button`
   }
 `;
 
-function Pagination({ count, totalPages }) {
+function Pagination({ count, totalPages, label = "sản phẩm" }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("trang")
     ? 1
     : Number(searchParams.get("trang"));
 
-  const limitOptions = [
-    { label: "Hiển thị 4 sản phẩm", value: 4 },
-    { label: "Hiển thị 8 sản phẩm", value: 8 },
-    { label: "Hiển thị 12 sản phẩm", value: 12 },
-    { label: "Hiển thị 16 sản phẩm", value: 16 },
-    { label: "Hiển thị 20 sản phẩm", value: 20 },
-  ];
+  let limits = [4, 8, 12, 16, 20];
+  let limitOptions = limits.map((limit) => ({
+    label: `Hiển thị ${limit} ${label}`,
+    value: limit,
+  }));
 
   const [limitId, setLimitId] = useState(
     searchParams.get("gioi-han") || PAGE_SIZE
@@ -105,19 +103,27 @@ function Pagination({ count, totalPages }) {
   function handleLimitChange(e) {
     setLimitId(e.target.value);
     searchParams.set("gioi-han", e.target.value);
+    // remove trang query when limit changes
+    searchParams.delete("trang");
     setSearchParams(searchParams);
+    // scroll smoothly to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function prevPage() {
     const prev = currentPage === 1 ? currentPage : currentPage - 1;
     searchParams.set("trang", prev);
     setSearchParams(searchParams);
+    // scroll smoothly to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function nextPage() {
     const next = currentPage === totalPages ? currentPage : currentPage + 1;
     searchParams.set("trang", next);
     setSearchParams(searchParams);
+    // scroll smoothly to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   if (totalPages <= 1) return null;
@@ -125,11 +131,11 @@ function Pagination({ count, totalPages }) {
   return (
     <StyledPagination>
       <P>
-        Hiển thị từ <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> đến{" "}
+        Hiển thị từ <span>{(currentPage - 1) * limitId + 1}</span> đến{" "}
         <span>
-          {currentPage === totalPages ? count : currentPage * PAGE_SIZE}
+          {currentPage === totalPages ? count : currentPage * limitId}
         </span>{" "}
-        trong tổng số <span>{count}</span> sản phẩm
+        trong tổng số <span>{count}</span> {label}
       </P>
       <Buttons>
         <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
@@ -146,6 +152,8 @@ function Pagination({ count, totalPages }) {
               onClick={() => {
                 searchParams.set("trang", page);
                 setSearchParams(searchParams);
+                // scroll smoothly to top
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
               <span>{page}</span>

@@ -1,5 +1,5 @@
 {
-  "name": "the-wide-oasis",
+  "name": "CT553",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -30,11 +30,12 @@
     "regenerator-runtime": "^0.14.1",
     "slugify": "^1.6.6",
     "styled-components": "^6.1.12",
-    "sweetalert2": "^11.14.0",
     "swiper": "^11.1.14",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-react": "^7.24.7",
     "@rollup/plugin-dynamic-import-vars": "^2.1.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

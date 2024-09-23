@@ -165,6 +165,15 @@ function App() {
                           }
                         />
                         <Route
+                          path="tai-khoan/quan-ly-don-hang/:orderId"
+                          element={
+                            <SuspenseWrapper
+                              level1="profile"
+                              path="OrderDetail"
+                            />
+                          }
+                        />
+                        <Route
                           path="tai-khoan/so-dia-chi"
                           element={
                             <SuspenseWrapper
