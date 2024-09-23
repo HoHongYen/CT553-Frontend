@@ -5,7 +5,6 @@ import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import { formatCurrency } from "@/utils/helpers";
 
-import Swal from "sweetalert2";
 import { Drawer } from "antd";
 import { HiOutlineShoppingCart, HiOutlineTrash } from "react-icons/hi2";
 
@@ -19,36 +18,20 @@ import SelectSize from "./SelectSize";
 import TickRoundIcon from "../icons/TickRoundIcon";
 import EmptyRoundBoxIcon from "../icons/EmptyRoundBoxIcon";
 import Button from "../ui/Button";
+import Modal from "../ui/Modal";
+import ConfirmCertain from "../ui/ConfirmCertain";
 
 function CartDrawer() {
   const navigate = useNavigate();
   const { open, closeCartDrawer } = useShowCartDrawer();
   const { cartItems, dispatch } = useCart();
 
-  const handleRemoveVariant = (variantId, productName) => () => {
-    Swal.fire({
-      width: 400,
-      size: "lg",
-      title: `Bạn có chắc chắc muốn xóa ${productName} khỏi giỏ hàng?`,
-      showDenyButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      denyButtonText: "Chắc chắn",
-      cancelButtonText: "Hủy",
-      customClass: {
-        CART_ACTIONS: "my-CART_ACTIONS",
-        denyButton: "order-1",
-        cancelButton: "order-2",
-      },
-    }).then((result) => {
-      if (result.isDenied) {
-        dispatch({
-          type: CART_ACTIONS.REMOVE_FROM_CART,
-          payload: { variantId },
-        });
-        toast.success("Đã xóa sản phẩm khỏi giỏ hàng!");
-      }
+  const handleRemoveVariant = (variantId) => {
+    dispatch({
+      type: CART_ACTIONS.REMOVE_FROM_CART,
+      payload: { variantId },
     });
+    toast.success("Đã xóa sản phẩm khỏi giỏ hàng!");
   };
 
   return (
@@ -131,17 +114,22 @@ function CartDrawer() {
                           {cartItem.product.name}
                         </p>
                       </Link>
-                      <ButtonIcon
-                        onClick={handleRemoveVariant(
-                          cartItem.variant.id,
-                          cartItem.product.name
-                        )}
-                        variation="danger"
-                        size="large"
-                        className="ml-auto -mt-3"
-                      >
-                        <HiOutlineTrash />
-                      </ButtonIcon>
+
+                      <Modal>
+                        <Modal.Open opens="removeItem">
+                          <ButtonIcon variation="danger" size="large">
+                            <HiOutlineTrash />
+                          </ButtonIcon>
+                        </Modal.Open>
+                        <Modal.Window name="removeItem">
+                          <ConfirmCertain
+                            resourceName={`Bạn có chắc chắc muốn xóa sản phẩm "${cartItem.product.name}" khỏi giỏ hàng?`}
+                            onConfirm={() =>
+                              handleRemoveVariant(cartItem.variant.id)
+                            }
+                          />
+                        </Modal.Window>
+                      </Modal>
                     </div>
 
                     <div className="flex gap-5">
@@ -160,7 +148,7 @@ function CartDrawer() {
                               <span className="font-semibold mr-3">
                                 Mã sản phẩm:
                               </span>{" "}
-                              {cartItem.product.id}
+                              #{cartItem.product.id}
                             </div>
                             <div className="flex flex-col">
                               <span className="font-semibold mr-3">

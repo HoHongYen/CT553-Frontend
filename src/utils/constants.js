@@ -1,6 +1,5 @@
 import { HiOutlineCash, HiOutlineTruck } from "react-icons/hi";
 import { HiMiniArrowPathRoundedSquare, HiOutlineEye, HiOutlineGift, HiOutlineLockClosed, HiOutlineMapPin, HiOutlineShoppingBag, HiOutlineUser, HiOutlineWrench } from "react-icons/hi2";
-import { v4 as uuidv4 } from "uuid";
 
 export const PAGE_SIZE = 8;
 
@@ -82,3 +81,48 @@ export const PRODUCT_TRENDING = "Trending";
 export const PRODUCT_FOR_YOU = "ForYou";
 export const PRODUCT_ALL = "All";
 export const PRODUCT_SALES = "Sales";
+
+export const ORDER_STATUS = {
+    AWAITING_CONFIRM: "AWAITING_CONFIRM",
+    AWAITING_FULFILLMENT: "AWAITING_FULFILLMENT",
+    DELIVERING: "DELIVERING",
+    DELIVERED: "DELIVERED",
+    CANCELED: "CANCELED",
+    RETURNED: "RETURNED",
+};
+
+export const ORDER_STATUS_TEXT = {
+    [ORDER_STATUS.AWAITING_CONFIRM]: "Chờ xác nhận",
+    [ORDER_STATUS.AWAITING_FULFILLMENT]: "Đang xử lý",
+    [ORDER_STATUS.DELIVERING]: "Đang giao",
+    [ORDER_STATUS.DELIVERED]: "Đã giao",
+    [ORDER_STATUS.CANCELED]: "Đã hủy",
+    [ORDER_STATUS.RETURNED]: "Đổi trả",
+};
+
+export const ORDER_STATUS_COLOR = {
+    [ORDER_STATUS.AWAITING_CONFIRM]: "blue",
+    [ORDER_STATUS.AWAITING_FULFILLMENT]: "indigo",
+    [ORDER_STATUS.DELIVERING]: "yellow",
+    [ORDER_STATUS.DELIVERED]: "green",
+    [ORDER_STATUS.CANCELED]: "red",
+    [ORDER_STATUS.RETURNED]: "grey",
+};
+
+export const PAYMENT_STATUS = {
+    PENDING: "PENDING",
+    SUCCESS: "SUCCESS",
+    FAILED: "FAILED",
+};
+
+export const PAYMENT_STATUS_TEXT = {
+    [PAYMENT_STATUS.PENDING]: "Chờ thanh toán",
+    [PAYMENT_STATUS.SUCCESS]: "Thành công",
+    [PAYMENT_STATUS.FAILED]: "Thất bại",
+};
+
+export const PAYMENT_STATUS_COLOR = {
+    [PAYMENT_STATUS.PENDING]: "blue",
+    [PAYMENT_STATUS.SUCCESS]: "green",
+    [PAYMENT_STATUS.FAILED]: "red",
+};

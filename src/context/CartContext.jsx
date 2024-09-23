@@ -19,7 +19,6 @@ export const CART_ACTIONS = {
   CHANGE_VARIANT: "CHANGE_VARIANT",
   CLEAR_CART: "CLEAR_CART",
   CHECK_ITEM: "CHECK_ITEM",
-  RESET: "RESET",
 };
 
 function reducer(state, action) {
@@ -157,9 +156,6 @@ function reducer(state, action) {
           return item;
         }),
       };
-
-    case CART_ACTIONS.RESET:
-      return { ...initialState };
 
     default:
       return state;

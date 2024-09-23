@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/hooks/profile/useUser";
 import { useCart } from "@/context/CartContext";
+import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 
 import { Badge } from "antd";
 import styled from "styled-components";
@@ -22,7 +23,6 @@ import {
 import SearchBar from "./SearchBar";
 import Dictaphone from "../home/Dictaphone";
 import ProductSearchImage from "./ProductSearchImage";
-import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 
 const StyledHeader = styled.header`
   background-color: var(--color-blue-100);

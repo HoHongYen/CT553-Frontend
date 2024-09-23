@@ -201,7 +201,7 @@ function ProductDetail() {
 
               <div className="flex gap-5 divide-gray-400 divide-x-[1px]">
                 <p>
-                  Mã sản phẩm: <span className="font-bold">{product.id}</span>
+                  Mã sản phẩm: <span className="font-bold">#{product.id}</span>
                 </p>
                 <p className="pl-5">
                   Còn lại:{" "}
