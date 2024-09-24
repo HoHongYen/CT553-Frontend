@@ -14,15 +14,32 @@ const StyledSelect = styled.select`
   box-shadow: var(--shadow-sm);
 `;
 
+{
+  /* <StyledSelect value={value} {...props} onChange={onChange}>
+        {options.map((option) => (
+          <option value={option.value} key={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </StyledSelect> */
+}
+
 function Select({ options, value, onChange, ...props }) {
   return (
-    <StyledSelect value={value} {...props} onChange={onChange}>
-      {options.map((option) => (
-        <option value={option.value} key={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </StyledSelect>
+    <div className="relative">
+      <StyledSelect value={value} {...props} onChange={onChange}>
+        {options.map((option) => (
+          <option value={option.value} key={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </StyledSelect>
+      {props.label && (
+        <label className="text-[1.1rem] z-2 text-[var(--color-grey-400)] pointer-events-none absolute left-3 inset-y-0 h-fit flex items-center select-none transition-all peer-focus:text-sm peer-placeholder-shown:text-lg px-1 peer-focus:px-1 peer-placeholder-shown:px-0 bg-[var(--color-grey-0)] peer-focus:bg-[var(--color-grey-0)] peer-placeholder-shown:bg-transparent m-0 peer-focus:m-0 peer-placeholder-shown:m-auto -translate-y-1/2 peer-focus:-translate-y-1/2 peer-placeholder-shown:translate-y-0">
+          {props.label}
+        </label>
+      )}
+    </div>
   );
 }
 

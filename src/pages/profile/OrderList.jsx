@@ -6,11 +6,12 @@ import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Sidebar from "@/components/profile/Sidebar";
+import Pagination from "@/components/ui/Pagination";
 import OrderFilterOperations from "@/components/profile/orders/OrderFilterOperations";
 import OrderHeader from "@/components/profile/orders/OrderHeader";
-import OrderDetailItem from "@/components/profile/orders/OrderDetailItem";
 import OrderFooter from "@/components/profile/orders/OrderFooter";
-import Pagination from "@/components/ui/Pagination";
+import OrderDetailItem from "@/components/profile/orders/OrderDetailItem";
+import OrderTracking from "@/components/profile/orders/OrderTracking";
 
 const breadcrumb = [{ name: "Tài khoản" }, { name: "Quản lý đơn hàng" }];
 
@@ -58,6 +59,10 @@ function OrderList() {
                 />
               ))}
               <OrderFooter order={order} />
+              {/* tracking order */}
+              <div className="mt-4">
+              <OrderTracking order={order} />
+              </div>
             </div>
           ))}
 

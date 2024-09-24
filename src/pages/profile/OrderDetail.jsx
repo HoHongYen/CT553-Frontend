@@ -4,14 +4,15 @@ import { useOrder } from "@/hooks/orders/useOrder";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import { Skeleton } from "antd";
-import OrderDetailItem from "@/components/profile/orders/OrderDetailItem";
-import OrderFooter from "@/components/profile/orders/OrderFooter";
-import OrderHeader from "@/components/profile/orders/OrderHeader";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Sidebar from "@/components/profile/Sidebar";
 import Row from "@/components/ui/Row";
 import Heading from "@/components/ui/Heading";
 import ButtonText from "@/components/ui/ButtonText";
+import OrderHeader from "@/components/profile/orders/OrderHeader";
+import OrderDetailItem from "@/components/profile/orders/OrderDetailItem";
+import OrderFooter from "@/components/profile/orders/OrderFooter";
+import OrderTracking from "@/components/profile/orders/OrderTracking";
 
 const breadcrumb = [
   { name: "Tài khoản" },
@@ -65,6 +66,10 @@ function OrderDetail() {
               />
             ))}
             <OrderFooter order={order} />
+            {/* tracking order */}
+            <div className="mt-4">
+              <OrderTracking order={order} />
+            </div>
           </div>
         </Row>
       </StyledPolicyLayout>

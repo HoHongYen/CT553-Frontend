@@ -20,7 +20,7 @@ export async function getOrdersByStatus({ orderStatusId, sortBy, page, limit }) 
 }
 
 export async function getOrderById(orderId) {
-    return (await api.get("/" + orderId)).data;
+    return (await api.get("/customer/" + orderId)).data;
 }
 
 
