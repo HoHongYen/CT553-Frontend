@@ -23,10 +23,14 @@ import Select from "@/components/ui/Select";
 import Discount from "@/components/products/Discount";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import { formatCurrency } from "@/utils/helpers";
+import RelatedProducts from "@/components/products/RelatedProducts";
+import ButtonText from "@/components/ui/ButtonText";
+import { useMoveBack } from "@/hooks/common/useMoveBack";
 
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
 function ProductDetail() {
+  const moveBack = useMoveBack();
   const { product, isLoading } = useProduct();
 
   const [breadcrumb, setBreadcrumb] = useState([]);
@@ -106,7 +110,10 @@ function ProductDetail() {
 
   return (
     <>
-      <BreadCrumb breadcrumb={breadcrumb} />
+      <div className="flex justify-between items-center">
+        <BreadCrumb breadcrumb={breadcrumb} />
+        <ButtonText onClick={moveBack}>&larr; Quay lại</ButtonText>
+      </div>
       <Row className="-mt-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="flex">
@@ -331,6 +338,7 @@ function ProductDetail() {
           </div>
         </div>
         <ProductDescription product={product} />
+        <RelatedProducts />
       </Row>
     </>
   );

@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useCategories } from "@/hooks/categories/useCategories";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { formatSlugify } from "@/utils/helpers";
+import { useCategories } from "@/hooks/categories/useCategories";
+import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -40,7 +41,12 @@ function Products() {
     );
     setActiveSubCategory(subCategory);
 
-    setBreadcrumb([{ name: mainCategory?.name }, { name: subCategory?.name }]);
+    // set breadcrumb
+    async function getBreadcrumb() {
+      const breadcrumb = await getBreadcrumbFromCategory(subCategory.id);
+      setBreadcrumb([...breadcrumb.metadata]);
+    }
+    getBreadcrumb();
   }, [categories, mainSlug, subSlug]);
 
   if (isLoading || !activeMainCategory || !activeSubCategory)

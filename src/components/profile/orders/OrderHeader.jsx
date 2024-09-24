@@ -1,4 +1,4 @@
-import { formatDate } from "@/utils/helpers";
+import { formatDateTime } from "@/utils/helpers";
 import Heading from "@/components/ui/Heading";
 import Tag from "@/components/ui/Tag";
 import { ORDER_STATUS_COLOR, ORDER_STATUS_TEXT } from "@/utils/constants";
@@ -12,7 +12,7 @@ function OrderHeader({ order }) {
         </Heading>
         <div className="italic">
           <span className="font-semibold mr-2">Ngày đặt hàng:</span>{" "}
-          {formatDate(order.createdAt)}
+          {formatDateTime(order.createdAt)}
         </div>
         <div className="italic">
           <span className="font-semibold mr-2">Giao tới:</span>{" "}

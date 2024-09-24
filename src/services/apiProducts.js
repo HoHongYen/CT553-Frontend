@@ -9,6 +9,11 @@ export async function getProducts({ type = PRODUCT_ALL, categoryIds, filter, fil
     return products;
 }
 
+export async function getRelatedProducts(id) {
+    const products = (await api.get("/related/" + id)).data;
+    return products;
+}
+
 export async function getHomeProducts({ type, limit }) {
     const products = (await api.get("/", { params: { type, limit } })).data;
     return products;
