@@ -17,7 +17,7 @@ export function useSearchProductByText() {
     } = useQuery({
         queryKey: ["productSearch", searchText],
         queryFn: () => searchApi(searchText),
-        enabled: searchText !== "",
+        enabled: !!searchText,
     });
 
     return { isLoading, fullTextSearchResult, semanticSearchResult };

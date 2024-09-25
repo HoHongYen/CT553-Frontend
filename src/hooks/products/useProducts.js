@@ -1,9 +1,9 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router-dom";
-import { PAGE_SIZE, PRODUCT_ALL } from "@/utils/constants";
-import { getProducts } from "@/services/apiProducts";
-import { useCategories } from "../categories/useCategories";
 import { formatSlugify } from "@/utils/helpers";
+import { PAGE_SIZE } from "@/utils/constants";
+import { useCategories } from "../categories/useCategories";
+import { getProducts } from "@/services/apiProducts";
 
 export function useProducts() {
     const queryClient = useQueryClient();
@@ -65,19 +65,18 @@ export function useProducts() {
     });
 
     // PRE_FETCHING
-    // const pageCount = Math.ceil(count / PAGE_SIZE);
-    // if (page < pageCount) {
-    //     queryClient.prefetchQuery({
-    //         queryKey: ["products", filter, sortBy, page + 1],
-    //         queryFn: () => getProducts({ filter, filterMinPrice, filterMaxPrice, sortBy, page: page + 1 }),
-    //     })
-    // }
-    // if (page > 1) {
-    //     queryClient.prefetchQuery({
-    //         queryKey: ["products", filter, sortBy, page - 1],
-    //         queryFn: () => getProducts({ filter, filterMinPrice, filterMaxPrice, sortBy, page: page - 1 }),
-    //     })
-    // }
+    if (page < totalPages) {
+        queryClient.prefetchQuery({
+            queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page + 1, limit, mainCategory, subCategory],
+            queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, pge: page + 1, limit }),
+        })
+    }
+    if (page > 1) {
+        queryClient.prefetchQuery({
+            queryKey: ["products", filter, filterMinPrice, filterMaxPrice, sortBy, page - 1, limit, mainCategory, subCategory],
+            queryFn: () => getProducts({ categoryIds: !category ? [] : [category?.id], filter, filterMinPrice: filterMinPriceValue, filterMaxPrice: filterMaxPriceValue, sortBy, page: page - 1, limit }),
+        })
+    }
 
     return { isLoading, products, error, totalProducts, totalPages };
 }

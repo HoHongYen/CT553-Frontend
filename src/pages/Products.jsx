@@ -11,7 +11,7 @@ import BreadCrumb from "@/components/ui/BreadCrumb";
 import Spinner from "@/components/ui/Spinner";
 import Sidebar from "@/components/categories/Sidebar";
 import CategoryItem from "@/components/home/CategoryItem";
-import CategoryFilterOperations from "@/components/categories/CategoryFilterOperations";
+import ProductFilterOperations from "@/components/categories/ProductFilterOperations";
 import ProductsList from "@/components/categories/ProductsList";
 import PriceSlider from "@/components/categories/PriceSlider";
 
@@ -79,7 +79,7 @@ function Products() {
           <div className="flex flex-col gap-7">
             <div className="flex justify-between">
               <PriceSlider />
-              <CategoryFilterOperations />
+              <ProductFilterOperations />
             </div>
             <ProductsList />
           </div>

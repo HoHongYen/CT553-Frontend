@@ -51,6 +51,8 @@ function ProductSearch() {
     return <Skeleton active />;
   }
 
+  console.log("searchParams.get('imageUrl')", searchParams.get("imageUrl"));
+
   return (
     <>
       <BreadCrumb breadcrumb={breadcrumb} />

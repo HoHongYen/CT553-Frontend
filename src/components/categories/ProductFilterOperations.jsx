@@ -2,7 +2,7 @@ import TableOperations from "@/components/ui/TableOperations";
 import Filter from "@/components/ui/Filter";
 import SortBy from "@/components/ui/SortBy";
 
-function CategoryFilterOperations() {
+function ProductFilterOperations() {
   return (
     <TableOperations>
       <Filter
@@ -33,4 +33,4 @@ function CategoryFilterOperations() {
   );
 }
 
-export default CategoryFilterOperations;
+export default ProductFilterOperations;
