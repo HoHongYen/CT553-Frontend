@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { formatCurrency } from "@/utils/helpers";
-import Button from "@/components/ui/Button";
 import Heading from "@/components/ui/Heading";
+import { ORDER_STATUS } from "@/utils/constants";
+import Button from "@/components/ui/Button";
+import CreateReviewForm from "@/components/products/reviews/CreateReviewForm";
+import Modal from "@/components/ui/Modal";
 
 function OrderDetailItem({ orderDetail, currentStatus }) {
   return (
@@ -25,7 +28,16 @@ function OrderDetailItem({ orderDetail, currentStatus }) {
               {orderDetail.variant.product.name}
             </Heading>
           </Link>
-          {currentStatus.name === "Đã giao" && <Button>Thêm đánh giá</Button>}
+          {currentStatus.name === ORDER_STATUS.DELIVERED && (
+            <Modal>
+              <Modal.Open opens="createReview">
+                <Button variation="normal">Viết đánh giá</Button>
+              </Modal.Open>
+              <Modal.Window name="createReview">
+                <CreateReviewForm orderDetail={orderDetail} />
+              </Modal.Window>
+            </Modal>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -50,8 +62,8 @@ function OrderDetailItem({ orderDetail, currentStatus }) {
                 <span className="font-semibold mr-2">Giá:</span>
                 <h3 className="flex gap-4 text-[var(--color-red-600)] font-bold mt-auto">
                   {formatCurrency(orderDetail.price)}
-                  <p className="line-through text-[var(--color-grey-400)]"> 
-                    {formatCurrency(orderDetail.variant.price)} 
+                  <p className="line-through text-[var(--color-grey-400)]">
+                    {formatCurrency(orderDetail.variant.price)}
                   </p>
                 </h3>
               </>

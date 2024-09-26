@@ -59,7 +59,7 @@ function Modal({ children, setIsFirstTime }) {
   const [openName, setOpenName] = useState("");
   const close = () => {
     setOpenName("");
-    setIsFirstTime(true);
+    setIsFirstTime?.(true);
   };
   const open = setOpenName;
   return (

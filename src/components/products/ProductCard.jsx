@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
-import { formatCurrency } from "@/utils/helpers";
+import { calculateRating, formatCurrency } from "@/utils/helpers";
 import { Badge, Rate } from "antd";
 import ButtonIcon from "../ui/ButtonIcon";
 import {
@@ -23,6 +23,8 @@ function ProductCard({ product }) {
   const { isProductInCart } = useCart();
 
   const isInCart = isProductInCart(product.id);
+
+  const rating = calculateRating(product.reviews);
 
   return (
     <div key={product.id} className="relative flex flex-col gap-3">
@@ -83,7 +85,7 @@ function ProductCard({ product }) {
       </div>
 
       <div>
-        <Rate disabled allowHalf defaultValue={4.5} />
+        <Rate disabled allowHalf value={rating} />
       </div>
 
       <div className="flex items-center">

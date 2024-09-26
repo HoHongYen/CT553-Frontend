@@ -17,6 +17,7 @@ const StyledModal = styled.div`
 `;
 
 const Overlay = styled.div`
+  overflow: scroll;
   position: fixed;
   top: 0;
   left: 0;

@@ -16,6 +16,7 @@ import Form from "@/components/ui/Form";
 import FormRow from "@/components/ui/FormRow";
 import Select from "@/components/ui/Select";
 import Checkbox from "@/components/ui/Checkbox";
+import Heading from "@/components/ui/Heading";
 
 function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
   const [isDefault, setIsDefault] = useState(true);
@@ -180,6 +181,11 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
       onSubmit={handleSubmit(onSubmit)}
       type={onCloseModal ? "modal" : "regular"}
     >
+      <div className="flex justify-center mb-10">
+        <Heading as="h2">
+          {isEditSession ? "Cập nhật địa chỉ" : "Thêm địa chỉ mới"}
+        </Heading>
+      </div>
       <FormRow label="Tên người nhận" error={errors?.contactName?.message}>
         <Input
           type="text"

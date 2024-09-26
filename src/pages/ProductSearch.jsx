@@ -78,7 +78,8 @@ function ProductSearch() {
             </p>
           </div>
           <div className="flex gap-8 h-[25vh] min-w-[30vw] w-[30vw] max-w-[40vw]">
-            <div className="overflow-hidden border-2 border-dashed border-[var(--color-grey-300)] ">
+            <div className="overflow-hidden border-2 border-da
+            shed border-[var(--color-grey-300)] ">
               <img
                 src={searchParams.get("imageUrl")}
                 className="w-full h-full object-contain"

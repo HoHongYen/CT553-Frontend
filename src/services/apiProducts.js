@@ -31,7 +31,6 @@ export async function search(search) {
 export async function searchByImageUrl(imageUrl) {
     console.log("imageUrl", imageUrl);
     if (!imageUrl) {
-        console.log("imageUrl", imageUrl);
         return { metadata: { products: [] } };
     }
     const res = (await api.get("/search/image", { params: { imageUrl } })).data;

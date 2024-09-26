@@ -6,7 +6,7 @@ import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 import { useProduct } from "@/hooks/products/useProduct";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 
-import { HiOutlineShoppingCart } from "react-icons/hi2";
+import { HiOutlineShoppingCart, HiStar } from "react-icons/hi2";
 import { Carousel as AntdCarousel, Badge, Tag } from "antd";
 
 import Heading from "@/components/ui/Heading";
@@ -22,10 +22,11 @@ import ViewCustomImage from "@/components/products/ViewCustomImage";
 import Select from "@/components/ui/Select";
 import Discount from "@/components/products/Discount";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
-import { formatCurrency } from "@/utils/helpers";
+import { calculateRating, formatCurrency } from "@/utils/helpers";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import ButtonText from "@/components/ui/ButtonText";
 import { useMoveBack } from "@/hooks/common/useMoveBack";
+import ReviewList from "@/components/products/reviews/ReviewList";
 
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
@@ -38,9 +39,11 @@ function ProductDetail() {
   const [selectedVariant, setSelectedVariant] = useState();
   const [quantity, setQuantity] = useState(1);
   const [currentImage, setCurrentImage] = useState();
-  const [viewImage, setViewImage] = useState();
+  const [viewImageIndex, setViewImageIndex] = useState(0);
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [allImages, setAllImages] = useState([]);
+
+  const [rating, setRating] = useState(0);
 
   const { dispatch } = useCart();
   const { openCartDrawer } = useShowCartDrawer();
@@ -53,6 +56,7 @@ function ProductDetail() {
 
   useEffect(() => {
     if (product) {
+      console.log("product", product);
       setSelectedVariant(product.variants[0]);
       setAllImages([
         product.thumbnailImage,
@@ -60,7 +64,9 @@ function ProductDetail() {
         ...product.images.map((image) => image.image),
       ]);
       setCurrentImage(product.thumbnailImage);
-      setViewImage(product.thumbnailImage);
+      setViewImageIndex(0);
+
+      setRating(calculateRating(product.reviews));
     }
 
     async function getBreadcrumb() {
@@ -136,14 +142,19 @@ function ProductDetail() {
               <div
                 onClick={() => {
                   if (isFirstTime) {
-                    setViewImage(currentImage);
+                    setViewImageIndex(
+                      allImages.findIndex(
+                        (image) => image.path === currentImage.path
+                      )
+                    );
                     setIsFirstTime(false);
                   }
                 }}
                 className="absolute cursor-pointer top-5 right-10 z-10"
               >
                 <ViewScaleImage
-                  image={viewImage}
+                  images={allImages}
+                  index={viewImageIndex}
                   setIsFirstTime={setIsFirstTime}
                 />
               </div>
@@ -211,12 +222,15 @@ function ProductDetail() {
                   Mã sản phẩm: <span className="font-bold">#{product.id}</span>
                 </p>
                 <p className="pl-5">
-                  Còn lại:{" "}
-                  <span className="font-bold">{selectedVariant?.quantity}</span>
-                </p>
-                <p className="pl-5">
                   Đã bán:{" "}
                   <span className="font-bold">{product.soldNumber}</span>
+                </p>
+                <p className="flex gap-2 items-center pl-5">
+                  Đánh giá: <span className="font-bold">{rating}</span>
+                  <span className="text-[var(--color-yellow-700)] text-3xl">
+                    <HiStar />
+                  </span>
+                  / {product.reviews.length} lượt đánh giá
                 </p>
               </div>
             </div>
@@ -232,7 +246,7 @@ function ProductDetail() {
 
             <div className="mt-3">
               <p>
-                <span className="font-bold mr-3">Kích thước:</span>{" "}
+                <span className="font-bold mr-2">Kích thước:</span>{" "}
                 {selectedVariant?.size}
               </p>
               <div className="flex gap-4 mt-3">
@@ -251,6 +265,13 @@ function ProductDetail() {
                   }}
                 />
               </div>
+            </div>
+
+            <div className="mt-3">
+              <p>
+                <span className="font-bold mr-2"> Có sẵn trong kho:</span>{" "}
+                {selectedVariant?.quantity}
+              </p>
             </div>
 
             <div className="mt-3">
@@ -339,6 +360,7 @@ function ProductDetail() {
         </div>
         <ProductDescription product={product} />
         <RelatedProducts />
+        <ReviewList />
       </Row>
     </>
   );

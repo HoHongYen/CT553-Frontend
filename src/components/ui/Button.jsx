@@ -61,10 +61,10 @@ const variations = {
 
   normal: css`
     color: var(--color-grey-600);
-    background-color: var(--color-yellow-100);
+    background-color: var(--color-yellow-700);
 
     &:hover {
-      background-color: var(--color-yellow-700);
+      background-color: var(--color-yellow-100);
     }
   `,
 };

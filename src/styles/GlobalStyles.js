@@ -27,8 +27,8 @@ const GlobalStyles = createGlobalStyle`
   --color-yellow-100: #FAFFAF;
   --color-yellow-700: #FFC94A;
 
-  /* --color-yellow-700: #a16207;
-  --color-yellow-800: #854d0e; */
+  /* --color-yellow-800: #a16207; */
+  /* --color-yellow-800: #854d0e; */
 
   --color-silver-100: #e5e7eb;
   --color-silver-700: #374151;

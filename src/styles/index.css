@@ -9,6 +9,11 @@
   height: 0;
 }
 
+.required:after {
+  content:" *";
+  color: red;
+}
+
 /* carousel button in homepage begin */
 .ant-carousel .slick-next,
 .ant-carousel .slick-prev {
