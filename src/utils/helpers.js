@@ -57,6 +57,7 @@ export const handleClickElement = (id) => {
 };
 
 export const calculateRating = (reviews) => {
+  if (!reviews.length) return 0;
   const totalRating = reviews.reduce((acc, review) => {
     return acc + review.rating;
   }, 0);

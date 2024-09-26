@@ -1,50 +1,56 @@
 import { getAllReviewsOfProduct } from "@/services/apiReviews";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useProduct } from "../products/useProduct";
+import { PAGE_SIZE_REVIEW } from "@/utils/constants";
 
 export function useReviews() {
-    // const [searchParams] = useSearchParams();
+    const queryClient = useQueryClient();
+    const [searchParams] = useSearchParams();
     const { slug } = useParams();
 
-    // // FILTER
-    // const filterValue = searchParams.get("trang-thai") || "tat-ca";
-    // const orderStatusId = filterValue === "tat-ca" ? 0 : orderStatuses.find((status) => formatSlugify(ORDER_STATUS_TEXT[status.name]) === filterValue)?.id;
-
     // // SORT
-    // const sortByRaw = searchParams.get("thu-tu") || "don-moi-nhat";
-    // let sortBy = { field: "createdAt", direction: "desc" };
-    // if (sortByRaw === "don-cu-nhat") {
-    //     sortBy = { field: "createdAt", direction: "asc" };
-    // } else if (sortByRaw === "gia-tang-dan") {
-    //     sortBy = { field: "finalPrice", direction: "asc" };
-    // } else if (sortByRaw === "gia-giam-dan") {
-    //     sortBy = { field: "finalPrice", direction: "desc" };
-    // }
+    const sortByRaw = searchParams.get("thu-tu") || "moi-nhat";
+    let sortBy = { field: "createdAt", direction: "desc" };
+    if (sortByRaw === "cu-nhat") {
+        sortBy = { field: "createdAt", direction: "asc" };
+    } else if (sortByRaw === "rating-tang-dan") {
+        sortBy = { field: "rating", direction: "asc" };
+    } else if (sortByRaw === "rating-giam-dan") {
+        sortBy = { field: "rating", direction: "desc" };
+    }
 
-    // // PAGINATION
-    // const page = !searchParams.get("trang")
-    //     ? 1
-    //     : Number(searchParams.get("trang"));
+    // PAGINATION
+    const page = !searchParams.get("trang")
+        ? 1
+        : Number(searchParams.get("trang"));
 
-    // const limit = searchParams.get("gioi-han") || PAGE_SIZE;
-
-    // const { isLoading,
-    //     data: { metadata: { orders, pagination: { totalOrders, totalPages } } } = { metadata: { orders: [], pagination: { totalOrders: 0, totalPages: 0 } } },
-    // } = useQuery({
-    //     queryKey: ["orders", orderStatusId, sortBy, page, limit],
-    //     queryFn: () => getOrdersByStatus({ orderStatusId, sortBy, page, limit }),
-    // })
+    const limit = searchParams.get("gioi-han") || PAGE_SIZE_REVIEW;
 
     const { product } = useProduct();
 
-    const { isLoading, data: { metadata: reviews } = { metadata: [] }
+    const { isLoading,
+        data: { metadata: { reviews, pagination: { totalReviews, totalPages } } } = { metadata: { reviews: [], pagination: { totalReviews: 0, totalPages: 0 } } },
     } = useQuery({
-        queryKey: ["reviews", slug],
-        queryFn: () => getAllReviewsOfProduct(product.id),
-    });
+        queryKey: ["reviews", slug, sortBy, page, limit],
+        queryFn: () => getAllReviewsOfProduct(product.id, { sortBy, page, limit }),
+    })
 
-    return { isLoading, reviews };
+    // PRE_FETCHING
+    if (page < totalPages) {
+        queryClient.prefetchQuery({
+            queryKey: ["reviews", slug, sortBy, page + 1, limit],
+            queryFn: () => getAllReviewsOfProduct(product.id, { sortBy, page: page + 1, limit }),
+        })
+    }
+    if (page > 1) {
+        queryClient.prefetchQuery({
+            queryKey: ["reviews", slug, sortBy, page - 1, limit],
+            queryFn: () => getAllReviewsOfProduct(product.id, { sortBy, page: page - 1, limit }),
+        })
+    }
+
+    return { isLoading, reviews, totalReviews, totalPages };
 }
 
 

@@ -15,19 +15,15 @@ const colors = [
   "red",
 ];
 
-function RatingBreakdown({ reviews }) {
+function RatingBreakdown({ allReviews }) {
   // calculate rating counts for each start, include half star
   const labels = Array.from({ length: 10 }, (_, index) => {
     const value = 5 - index / 2;
     return value;
-    // return {
-    //   label: value,
-    //   count: 0,
-    // };
   });
 
   const ratingCounts = labels.map((label) => {
-    return reviews.filter((review) => review.rating === label).length;
+    return allReviews.filter((review) => review.rating === label).length;
   });
 
   return (
@@ -44,7 +40,7 @@ function RatingBreakdown({ reviews }) {
             </div>
             <div className="ml-auto">
               <Progress
-                percent={(count / reviews.length) * 100}
+                percent={(count / allReviews.length) * 100}
                 strokeColor={colors[index]}
                 size={{ width: "250px", height: "10px" }}
                 showInfo={false}

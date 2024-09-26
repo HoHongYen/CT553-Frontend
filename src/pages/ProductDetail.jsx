@@ -360,7 +360,7 @@ function ProductDetail() {
         </div>
         <ProductDescription product={product} />
         <RelatedProducts />
-        <ReviewList />
+        <ReviewList allReviews={product.reviews} />
       </Row>
     </>
   );

@@ -8,8 +8,8 @@ export async function createReview(data) {
     return (await api.post("", data)).data;
 }
 
-export async function getAllReviewsOfProduct(productId) {
-    const reviews = (await api.get("/" + productId)).data;
+export async function getAllReviewsOfProduct(productId, { sortBy, page, limit }) {
+    const reviews = (await api.get("/" + productId, { params: { sortBy, page, limit } })).data;
     console.log("reviews", reviews);
     return reviews;
 }

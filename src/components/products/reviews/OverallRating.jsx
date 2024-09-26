@@ -2,8 +2,8 @@ import { calculateRating } from "@/utils/helpers";
 import { Rate } from "antd";
 import Heading from "../../ui/Heading";
 
-function OverallRating({ reviews }) {
-  const rating = calculateRating(reviews);
+function OverallRating({ allReviews }) {
+  const rating = calculateRating(allReviews);
 
   return (
     <div className="flex flex-col gap-5 items-center justify-center p-10 rounded-[10px] bg-[var(--color-blue-100)]">
@@ -21,7 +21,7 @@ function OverallRating({ reviews }) {
         value={rating}
       />
       <div className="text-[var(--color-grey-400)]">
-        {reviews.length} lượt đánh giá
+        {allReviews.length} lượt đánh giá
       </div>
     </div>
   );

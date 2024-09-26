@@ -84,20 +84,27 @@ const PageButton = styled.button`
   }
 `;
 
-function Pagination({ count, totalPages, label = "sản phẩm" }) {
+function Pagination({
+  count,
+  totalPages,
+  label = "sản phẩm",
+  pageSize = PAGE_SIZE,
+  limitArrays = [],
+  isScrollToTop = true,
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("trang")
     ? 1
     : Number(searchParams.get("trang"));
 
-  let limits = [4, 8, 12, 16, 20];
+  let limits = limitArrays || [4, 8, 12, 16, 20];
   let limitOptions = limits.map((limit) => ({
     label: `Hiển thị ${limit} ${label}`,
     value: limit,
   }));
 
   const [limitId, setLimitId] = useState(
-    searchParams.get("gioi-han") || PAGE_SIZE
+    searchParams.get("gioi-han") || pageSize
   );
 
   function handleLimitChange(e) {
@@ -107,7 +114,7 @@ function Pagination({ count, totalPages, label = "sản phẩm" }) {
     searchParams.delete("trang");
     setSearchParams(searchParams);
     // scroll smoothly to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (isScrollToTop) window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function prevPage() {
@@ -115,7 +122,7 @@ function Pagination({ count, totalPages, label = "sản phẩm" }) {
     searchParams.set("trang", prev);
     setSearchParams(searchParams);
     // scroll smoothly to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (isScrollToTop) window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function nextPage() {
@@ -123,10 +130,10 @@ function Pagination({ count, totalPages, label = "sản phẩm" }) {
     searchParams.set("trang", next);
     setSearchParams(searchParams);
     // scroll smoothly to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (isScrollToTop) window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  if (totalPages <= 1) return null;
+  // if (totalPages <= 1) return null;
 
   return (
     <StyledPagination>
@@ -153,7 +160,8 @@ function Pagination({ count, totalPages, label = "sản phẩm" }) {
                 searchParams.set("trang", page);
                 setSearchParams(searchParams);
                 // scroll smoothly to top
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                if (isScrollToTop)
+                  window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
               <span>{page}</span>
