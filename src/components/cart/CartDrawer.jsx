@@ -20,6 +20,7 @@ import EmptyRoundBoxIcon from "../icons/EmptyRoundBoxIcon";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import ConfirmCertain from "../ui/ConfirmCertain";
+import Empty from "../ui/Empty";
 
 function CartDrawer() {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function CartDrawer() {
       <div className="flex flex-col gap-3">
         {cartItems.length === 0 && (
           <div className="flex flex-col gap-5 items-center justify-center h-[calc(100vh-200px)]">
-            <p>Bạn chưa thêm sản phẩm nào vào giỏ hàng!</p>
+            <Empty description="Bạn chưa thêm sản phẩm nào vào giỏ hàng!" />
             <Button
               onClick={() => navigate("/trang-chu")}
               variation="primary"

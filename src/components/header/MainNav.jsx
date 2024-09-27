@@ -1,5 +1,7 @@
 /* eslint-disable */
 import { Link, NavLink } from "react-router-dom";
+import { policies } from "@/utils/constants";
+import { formatSlugify } from "@/utils/helpers";
 import { useCategories } from "@/hooks/categories/useCategories";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,14 +12,11 @@ import {
   HiOutlineHome,
   HiOutlineCalendarDays,
   HiOutlineGift,
-  HiOutlineEnvelope,
   HiOutlineChevronRight,
   HiOutlineClipboardDocumentList,
 } from "react-icons/hi2";
 
 import RoundImage from "@/components/ui/RoundImage";
-import { policies } from "@/utils/constants";
-import { formatSlugify } from "@/utils/helpers";
 
 const NavList = styled.ul`
   display: flex;

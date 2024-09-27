@@ -20,6 +20,7 @@ import EmptyRoundBoxIcon from "@/components/icons/EmptyRoundBoxIcon";
 import TickRoundIcon from "@/components/icons/TickRoundIcon";
 import Modal from "@/components/ui/Modal";
 import ConfirmCertain from "@/components/ui/ConfirmCertain";
+import Empty from "@/components/ui/Empty";
 
 function Cart() {
   const navigate = useNavigate();
@@ -42,7 +43,9 @@ function Cart() {
   if (cartItems.length === 0) {
     return (
       <div className="flex flex-col gap-5 items-center justify-center h-[calc(100vh-200px)]">
-        <Heading as="h2">Bạn chưa thêm sản phẩm nào vào giỏ hàng!</Heading>
+        <Heading as="h2">
+          <Empty description="Bạn chưa thêm sản phẩm nào vào giỏ hàng!" />
+        </Heading>
         <Button
           onClick={() => navigate("/trang-chu")}
           variation="primary"

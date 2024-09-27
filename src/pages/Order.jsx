@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { ORDER_ACTIONS, useOrder } from "@/context/OrderContext";
@@ -20,6 +21,7 @@ import OrderPayment from "@/components/order/OrderPayment";
 import OrderSummary from "@/components/order/OrderSummary";
 import OrderCoupons from "@/components/order/OrderCoupons";
 import Button from "@/components/ui/Button";
+import Empty from "@/components/ui/Empty";
 
 const breadcrumb = [{ name: "Đặt hàng" }];
 
@@ -35,19 +37,34 @@ function Order() {
   const { dispatch: orderDispatch } = useOrder();
 
   const {
-    paymentMethods,
+    addresses,
     address: addressToOrder,
     shippingFee,
     totalDiscount,
     finalPrice,
-    paymentMethod,
     appliedCoupon,
+    paymentMethods,
+    paymentMethod,
+    sortedUnusedCoupons,
   } = useOrder();
 
   const { createOrder } = useCreateOrder();
   const { createRedirectUrlVNPAY } = useCreateRedirectUrlVNPAY();
 
+  const [addressError, setAddressError] = useState("");
+
+  useEffect(() => {
+    if (addressToOrder) {
+      setAddressError("");
+    }
+  }, [addressToOrder]);
+
   const handleCreateOrder = async () => {
+    if (!addressToOrder) {
+      setAddressError("Vui lòng chọn địa chỉ nhận hàng!");
+      return;
+    }
+
     const order = {
       totalPrice,
       totalDiscount,
@@ -87,9 +104,15 @@ function Order() {
           payload: { cartItems: unCheckedItems },
         });
         // reset order
+        const defaultAddress = addresses.find((address) => address.isDefault);
+        const coupon = sortedUnusedCoupons[0];
         orderDispatch({
           type: ORDER_ACTIONS.RESET,
-          payload: { paymentMethod: paymentMethods[0] },
+          payload: {
+            paymentMethod: paymentMethods[0],
+            address: defaultAddress,
+            appliedCoupon: coupon,
+          },
         });
       },
     });
@@ -98,7 +121,9 @@ function Order() {
   if (totalItems === 0) {
     return (
       <div className="flex flex-col gap-5 items-center justify-center h-[calc(100vh-200px)]">
-        <Heading as="h2">Bạn chưa thêm sản phẩm nào vào giỏ hàng!</Heading>
+        <Heading as="h2">
+          <Empty description="Bạn chưa thêm sản phẩm nào vào giỏ hàng!" />
+        </Heading>
         <Button
           onClick={() => navigate("/trang-chu")}
           variation="primary"
@@ -147,6 +172,9 @@ function Order() {
                 )}
                 <AddAddress />
               </div>
+                <span className="text-[1.4rem] text-[var(--color-red-700)]">
+                  {addressError} 
+                </span>
             </div>
             {/* address end */}
 

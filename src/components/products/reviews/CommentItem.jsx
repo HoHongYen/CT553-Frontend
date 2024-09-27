@@ -15,7 +15,7 @@ function CommentItem({ review }) {
     <div className="flex flex-col gap-3 pt-10 justify-center ">
       <div className="flex justify-between">
         <div className="flex gap-3">
-          <RoundImage path={review.account.avatar.path} />
+          <RoundImage path={review.account.avatar?.path || "/default-user.jpg"} />
           <div className="flex flex-col">
             <div className="font-bold">{review.account.fullName}</div>
             <Rate disabled allowHalf value={review.rating} />

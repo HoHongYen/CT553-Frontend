@@ -45,9 +45,13 @@ function reducer(state, action) {
     case ORDER_ACTIONS.REMOVE_APPLIED_COUPON:
       return { ...state, appliedCoupon: null };
 
-    // keep the payment method is COD
+    // keep the payment method is COD, address is default address
     case ORDER_ACTIONS.RESET:
-      return { ...initialState, paymentMethod: action.payload.paymentMethod };
+      return {
+        ...initialState,
+        address: action.payload.address,
+        paymentMethod: action.payload.paymentMethod,
+      };
 
     default:
       return state;
@@ -173,6 +177,7 @@ function OrderProvider({ children }) {
     <OrderContext.Provider
       value={{
         address,
+        addresses,
         shippingFee,
         paymentMethods,
         paymentMethod,
