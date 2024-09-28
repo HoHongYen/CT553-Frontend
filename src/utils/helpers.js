@@ -63,3 +63,8 @@ export const calculateRating = (reviews) => {
   }, 0);
   return (totalRating / reviews.length).toFixed(1);
 }
+
+export const jumpToRelevantDiv = (id) => {
+  const relevantDiv = document.getElementById(id);
+  relevantDiv.scrollIntoView({ behavior: "smooth" });
+};

@@ -1,6 +1,8 @@
 import { Progress } from "antd";
 import { HiStar } from "react-icons/hi2";
 import Heading from "../../ui/Heading";
+import Button from "@/components/ui/Button";
+import { jumpToRelevantDiv } from "@/utils/helpers";
 
 const colors = [
   "green",
@@ -15,7 +17,7 @@ const colors = [
   "red",
 ];
 
-function RatingBreakdown({ allReviews }) {
+function RatingBreakdown({ allReviews, isPopUp = false }) {
   // calculate rating counts for each start, include half star
   const labels = Array.from({ length: 10 }, (_, index) => {
     const value = 5 - index / 2;
@@ -50,6 +52,14 @@ function RatingBreakdown({ allReviews }) {
           </div>
         ))}
       </div>
+      {isPopUp && (
+        <Button
+          onClick={() => jumpToRelevantDiv("reviewList")}
+          className="mt-2"
+        >
+          Xem tất cả đánh giá
+        </Button>
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { useProduct } from "@/hooks/products/useProduct";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 
 import { HiOutlineShoppingCart, HiStar } from "react-icons/hi2";
-import { Carousel as AntdCarousel, Badge, Tag } from "antd";
+import { Carousel as AntdCarousel, Badge, Popover, Tag } from "antd";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -27,6 +27,7 @@ import RelatedProducts from "@/components/products/RelatedProducts";
 import ButtonText from "@/components/ui/ButtonText";
 import { useMoveBack } from "@/hooks/common/useMoveBack";
 import ReviewList from "@/components/products/reviews/ReviewList";
+import RatingBreakdown from "@/components/products/reviews/RatingBreakdown";
 
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
@@ -225,13 +226,24 @@ function ProductDetail() {
                   Đã bán:{" "}
                   <span className="font-bold">{product.soldNumber}</span>
                 </p>
-                <p className="flex gap-2 items-center pl-5">
-                  Đánh giá: <span className="font-bold">{rating}</span>
-                  <span className="text-[var(--color-yellow-700)] text-3xl">
-                    <HiStar />
-                  </span>
-                  / {product.reviews.length} lượt đánh giá
-                </p>
+                <Popover
+                  placement="bottom"
+                  // title={text}
+                  content={
+                    <RatingBreakdown
+                      allReviews={product.reviews}
+                      isPopUp={true}
+                    />
+                  }
+                >
+                  <p className="flex gap-2 items-center pl-5">
+                    Đánh giá: <span className="font-bold">{rating}</span>
+                    <span className="text-[var(--color-yellow-700)] text-3xl">
+                      <HiStar />
+                    </span>
+                    / {product.reviews.length} lượt đánh giá
+                  </p>
+                </Popover>
               </div>
             </div>
 

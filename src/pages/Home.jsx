@@ -6,6 +6,7 @@ import HomeProducts from "@/components/home/HomeProducts";
 import CategoryMenu from "@/components/home/CategoryMenu";
 import Heading from "@/components/ui/Heading";
 import Slider from "@/components/home/Slider";
+import TopReviews from "@/components/home/TopReviews";
 const breadcrumb = [];
 
 export const Slogan = styled.div`
@@ -63,6 +64,15 @@ function Home() {
           Dành cho bạn
         </Heading>
         <HomeProducts />
+      </div>
+      <div className="flex flex-col gap-10 mt-10">
+        <Heading
+          as="h2"
+          className="uppercase flex justify-center font-extrabold"
+        >
+          Đánh giá của khách hàng
+        </Heading>
+        <TopReviews />
       </div>
     </>
   );

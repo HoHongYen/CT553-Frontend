@@ -14,6 +14,12 @@ export async function getAllReviewsOfProduct(productId, { sortBy, page, limit })
     return reviews;
 }
 
+export async function getTopReviews() {
+    const reviews = (await api.get("/top")).data;
+    console.log("reviews", reviews);
+    return reviews;
+}
+
 export async function uploadImage(id, data) {
     return (await api.post(`/${id}/add-image`, data)).data;
 }

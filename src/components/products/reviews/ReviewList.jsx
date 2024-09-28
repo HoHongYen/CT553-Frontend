@@ -6,7 +6,7 @@ import OverallRating from "./OverallRating";
 import RatingBreakdown from "./RatingBreakdown";
 import Pagination from "@/components/ui/Pagination";
 
-function ReviewList({allReviews}) {
+function ReviewList({ allReviews }) {
   const { reviews, totalReviews, totalPages } = useReviews();
 
   if (!reviews) return <Skeleton active />;
@@ -14,7 +14,7 @@ function ReviewList({allReviews}) {
   if (reviews.length === 0) return null;
 
   return (
-    <div className="flex flex-col">
+    <div id="reviewList" className="flex flex-col">
       <Heading
         as="h2"
         className="uppercase flex justify-center font-extrabold my-10"
