@@ -1,4 +1,6 @@
 import { formatCurrency } from "@/utils/helpers";
+import { Statistic } from "antd";
+const { Countdown } = Statistic;
 
 function Discount({ product, selectedVariant }) {
   const { productDiscount } = product;
@@ -35,7 +37,16 @@ function Discount({ product, selectedVariant }) {
           {discountType === "percentage"
             ? `-${discountValue}%`
             : `-${formatCurrency(discountValue)}`}
-        </p>
+        </p>,
+        <div className="ml-1 flex items-center gap-3">
+          <p>kết thúc sau:</p>
+          <Countdown
+            format="D ngày H giờ m phút s giây"
+            contentFontSize={15}
+            value={product.productDiscount[0].endDate}
+            valueStyle={{ color: "#f50", fontSize: 17, fontWeight: "bold" }}
+          />
+        </div>
       </div>
     </div>
   );

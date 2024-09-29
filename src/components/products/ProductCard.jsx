@@ -27,7 +27,10 @@ function ProductCard({ product }) {
   const rating = calculateRating(product.reviews);
 
   return (
-    <div key={product.id} className="relative flex flex-col gap-3">
+    <div
+      key={product.id}
+      className="relative flex flex-col justify-between gap-3"
+    >
       {/* discount badge begin */}
       {product.productDiscount.length > 0 && (
         <div className="z-[999] absolute right-0 -top-8">
@@ -61,42 +64,45 @@ function ProductCard({ product }) {
           {product.name}
         </p>
       </Link>
+
       <div>
-        {product.productDiscount.length > 0 && (
-          <p className="text-[var(--color-grey-400)] line-through">
-            {formatCurrency(getFinalPrice(product.variants[0].price))} {" - "}
-            {formatCurrency(
-              getFinalPrice(product.variants[product.variants.length - 1].price)
-            )}{" "}
-          </p>
-        )}
-        <p
-          className={`font-bold text-[18px] ${
-            product.productDiscount.length > 0
-              ? "text-[var(--color-red-600)]"
-              : "text-[var(--color-brand-700)]"
-          }  `}
-        >
-          {formatCurrency(product.variants[0].price)} {" - "}
+      {product.productDiscount.length > 0 && (
+        <p className="text-[var(--color-grey-400)] line-through">
+          {formatCurrency(getFinalPrice(product.variants[0].price))} {" - "}
           {formatCurrency(
-            product.variants[product.variants.length - 1].price
+            getFinalPrice(product.variants[product.variants.length - 1].price)
           )}{" "}
         </p>
+      )}
+      <p
+        className={`font-bold text-[18px] ${
+          product.productDiscount.length > 0
+            ? "text-[var(--color-red-600)]"
+            : "text-[var(--color-brand-700)]"
+        }  `}
+      >
+        {formatCurrency(product.variants[0].price)} {" - "}
+        {formatCurrency(
+          product.variants[product.variants.length - 1].price
+        )}{" "}
+      </p>
       </div>
 
       <div>
-        <Rate disabled allowHalf value={rating} />
-      </div>
+        <div>
+          <Rate disabled allowHalf value={rating} />
+        </div>
 
-      <div className="flex items-center">
-        <p>Đã bán: {product.soldNumber}</p>
-        <div className="ml-auto">
-          <ButtonIcon variation="success">
-            {isInCart ? <HiShoppingCart /> : <HiOutlineShoppingCart />}
-          </ButtonIcon>
-          <ButtonIcon variation="danger">
-            {isInCart ? <HiHeart /> : <HiOutlineHeart />}
-          </ButtonIcon>
+        <div className="flex items-center">
+          <p>Đã bán: {product.soldNumber}</p>
+          <div className="ml-auto">
+            <ButtonIcon variation="success">
+              {isInCart ? <HiShoppingCart /> : <HiOutlineShoppingCart />}
+            </ButtonIcon>
+            <ButtonIcon variation="danger">
+              {isInCart ? <HiHeart /> : <HiOutlineHeart />}
+            </ButtonIcon>
+          </div>
         </div>
       </div>
     </div>

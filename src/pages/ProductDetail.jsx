@@ -4,10 +4,13 @@ import toast from "react-hot-toast";
 
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
 import { useProduct } from "@/hooks/products/useProduct";
+import { useMoveBack } from "@/hooks/common/useMoveBack";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
+import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 
 import { HiOutlineShoppingCart, HiStar } from "react-icons/hi2";
 import { Carousel as AntdCarousel, Badge, Popover, Tag } from "antd";
+import { calculateRating, formatCurrency } from "@/utils/helpers";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -21,11 +24,8 @@ import ImageMagnifier from "@/components/ui/ImageMagnifier";
 import ViewCustomImage from "@/components/products/ViewCustomImage";
 import Select from "@/components/ui/Select";
 import Discount from "@/components/products/Discount";
-import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
-import { calculateRating, formatCurrency } from "@/utils/helpers";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import ButtonText from "@/components/ui/ButtonText";
-import { useMoveBack } from "@/hooks/common/useMoveBack";
 import ReviewList from "@/components/products/reviews/ReviewList";
 import RatingBreakdown from "@/components/products/reviews/RatingBreakdown";
 
