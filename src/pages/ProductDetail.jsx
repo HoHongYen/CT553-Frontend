@@ -28,6 +28,8 @@ import RelatedProducts from "@/components/products/RelatedProducts";
 import ButtonText from "@/components/ui/ButtonText";
 import ReviewList from "@/components/products/reviews/ReviewList";
 import RatingBreakdown from "@/components/products/reviews/RatingBreakdown";
+import { Statistic } from "antd";
+const { Countdown } = Statistic;
 
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
@@ -121,7 +123,7 @@ function ProductDetail() {
         <BreadCrumb breadcrumb={breadcrumb} />
         <ButtonText onClick={moveBack}>&larr; Quay lại</ButtonText>
       </div>
-      <Row className="-mt-3">
+      <Row className="-mt-5">
         <div className="grid grid-cols-2 gap-3">
           <div className="flex">
             <div className="flex flex-col gap-3 w-40">
@@ -228,7 +230,6 @@ function ProductDetail() {
                 </p>
                 <Popover
                   placement="bottom"
-                  // title={text}
                   content={
                     <RatingBreakdown
                       allReviews={product.reviews}
@@ -255,13 +256,27 @@ function ProductDetail() {
             ></p>
 
             <Discount product={product} selectedVariant={selectedVariant} />
-
-            <div className="mt-3">
+            {product.productDiscount.length > 0 && (
+              <div className="ml-1 flex items-center gap-3">
+                <p>Kết thúc sau:</p>
+                <Countdown
+                  format="D ngày H giờ m phút s giây"
+                  contentFontSize={15}
+                  value={product.productDiscount[0].endDate}
+                  valueStyle={{
+                    color: "#f50",
+                    fontSize: 17,
+                    fontWeight: "bold",
+                  }}
+                />
+              </div>
+            )}
+            <div className="mt-3 flex items-center gap-3">
               <p>
                 <span className="font-bold mr-2">Kích thước:</span>{" "}
-                {selectedVariant?.size}
+                {/* {selectedVariant?.size} */}
               </p>
-              <div className="flex gap-4 mt-3">
+              <div className="flex gap-4">
                 <Select
                   options={product.variants.map((variant, index) => {
                     return {
@@ -286,9 +301,9 @@ function ProductDetail() {
               </p>
             </div>
 
-            <div className="mt-3">
+            <div className="mt-3 flex items-center gap-3">
               <p className="font-bold">Số lượng:</p>
-              <div className="flex gap-4 mt-3">
+              <div className="flex gap-4">
                 <div className="flex gap-[0.5px]">
                   <Button
                     onClick={() => {
@@ -332,19 +347,21 @@ function ProductDetail() {
                     +
                   </Button>
                 </div>
-                <Button onClick={handleAddToCart} variation="success">
-                  <div className="flex justify-center items-center gap-4">
-                    <HiOutlineShoppingCart />
-                    Thêm vào giỏ hàng
-                  </div>
-                </Button>
               </div>
             </div>
-            <Button>
-              <div className="flex justify-center items-center gap-4">
-                MUA NGAY
-              </div>
-            </Button>
+            <div className="grid grid-cols-2 gap-10">
+              <Button onClick={handleAddToCart} variation="success">
+                <div className="flex justify-center items-center gap-4">
+                  <HiOutlineShoppingCart />
+                  Thêm vào giỏ hàng
+                </div>
+              </Button>
+              <Button>
+                <div className="flex justify-center items-center gap-4">
+                  MUA NGAY
+                </div>
+              </Button>
+            </div>
 
             <div className="items-center mt-2">
               <span className="font-bold mr-2">Danh mục:</span>{" "}

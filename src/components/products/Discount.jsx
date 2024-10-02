@@ -1,6 +1,4 @@
 import { formatCurrency } from "@/utils/helpers";
-import { Statistic } from "antd";
-const { Countdown } = Statistic;
 
 function Discount({ product, selectedVariant }) {
   const { productDiscount } = product;
@@ -15,7 +13,7 @@ function Discount({ product, selectedVariant }) {
     );
   }
 
-  const { discountType, discountValue, startDate, endDate } =
+  const { discountType, discountValue } =
     productDiscount[0];
 
   let finalPrice = selectedVariant?.price;
@@ -25,7 +23,7 @@ function Discount({ product, selectedVariant }) {
   } else finalPrice = selectedVariant?.price - discountValue;
 
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 -mt-5">
       <p className="text-4xl font-bold text-[var(--color-red-600)]">
         {formatCurrency(finalPrice)}{" "}
       </p>
@@ -37,16 +35,7 @@ function Discount({ product, selectedVariant }) {
           {discountType === "percentage"
             ? `-${discountValue}%`
             : `-${formatCurrency(discountValue)}`}
-        </p>,
-        <div className="ml-1 flex items-center gap-3">
-          <p>kết thúc sau:</p>
-          <Countdown
-            format="D ngày H giờ m phút s giây"
-            contentFontSize={15}
-            value={product.productDiscount[0].endDate}
-            valueStyle={{ color: "#f50", fontSize: 17, fontWeight: "bold" }}
-          />
-        </div>
+        </p>
       </div>
     </div>
   );
