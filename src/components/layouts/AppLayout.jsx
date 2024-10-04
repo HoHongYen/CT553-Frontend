@@ -68,6 +68,15 @@ function AppLayout() {
       <div className="fixed bottom-24 right-10">
         <GoTop showGoTop={showGoTop} scrollUp={handleScrollUp} />
       </div>
+      <div className="z-[999] absolute right-0 bottom-0">
+        <df-messenger
+          chat-icon="https:&#x2F;&#x2F;asset.cloudinary.com&#x2F;dphzvfcmy&#x2F;fa104c1334f06b45aa6e752cffb99376"
+          intent="WELCOME"
+          chat-title="Decorpic"
+          agent-id="e79af124-0960-4849-b7c7-35a816f46009"
+          language-code="vi"
+        ></df-messenger>
+      </div>
 
       <Header />
       <Main>
