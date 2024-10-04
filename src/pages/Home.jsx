@@ -7,6 +7,9 @@ import CategoryMenu from "@/components/home/CategoryMenu";
 import Heading from "@/components/ui/Heading";
 import Slider from "@/components/home/Slider";
 import TopReviews from "@/components/home/TopReviews";
+import { PRODUCT_NEWEST, PRODUCT_TRENDING } from "@/utils/constants";
+import { useEffect, useState } from "react";
+import { getHomeProducts } from "@/services/apiProducts";
 const breadcrumb = [];
 
 export const Slogan = styled.div`
@@ -17,6 +20,30 @@ export const Slogan = styled.div`
 `;
 
 function Home() {
+  const [newestProducts, setNewestProducts] = useState([]);
+  const [bestSellerProducts, setBestSellerProducts] = useState([]);
+
+  useEffect(() => {
+    async function fetchNewestProducts() {
+      const products = await getHomeProducts({
+        type: PRODUCT_NEWEST,
+        limit: 10,
+      });
+      setNewestProducts(products.metadata.products);
+    }
+
+    async function fetchBestSellerProducts() {
+      const products = await getHomeProducts({
+        type: PRODUCT_TRENDING,
+        limit: 10,
+      });
+      setBestSellerProducts(products.metadata.products);
+    }
+
+    fetchNewestProducts();
+    fetchBestSellerProducts();
+  }, []);
+
   return (
     <>
       <BreadCrumb breadcrumb={breadcrumb} />
@@ -45,7 +72,7 @@ function Home() {
         >
           Sản phẩm mới
         </Heading>
-        <HomeProducts />
+        <HomeProducts products={newestProducts} />
       </div>
       <div className="flex flex-col gap-10 mt-10">
         <Heading
@@ -54,7 +81,7 @@ function Home() {
         >
           Sản phẩm nổi bật
         </Heading>
-        <HomeProducts />
+        <HomeProducts products={bestSellerProducts} />
       </div>
       <div className="flex flex-col gap-10 mt-10">
         <Heading
@@ -63,7 +90,7 @@ function Home() {
         >
           Dành cho bạn
         </Heading>
-        <HomeProducts />
+        <HomeProducts products={newestProducts} />
       </div>
       <div className="flex flex-col gap-10 mt-10">
         <Heading

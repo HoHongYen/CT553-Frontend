@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 const StyledLogo = styled.div`
   text-align: center;
+  /* padding-right: ${(props) =>
+    props.size === "medium" ? "10px" : "auto"}; */
 `;
 
 const Img = styled.img`
