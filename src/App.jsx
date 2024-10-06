@@ -38,7 +38,9 @@ function App() {
                 }}
               >
                 <GlobalStyles />
-                <ReactQueryDevtools initialIsOpen={false} />
+                {/* <ReactQueryDevtools
+                  initialIsOpen={false}
+                /> */}
                 <BrowserRouter>
                   <ScrollToTop />
                   <Routes>

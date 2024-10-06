@@ -29,6 +29,17 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
+  useEffect(() => {
+    // set timeout 1000
+    setTimeout(() => {
+      document
+        .querySelector("df-messenger")
+        .shadowRoot.querySelector("df-messenger-chat")
+        .shadowRoot.querySelector("df-messenger-user-input")
+        .shadowRoot.querySelector(".input-box-wrapper > input").placeholder =
+        "Nhập tin nhắn...";
+    }, 1000);
+  }, []);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showGoTop, setShowGoTop] = useState(false);
   const { isAuthenticated } = useUser();
