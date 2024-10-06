@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { ORDER_ACTIONS, useOrder } from "@/context/OrderContext";
 import { useCreateOrder } from "@/hooks/orders/useCreateOrder";
@@ -87,10 +88,7 @@ function Order() {
     createOrder(order, {
       onSuccess: ({ metadata: order }) => {
         // open new tab to redirect to VNPAY
-        console.log("orderPaymentMethodId", order.paymentMethod.id);
-        console.log("paymentMethods[1].id", paymentMethods[1].id);
         if (order.paymentMethod.id === paymentMethods[1].id) {
-          console.log("VNPAY payment branch");
           createRedirectUrlVNPAY({
             orderId: order.id,
             amount: order.finalPrice,
@@ -138,6 +136,9 @@ function Order() {
 
   return (
     <>
+      <Helmet>
+        <title>Đặt hàng</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <div className="flex justify-between">
         <Heading as="h1">Đặt hàng</Heading>
@@ -172,9 +173,9 @@ function Order() {
                 )}
                 <AddAddress />
               </div>
-                <span className="text-[1.4rem] text-[var(--color-red-700)]">
-                  {addressError} 
-                </span>
+              <span className="text-[1.4rem] text-[var(--color-red-700)]">
+                {addressError}
+              </span>
             </div>
             {/* address end */}
 

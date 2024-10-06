@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { OrderProvider } from "@/context/OrderContext";
+import { Helmet } from "react-helmet";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -21,6 +22,9 @@ const StyledPolicyLayout = styled.div`
 function AddressList() {
   return (
     <OrderProvider>
+      <Helmet>
+        <title>Sổ địa chỉ</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />

@@ -11,7 +11,10 @@ import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
 import { HiOutlineShoppingCart, HiStar } from "react-icons/hi2";
 import { Carousel as AntdCarousel, Badge, Popover, Tag } from "antd";
 import { calculateRating, formatCurrency } from "@/utils/helpers";
+import { Helmet } from "react-helmet";
 
+import { Statistic } from "antd";
+const { Countdown } = Statistic;
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import BreadCrumb from "@/components/ui/BreadCrumb";
@@ -28,8 +31,6 @@ import RelatedProducts from "@/components/products/RelatedProducts";
 import ButtonText from "@/components/ui/ButtonText";
 import ReviewList from "@/components/products/reviews/ReviewList";
 import RatingBreakdown from "@/components/products/reviews/RatingBreakdown";
-import { Statistic } from "antd";
-const { Countdown } = Statistic;
 
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
@@ -119,6 +120,9 @@ function ProductDetail() {
 
   return (
     <>
+      <Helmet>
+        <title>{product.name}</title>
+      </Helmet>
       <div className="flex justify-between items-center">
         <BreadCrumb breadcrumb={breadcrumb} />
         <ButtonText onClick={moveBack}>&larr; Quay lại</ButtonText>

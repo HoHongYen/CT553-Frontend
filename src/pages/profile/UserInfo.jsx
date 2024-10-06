@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
 import UpdateUserDataForm from "@/components/profile/UpdateUserDataForm";
 import Heading from "@/components/ui/Heading";
@@ -19,6 +20,9 @@ const StyledPolicyLayout = styled.div`
 function UserInfo() {
   return (
     <>
+      <Helmet>
+        <title>Thông tin cá nhân</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />

@@ -1,5 +1,6 @@
 import { useDeliveryPolicy } from "@/hooks/policies/useDeliveryPolicy";
 import { Skeleton } from "antd";
+import { Helmet } from "react-helmet";
 import Heading from "@/components/ui/Heading";
 import Empty from "@/components/ui/Empty";
 
@@ -9,6 +10,9 @@ function DeliveryPolicy() {
 
   return (
     <div className="flex flex-col gap-8">
+      <Helmet>
+        <title>Chính sách giao hàng</title>
+      </Helmet>
       <Heading as="h1">Chính sách giao hàng</Heading>
       {
         !deliveryPolicy ? (
@@ -16,6 +20,7 @@ function DeliveryPolicy() {
             <Empty description="Hiện chưa có chính sách" />
           </div>
         ) : (
+
           <div
             dangerouslySetInnerHTML={{ __html: deliveryPolicy.content }}
           />

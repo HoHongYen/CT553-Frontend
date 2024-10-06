@@ -1,5 +1,6 @@
 import { useCheckProductPolicy } from "@/hooks/policies/useCheckProductPolicy";
 import { Skeleton } from "antd";
+import { Helmet } from "react-helmet";
 import Heading from "@/components/ui/Heading";
 import Empty from "@/components/ui/Empty";
 
@@ -9,6 +10,9 @@ function CheckProductPolicy() {
 
   return (
     <div className="flex flex-col gap-8">
+      <Helmet>
+        <title>Chính sách kiểm hàng</title>
+      </Helmet>
       <Heading as="h1">Chính sách kiểm hàng</Heading>
       {
         !checkProductPolicy ? (

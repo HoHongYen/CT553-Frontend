@@ -1,4 +1,5 @@
 import { usePaymentPolicy } from "@/hooks/policies/usePaymentPolicy";
+import { Helmet } from "react-helmet";
 import { Skeleton } from "antd";
 import Heading from "@/components/ui/Heading";
 import Empty from "@/components/ui/Empty";
@@ -9,6 +10,9 @@ function PaymentPolicy() {
 
   return (
     <div className="flex flex-col gap-8">
+      <Helmet>
+        <title>Chính sách thanh toán</title>
+      </Helmet>
       <Heading as="h1">Chính sách thanh toán</Heading>
       {
         !paymentPolicy ? (

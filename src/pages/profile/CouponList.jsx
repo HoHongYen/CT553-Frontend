@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
+import { useCollectedCoupons } from "@/hooks/coupons/useCollectedCoupons";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Sidebar from "@/components/profile/Sidebar";
 import CouponItem from "@/components/hotdeals/CouponItem";
-import { useCollectedCoupons } from "@/hooks/coupons/useCollectedCoupons";
 
 const breadcrumb = [{ name: "Tài khoản" }, { name: "Coupon" }];
 
@@ -22,6 +23,9 @@ function CouponList() {
 
   return (
     <>
+      <Helmet>
+        <title>Coupon của bạn</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />
@@ -30,10 +34,7 @@ function CouponList() {
           <Row>
             <div className="grid grid-cols-2">
               {collectedCoupons?.map((item) => (
-                <CouponItem
-                  key={item.coupon.id}
-                  coupon={item.coupon}
-                />
+                <CouponItem key={item.coupon.id} coupon={item.coupon} />
               ))}
             </div>
           </Row>

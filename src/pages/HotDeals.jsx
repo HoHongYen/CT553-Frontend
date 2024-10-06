@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useCoupons } from "@/hooks/coupons/useCoupons";
 import { PRODUCT_SALES } from "@/utils/constants";
 import { getHomeProducts } from "@/services/apiProducts";
@@ -27,6 +28,9 @@ function HotDeals() {
 
   return (
     <>
+      <Helmet>
+        <title>Khuyến mại</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <div className="flex justify-between">
         <Heading as="h1">Các chương trình khuyến mại</Heading>
@@ -41,7 +45,7 @@ function HotDeals() {
           >
             Coupons hiện có
           </Heading>
-          <CouponMenu />
+          <CouponMenu coupons={coupons} />
         </div>
       )}
       {hasDiscountProducts.length > 0 && (

@@ -2,6 +2,7 @@ import { useWarrantyPolicy } from "@/hooks/policies/useWarrantyPolicy";
 import { Skeleton } from "antd";
 import Heading from "@/components/ui/Heading";
 import Empty from "@/components/ui/Empty";
+import { Helmet } from "react-helmet";
 
 function WarrantyPolicy() {
   const { isLoading, warrantyPolicy } = useWarrantyPolicy();
@@ -9,18 +10,17 @@ function WarrantyPolicy() {
 
   return (
     <div className="flex flex-col gap-8">
+      <Helmet>
+        <title>Chính sách bảo hành</title>
+      </Helmet>
       <Heading as="h1">Chính sách bảo hành</Heading>
-      {
-        !warrantyPolicy ? (
-          <div className="flex h-[50vh] items-center justify-center">
-            <Empty description="Hiện chưa có chính sách" />
-          </div>
-        ) : (
-          <div
-            dangerouslySetInnerHTML={{ __html: warrantyPolicy.content }}
-          />
-        )
-      }
+      {!warrantyPolicy ? (
+        <div className="flex h-[50vh] items-center justify-center">
+          <Empty description="Hiện chưa có chính sách" />
+        </div>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: warrantyPolicy.content }} />
+      )}
     </div>
   );
 }

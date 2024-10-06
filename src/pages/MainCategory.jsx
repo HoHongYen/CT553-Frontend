@@ -3,6 +3,7 @@ import { useCategories } from "@/hooks/categories/useCategories";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { formatSlugify } from "@/utils/helpers";
+import { Helmet } from "react-helmet";
 
 import Heading from "@/components/ui/Heading";
 import Row from "@/components/ui/Row";
@@ -40,6 +41,9 @@ function MainCategory() {
 
   return (
     <>
+      <Helmet>
+        <title>Sản phẩm</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <Heading as="h1">{activeCategory.name}</Heading>
       {activeCategory.children.length > 0 && (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { useSearchProductByText } from "@/hooks/products/useSearchProductByText";
 import { useSearchProductByImage } from "@/hooks/products/useSearchProductByImage";
 
@@ -55,8 +56,10 @@ function ProductSearch() {
 
   return (
     <>
+      <Helmet>
+        <title>Sản phẩm</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
-
       {!isImageSearch ? (
         <div className="flex justify-between items-center">
           <Heading as="h1">
@@ -78,8 +81,10 @@ function ProductSearch() {
             </p>
           </div>
           <div className="flex gap-8 h-[25vh] min-w-[30vw] w-[30vw] max-w-[40vw]">
-            <div className="overflow-hidden border-2 border-da
-            shed border-[var(--color-grey-300)] ">
+            <div
+              className="overflow-hidden border-2 border-da
+            shed border-[var(--color-grey-300)] "
+            >
               <img
                 src={searchParams.get("imageUrl")}
                 className="w-full h-full object-contain"

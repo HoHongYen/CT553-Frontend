@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { formatCurrency } from "@/utils/helpers";
 
@@ -60,6 +61,9 @@ function Cart() {
 
   return (
     <>
+      <Helmet>
+        <title>Giỏ hàng</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <div className="flex justify-between">
         <Heading as="h1">Giỏ hàng của bạn </Heading>

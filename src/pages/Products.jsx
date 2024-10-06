@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { formatSlugify } from "@/utils/helpers";
 import { useCategories } from "@/hooks/categories/useCategories";
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
@@ -54,6 +55,9 @@ function Products() {
 
   return (
     <>
+      <Helmet>
+        <title>Sản phẩm</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <Heading as="h1">
         {activeMainCategory.name} &gt; {activeSubCategory.name}

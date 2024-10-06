@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import { useOrders } from "@/hooks/orders/useOrders";
 
 import { Skeleton } from "antd";
@@ -32,6 +33,9 @@ function OrderList() {
 
   return (
     <>
+      <Helmet>
+        <title>Quản lý đơn hàng</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />
@@ -61,7 +65,7 @@ function OrderList() {
               <OrderFooter order={order} />
               {/* tracking order */}
               <div className="mt-4">
-              <OrderTracking order={order} />
+                <OrderTracking order={order} />
               </div>
             </div>
           ))}

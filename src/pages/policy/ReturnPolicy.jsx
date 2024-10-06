@@ -1,4 +1,5 @@
 import { useReturnPolicy } from "@/hooks/policies/useReturnPolicy";
+import { Helmet } from "react-helmet";
 import { Skeleton } from "antd";
 import Heading from "@/components/ui/Heading";
 import Empty from "@/components/ui/Empty";
@@ -9,6 +10,9 @@ function ReturnPolicy() {
 
   return (
     <div className="flex flex-col gap-8">
+      <Helmet>
+        <title>Chính sách đổi trả</title>
+      </Helmet>
       <Heading as="h1">Chính sách đổi trả</Heading>
       {
         !returnPolicy ? (

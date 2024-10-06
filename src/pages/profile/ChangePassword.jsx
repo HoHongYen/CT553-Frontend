@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import { useUser } from "@/hooks/profile/useUser";
 
 import UpdatePasswordForm from "@/components/profile/UpdatePasswordForm";
@@ -22,6 +23,9 @@ function ChangePassword() {
 
   return (
     <>
+      <Helmet>
+        <title>Thay đổi mật khẩu</title>
+      </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />
