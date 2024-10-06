@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useUser } from "@/hooks/profile/useUser";
 import { useCart } from "@/context/CartContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
@@ -46,9 +46,14 @@ function Header() {
   const navigate = useNavigate();
   const { isAuthenticated } = useUser();
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { cartItems } = useCart();
   const { openCartDrawer } = useShowCartDrawer();
+
+  useEffect(() => {
+    searchParams.has("s") && setIsSearchOpen(true);
+  }, [searchParams]);
 
   return (
     <StyledHeader>

@@ -80,6 +80,12 @@ function SearchBar({ placeholder, style }) {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (searchParams.get("s")) {
+      setValue(searchParams.get("s"));
+    }
+  }, [searchParams]);
+
   return (
     <>
       <Select
