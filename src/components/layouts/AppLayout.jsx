@@ -76,7 +76,7 @@ function AppLayout() {
     <StyledAppLayout>
       <CartDrawer />
       <div ref={refScrollUp}> </div>
-      <div className="fixed bottom-24 right-10">
+      <div className="fixed bottom-10 left-10">
         <GoTop showGoTop={showGoTop} scrollUp={handleScrollUp} />
       </div>
       <div className="z-[999] absolute right-0 bottom-0">
