@@ -1,9 +1,9 @@
+import styled from "styled-components";
+import { useState } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { PAGE_SIZE } from "@/utils/constants";
 import Select from "./Select";
-import { useState } from "react";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -89,7 +89,7 @@ function Pagination({
   totalPages,
   label = "sản phẩm",
   pageSize = PAGE_SIZE,
-  limitArrays = [],
+  limitArrays = [4, 8, 12, 16, 20],
   isScrollToTop = true,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -97,7 +97,7 @@ function Pagination({
     ? 1
     : Number(searchParams.get("trang"));
 
-  let limits = limitArrays || [4, 8, 12, 16, 20];
+  let limits = limitArrays;
   let limitOptions = limits.map((limit) => ({
     label: `Hiển thị ${limit} ${label}`,
     value: limit,
@@ -151,22 +151,82 @@ function Pagination({
         </PaginationButton>
 
         <div className="flex justify-center gap-5">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <PageButton
-              className="px-10 py-2"
-              key={page}
-              active={page === currentPage}
-              onClick={() => {
-                searchParams.set("trang", page);
-                setSearchParams(searchParams);
-                // scroll smoothly to top
-                if (isScrollToTop)
+          {totalPages <= 7 ? (
+            Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <PageButton
+                className="px-10 py-2"
+                key={page}
+                active={page === currentPage}
+                onClick={() => {
+                  searchParams.set("trang", page);
+                  setSearchParams(searchParams);
+                  // scroll smoothly to top
                   window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              <span>{page}</span>
-            </PageButton>
-          ))}
+                }}
+              >
+                <span>{page}</span>
+              </PageButton>
+            ))
+          ) : (
+            <div className="flex items-center justify-center gap-5">
+              {currentPage + 2 < totalPages && currentPage > 3 && (
+                <span>...</span>
+              )}
+              {(currentPage + 2 >= totalPages || currentPage <= 3) &&
+                Array.from({ length: 3 }, (_, i) => i + 1).map((page) => (
+                  <PageButton
+                    className="px-10 py-2"
+                    key={page}
+                    active={page === currentPage}
+                    onClick={() => {
+                      searchParams.set("trang", page);
+                      setSearchParams(searchParams);
+                      // scroll smoothly to top
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                  >
+                    <span>{page}</span>
+                  </PageButton>
+                ))}
+              {currentPage > 3 &&
+                currentPage + 3 < totalPages &&
+                Array.from({ length: 3 }, (_, i) => currentPage + i).map(
+                  (page) => (
+                    <PageButton
+                      className="px-10 py-2"
+                      key={page}
+                      active={page === currentPage}
+                      onClick={() => {
+                        searchParams.set("trang", page);
+                        setSearchParams(searchParams);
+                        // scroll smoothly to top
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                    >
+                      <span>{page}</span>
+                    </PageButton>
+                  )
+                )}
+              <span>...</span>
+              {Array.from({ length: 3 }, (_, i) => totalPages - 2 + i).map(
+                (page) => (
+                  <PageButton
+                    className="px-10 py-2"
+                    key={page}
+                    active={page === currentPage}
+                    onClick={() => {
+                      searchParams.set("trang", page);
+                      setSearchParams(searchParams);
+                      // scroll smoothly to top
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                  >
+                    <span>{page}</span>
+                  </PageButton>
+                )
+              )}
+            </div>
+          )}
         </div>
 
         <PaginationButton

@@ -62,11 +62,17 @@ function ProductDetail() {
     if (product) {
       console.log("product", product);
       setSelectedVariant(product.variants[0]);
+      if (product.viewImage) {
       setAllImages([
         product.thumbnailImage,
         product.viewImage,
         ...product.images.map((image) => image.image),
-      ]);
+      ]);} else {
+        setAllImages([
+          product.thumbnailImage,
+          ...product.images.map((image) => image.image),
+        ]);
+      }
       setCurrentImage(product.thumbnailImage);
       setViewImageIndex(0);
 

@@ -48,7 +48,7 @@ function OrderDetail() {
   return (
     <>
       <Helmet>
-        <title>Chi tiết đơn hàng #{order.id}</title>
+        <title>Chi tiết đơn hàng</title>
       </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
