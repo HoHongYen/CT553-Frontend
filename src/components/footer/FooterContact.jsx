@@ -1,3 +1,5 @@
+import { useShopInfo } from "@/hooks/shopInfo/useShopInfo";
+import { Skeleton } from "antd";
 import {
   HiOutlineBuildingLibrary,
   HiOutlineEnvelope,
@@ -6,6 +8,9 @@ import {
 } from "react-icons/hi2";
 
 function FooterContact() {
+  const { shopInfo } = useShopInfo();
+  if (!shopInfo) return <Skeleton active />;
+
   return (
     <div className="flex flex-col items-center">
       <h2 className="font-bold mb-6 flex justify-center uppercase md:justify-start items-center">
@@ -14,19 +19,22 @@ function FooterContact() {
       <div className="flex flex-col gap-4">
         <div className="flex gap-3 items-center">
           <HiOutlineBuildingLibrary />
-          <p>3/2, Xuân Khánh, Ninh Kiều, Cần Thơ</p>
+          <p>
+            {shopInfo.detailAddress}, {shopInfo.wardName},{" "}
+            {shopInfo.districtName}, {shopInfo.provinceName}
+          </p>
         </div>
         <div className="flex gap-3 items-center">
           <HiOutlineShoppingBag />
-          <p>Cửa hàng tranh trang trí DECORPIC</p>
+          <p>{shopInfo.fullName}</p>
         </div>
         <div className="flex gap-3 items-center">
           <HiOutlineEnvelope />
-          <p>decorpic@gmail.com</p>
+          <p>{shopInfo.email}</p>
         </div>
         <div className="flex gap-3 items-center">
           <HiOutlinePhone />
-          <p>0292 3832 663</p>
+          <p>{shopInfo.phone}</p>
         </div>
       </div>
     </div>

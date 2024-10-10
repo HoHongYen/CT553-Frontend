@@ -11,7 +11,7 @@ import { DownOutlined } from "@ant-design/icons";
 import {
   HiOutlineHome,
   HiOutlineCalendarDays,
-  HiOutlineGift,
+  HiOutlineTicket,
   HiOutlineChevronRight,
   HiOutlineClipboardDocumentList,
 } from "react-icons/hi2";
@@ -166,7 +166,7 @@ function MainNav() {
         </li>
         <li>
           <StyledNavLink to="/khuyen-mai">
-            <HiOutlineGift />
+            <HiOutlineTicket />
             <span className="font-bold text-[1.7rem] hover:text-[var(--color-brand-700)]">
               Khuyến mại
             </span>

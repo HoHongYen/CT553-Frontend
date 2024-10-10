@@ -1,5 +1,5 @@
 import { HiOutlineCash, HiOutlineTruck } from "react-icons/hi";
-import { HiMiniArrowPathRoundedSquare, HiOutlineEye, HiOutlineGift, HiOutlineLockClosed, HiOutlineMapPin, HiOutlineShoppingBag, HiOutlineUser, HiOutlineWrench } from "react-icons/hi2";
+import { HiMiniArrowPathRoundedSquare, HiOutlineEye, HiOutlineTicket, HiOutlineLockClosed, HiOutlineMapPin, HiOutlineShoppingBag, HiOutlineUser, HiOutlineWrench } from "react-icons/hi2";
 
 export const PAGE_SIZE = 8;
 export const PAGE_SIZE_ORDER = 5;
@@ -32,7 +32,7 @@ export const profileLinks = [
         title: "Sổ địa chỉ",
     },
     {
-        icon: HiOutlineGift,
+        icon: HiOutlineTicket,
         title: "Coupon",
     },
 ];

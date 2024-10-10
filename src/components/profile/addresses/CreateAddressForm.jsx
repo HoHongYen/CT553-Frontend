@@ -215,6 +215,7 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
 
       <FormRow label="Tỉnh / thành phố" error={provinceError}>
         <Select
+          className="w-full"
           disabled={isWorking}
           options={provinceOptions}
           value={provinceId}
@@ -224,6 +225,7 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
 
       <FormRow label="Quận / huyện" error={districtError}>
         <Select
+          className="w-full"
           disabled={isWorking}
           options={districtOptions}
           value={districtId}
@@ -233,6 +235,7 @@ function CreateAddressForm({ addressToEdit = {}, onCloseModal }) {
 
       <FormRow label="Phường / xã" error={wardError}>
         <Select
+          className="w-full"
           disabled={isWorking}
           options={wardOptions}
           value={wardCode}

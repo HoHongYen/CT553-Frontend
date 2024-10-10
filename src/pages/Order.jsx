@@ -13,7 +13,7 @@ import Row from "@/components/ui/Row";
 import OrderProducts from "@/components/order/OrderProducts";
 import AddressTable from "@/components/profile/addresses/AddressTable";
 import {
-  HiOutlineGift,
+  HiOutlineTicket,
   HiOutlineMapPin,
   HiOutlineShoppingBag,
 } from "react-icons/hi2";
@@ -215,7 +215,7 @@ function Order() {
                   className="flex items-center gap-3 text-[var(--color-brand-700)]"
                   as="h2"
                 >
-                  <HiOutlineGift />
+                  <HiOutlineTicket />
                   <span className="font-bold">Áp dụng coupon (nếu có)</span>
                   {appliedCoupon && (
                     <span className="text-[var(--color-green-700)]">
