@@ -66,26 +66,36 @@ function ProductCard({ product }) {
       </Link>
 
       <div>
-      {product.productDiscount.length > 0 && (
-        <p className="text-[var(--color-grey-400)] line-through">
-          {formatCurrency(getFinalPrice(product.variants[0].price))} {" - "}
-          {formatCurrency(
-            getFinalPrice(product.variants[product.variants.length - 1].price)
-          )}{" "}
-        </p>
-      )}
-      <p
-        className={`font-bold text-[18px] ${
-          product.productDiscount.length > 0
-            ? "text-[var(--color-red-600)]"
-            : "text-[var(--color-brand-700)]"
-        }  `}
-      >
-        {formatCurrency(product.variants[0].price)} {" - "}
-        {formatCurrency(
+        {product.productDiscount.length > 0 && (
+          <p className="text-[var(--color-grey-400)] line-through">
+            {product.variants[0].price !==
+            product.variants[product.variants.length - 1].price
+              ? formatCurrency(getFinalPrice(product.variants[0].price)) +
+                " - " +
+                formatCurrency(
+                  getFinalPrice(
+                    product.variants[product.variants.length - 1].price
+                  )
+                )
+              : formatCurrency(getFinalPrice(product.variants[0].price))}
+          </p>
+        )}
+        <p
+          className={`font-bold text-[18px] ${
+            product.productDiscount.length > 0
+              ? "text-[var(--color-red-600)]"
+              : "text-[var(--color-brand-700)]"
+          }  `}
+        >
+          {product.variants[0].price !==
           product.variants[product.variants.length - 1].price
-        )}{" "}
-      </p>
+            ? formatCurrency(product.variants[0].price) +
+              " - " +
+              formatCurrency(
+                product.variants[product.variants.length - 1].price
+              )
+            : formatCurrency(product.variants[0].price)}
+        </p>
       </div>
 
       <div>

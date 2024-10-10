@@ -19,6 +19,7 @@ export const CART_ACTIONS = {
   CHANGE_VARIANT: "CHANGE_VARIANT",
   CLEAR_CART: "CLEAR_CART",
   CHECK_ITEM: "CHECK_ITEM",
+  UNCHECK_ALL: "UNCHECK_ALL",
 };
 
 function reducer(state, action) {
@@ -154,6 +155,15 @@ function reducer(state, action) {
             return { ...item, isChecked: !item.isChecked };
           }
           return item;
+        }),
+      };
+
+    // tenth action
+    case CART_ACTIONS.UNCHECK_ALL:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          return { ...item, isChecked: false };
         }),
       };
 

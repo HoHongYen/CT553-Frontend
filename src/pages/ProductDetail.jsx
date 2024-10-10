@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { getBreadcrumbFromCategory } from "@/services/apiCategories";
@@ -36,6 +36,7 @@ const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
 function ProductDetail() {
   const moveBack = useMoveBack();
+  const navigate = useNavigate();
   const { product, isLoading } = useProduct();
 
   const [breadcrumb, setBreadcrumb] = useState([]);
@@ -63,11 +64,12 @@ function ProductDetail() {
       console.log("product", product);
       setSelectedVariant(product.variants[0]);
       if (product.viewImage) {
-      setAllImages([
-        product.thumbnailImage,
-        product.viewImage,
-        ...product.images.map((image) => image.image),
-      ]);} else {
+        setAllImages([
+          product.thumbnailImage,
+          product.viewImage,
+          ...product.images.map((image) => image.image),
+        ]);
+      } else {
         setAllImages([
           product.thumbnailImage,
           ...product.images.map((image) => image.image),
@@ -120,6 +122,38 @@ function ProductDetail() {
     setTimeout(() => {
       openCartDrawer();
     }, 1000);
+  };
+
+  const handleBuyNow = () => {
+    let discountPrice;
+    if (!product.productDiscount || product.productDiscount.length === 0) {
+      discountPrice = 0;
+    } else {
+      const { discountType, discountValue } = product.productDiscount[0];
+      if (discountType === "percentage") {
+        discountPrice = (selectedVariant.price * discountValue) / 100;
+      } else {
+        discountPrice = discountValue;
+      }
+    }
+
+    // only add this item to cart, other items set to be unchecked
+    dispatch({
+      type: CART_ACTIONS.UNCHECK_ALL,
+    });
+
+    dispatch({
+      type: CART_ACTIONS.ADD_TO_CART,
+      payload: {
+        variant: selectedVariant,
+        quantity: quantity,
+        isChecked: true,
+        product: product,
+        finalPricePerOne: selectedVariant.price - discountPrice,
+      },
+    });
+    // go to order page
+    navigate("/dat-hang");
   };
 
   if (isLoading) return <Spinner />;
@@ -366,7 +400,7 @@ function ProductDetail() {
                   Thêm vào giỏ hàng
                 </div>
               </Button>
-              <Button>
+              <Button onClick={handleBuyNow}>
                 <div className="flex justify-center items-center gap-4">
                   MUA NGAY
                 </div>
