@@ -207,6 +207,10 @@ function App() {
                       path="*"
                       element={<SuspenseWrapper path="PageNotFound" />}
                     />
+                    <Route
+                      path="maintaining"
+                      element={<SuspenseWrapper path="Maintaining" />}
+                    />
                   </Routes>
                 </BrowserRouter>
                 <Toaster

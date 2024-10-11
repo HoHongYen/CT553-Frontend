@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "@/hooks/profile/useUser";
 import { OrderProvider } from "@/context/OrderContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
@@ -8,6 +8,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import GoTop from "../ui/GoTop";
 import CartDrawer from "../cart/CartDrawer";
+import { useShopInfo } from "@/hooks/shopInfo/useShopInfo";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -29,6 +30,13 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
+  const { shopInfo } = useShopInfo();
+  const navigate = useNavigate();
+
+  if (shopInfo?.isMaintaining) {
+    navigate("/maintaining");
+  }
+
   useEffect(() => {
     // set timeout 1000
     setTimeout(() => {
