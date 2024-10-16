@@ -5,7 +5,11 @@ import {
 } from "@/utils/constants";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { getHomeProducts } from "@/services/apiProducts";
+import { useUser } from "@/hooks/profile/useUser";
+import {
+  getHomeProducts,
+  getRecommendedProducts,
+} from "@/services/apiProducts";
 import styled from "styled-components";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 import Carousel from "@/components/home/Carousel";
@@ -24,9 +28,11 @@ export const Slogan = styled.div`
 `;
 
 function Home() {
+  const { user } = useUser();
   const [newestProducts, setNewestProducts] = useState([]);
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
   const [hasDiscountProducts, setHasDiscountProducts] = useState([]);
+  const [forYouProducts, setForYouProducts] = useState([]);
 
   useEffect(() => {
     async function fetchNewestProducts() {
@@ -53,9 +59,20 @@ function Home() {
       setHasDiscountProducts(products.metadata.products);
     }
 
+    async function fetchForYouProducts() {
+      if (user) {
+        const products = await getRecommendedProducts(
+          localStorage.getItem("accesstoken")
+        );
+        setForYouProducts(products.metadata);
+      }
+      console.log("forYouProducts", forYouProducts);
+    }
+
     fetchNewestProducts();
     fetchBestSellerProducts();
     fetchHasDiscountProducts();
+    fetchForYouProducts();
   }, []);
 
   return (
@@ -107,15 +124,18 @@ function Home() {
         </Heading>
         <HomeProducts products={hasDiscountProducts} />
       </div>
-      <div className="flex flex-col gap-10 mt-10">
-        <Heading
-          as="h2"
-          className="uppercase flex justify-center font-extrabold"
-        >
-          Dành cho bạn
-        </Heading>
-        <HomeProducts products={newestProducts} />
-      </div>
+      {user && (
+        <div className="flex flex-col gap-10 mt-10">
+          <Heading
+            as="h2"
+            className="uppercase flex justify-center font-extrabold"
+          >
+            Dành cho bạn
+          </Heading>
+          {}
+          <HomeProducts products={forYouProducts} />
+        </div>
+      )}
       <div className="flex flex-col gap-10 mt-10">
         <Heading
           as="h2"

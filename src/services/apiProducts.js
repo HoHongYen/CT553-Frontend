@@ -19,6 +19,19 @@ export async function getHomeProducts({ type, limit }) {
     return products;
 }
 
+export async function getRecommendedProducts(token) {
+    return (
+        await api.request({
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method: "GET",
+            url: import.meta.env.VITE_API_BASE_URL + "/api/products/recommend",
+        })
+    ).data;
+}
+
+
 export async function search(search) {
     console.log("search", search);
     const res = (await api.get("/search", { params: { s: search } })).data;
