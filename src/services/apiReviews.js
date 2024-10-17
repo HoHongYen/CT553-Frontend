@@ -3,6 +3,12 @@ import createApiClient from "./api";
 const baseUrl = "/api/reviews";
 const api = createApiClient(baseUrl, { needAuth: true });
 
+export async function checkIfUserHasReviewed(data) { // orderId, variantId
+    console.log("data", data);
+    const res = (await api.post("/check", data)).data;
+    return res;
+}
+
 export async function createReview(data) {
     console.log("data", data);
     return (await api.post("", data)).data;

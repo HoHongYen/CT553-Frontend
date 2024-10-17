@@ -37,6 +37,10 @@ function CreateReviewForm({ orderDetail, reviewToEdit = {}, onCloseModal }) {
   const isWorking = isCreating || isUpdating || isUploadingImage;
 
   useEffect(() => {
+
+    console.log("reviewToEdit", reviewToEdit);
+    console.log("isEditSession", isEditSession);
+
     if (isEditSession) {
       setComment(reviewToEdit.comment);
       setRating(reviewToEdit.rating);

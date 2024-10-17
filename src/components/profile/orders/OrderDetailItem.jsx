@@ -1,12 +1,30 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { formatCurrency } from "@/utils/helpers";
-import Heading from "@/components/ui/Heading";
 import { ORDER_STATUS } from "@/utils/constants";
+import { checkIfUserHasReviewed } from "@/services/apiReviews";
+import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
-import CreateReviewForm from "@/components/products/reviews/CreateReviewForm";
 import Modal from "@/components/ui/Modal";
+import CreateReviewForm from "@/components/products/reviews/CreateReviewForm";
+import { useReviews } from "@/hooks/reviews/useReviews";
 
 function OrderDetailItem({ orderDetail, currentStatus }) {
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const { reviews } = useReviews();
+
+  useEffect(() => {
+    const helper = async () => {
+      const res = await checkIfUserHasReviewed({
+        orderId: orderDetail.orderId,
+        variantId: orderDetail.variantId,
+      });
+      console.log("res", res.metadata);
+      setHasReviewed(res.metadata);
+    };
+    helper();
+  }, [orderDetail]);
+
   return (
     <div className="flex gap-7">
       {/* image begin */}
@@ -28,13 +46,26 @@ function OrderDetailItem({ orderDetail, currentStatus }) {
               {orderDetail.variant.product.name}
             </Heading>
           </Link>
-          {currentStatus.name === ORDER_STATUS.DELIVERED && (
+          {currentStatus.name === ORDER_STATUS.DELIVERED && !hasReviewed && (
             <Modal>
               <Modal.Open opens="createReview">
                 <Button variation="normal">Viết đánh giá</Button>
               </Modal.Open>
               <Modal.Window name="createReview">
                 <CreateReviewForm orderDetail={orderDetail} />
+              </Modal.Window>
+            </Modal>
+          )}
+          {currentStatus.name === ORDER_STATUS.DELIVERED && hasReviewed && (
+            <Modal>
+              <Modal.Open opens="createReview">
+                <Button variation="success">Chỉnh sửa đánh giá</Button>
+              </Modal.Open>
+              <Modal.Window name="createReview">
+                <CreateReviewForm
+                  reviewToEdit={hasReviewed}
+                  orderDetail={orderDetail}
+                />
               </Modal.Window>
             </Modal>
           )}

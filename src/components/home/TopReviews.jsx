@@ -1,7 +1,7 @@
 import { Skeleton } from "antd";
 import { useTopReviews } from "@/hooks/reviews/useTopReviews";
-import ReviewCard from "./ReviewCard";
 import { Carousel as AntdCarousel } from "antd";
+import ReviewCard from "./ReviewCard";
 
 function TopReviews() {
   const { topReviews } = useTopReviews();
