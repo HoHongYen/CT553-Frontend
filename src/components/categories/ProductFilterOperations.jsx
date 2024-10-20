@@ -20,6 +20,14 @@ function ProductFilterOperations() {
           { value: "ten-tang-dan", label: "Xếp theo tên (A-Z)" },
           { value: "ten-giam-dan", label: "Xếp theo tên (Z-A)" },
           {
+            value: "rating-tang-dan",
+            label: "Xếp theo rating tăng dần",
+          },
+          {
+            value: "rating-giam-dan",
+            label: "Xếp theo rating giảm dần",
+          },
+          {
             value: "gia-tang-dan",
             label: "Xếp theo giá tăng dần",
           },

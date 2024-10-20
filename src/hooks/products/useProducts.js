@@ -40,6 +40,10 @@ export function useProducts() {
         sortBy = { field: "name", direction: "asc" };
     } else if (sortByRaw === "ten-giam-dan") {
         sortBy = { field: "name", direction: "desc" };
+    } else if (sortByRaw === "rating-tang-dan") {
+        sortBy = { field: "rating", direction: "asc" };
+    } else if (sortByRaw === "rating-giam-dan") {
+        sortBy = { field: "rating", direction: "desc" };
     }
     // else if (sortByRaw === "gia-tang-dan") {
     //     sortBy = { field: "finalPrice", direction: "asc" };
