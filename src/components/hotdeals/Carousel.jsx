@@ -1,21 +1,14 @@
+import { useHotDealBanners } from "@/hooks/banners/useHotDealBanners";
 import { Carousel as AntdCarousel } from "antd";
 
-const images = [
-  {
-    id: 1,
-    url: "https://miahome.vn/wp-content/uploads/2024/10/tranh-son-mai-giam-gia-giai-phogn-thu-do-22-768x280.webp",
-  },
-  {
-    id: 2,
-    url: "https://miahome.vn/wp-content/uploads/2024/10/banner-20-10-1024x373.webp",
-  },
-];
-
 function Carousel() {
+  const { hotDealBanners } = useHotDealBanners();
+  console.log("hotDealBanners", hotDealBanners);
+
   return (
     <AntdCarousel arrows autoplay>
-      {images.map((image) => (
-        <img key={image.id} src={image.url} className="w-full" />
+      {hotDealBanners.map((banner) => (
+        <img key={banner.id} src={banner.image.path} className="w-full" />
       ))}
     </AntdCarousel>
   );
