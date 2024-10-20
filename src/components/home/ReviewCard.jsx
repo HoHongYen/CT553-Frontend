@@ -13,7 +13,7 @@ function ReviewCard({ review }) {
       </Link>
 
       <div className="flex flex-col gap-5">
-        <Rate disabled allowHalf value={review.rating} />
+        <Rate disabled value={review.rating} />
         <div className="text-[var(--color-grey-400)]">{review.comment}</div>
       </div>
       <div className="flex justify-between">

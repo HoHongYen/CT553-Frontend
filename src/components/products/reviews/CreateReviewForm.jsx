@@ -37,7 +37,6 @@ function CreateReviewForm({ orderDetail, reviewToEdit = {}, onCloseModal }) {
   const isWorking = isCreating || isUpdating || isUploadingImage;
 
   useEffect(() => {
-
     console.log("reviewToEdit", reviewToEdit);
     console.log("isEditSession", isEditSession);
 
@@ -215,7 +214,6 @@ function CreateReviewForm({ orderDetail, reviewToEdit = {}, onCloseModal }) {
         <div className="flex items-center gap-5 w-[70%] justify-center">
           <Rate
             style={{ fontSize: "3rem" }}
-            allowHalf
             tooltips={desc}
             onChange={setRating}
             value={rating}

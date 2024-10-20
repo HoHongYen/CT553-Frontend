@@ -100,7 +100,7 @@ function ProductCard({ product }) {
 
       <div>
         <div>
-          <Rate disabled allowHalf value={rating} />
+          <Rate disabled value={rating} />
         </div>
 
         <div className="flex items-center">

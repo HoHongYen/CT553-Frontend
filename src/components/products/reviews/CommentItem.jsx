@@ -20,7 +20,7 @@ function CommentItem({ review }) {
           />
           <div className="flex flex-col">
             <div className="font-bold">{review.account.fullName}</div>
-            <Rate disabled allowHalf value={review.rating} />
+            <Rate disabled value={review.rating} />
           </div>
         </div>
         <span className="text-2xl text-[var(--color-grey-400)]">

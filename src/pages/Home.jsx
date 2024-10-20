@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useUser } from "@/hooks/profile/useUser";
+import TopReviews from "@/components/home/TopReviews";
 import {
   getHomeProducts,
   getRecommendedProducts,
@@ -17,14 +18,14 @@ import Introduce from "@/components//home/Introduce";
 import HomeProducts from "@/components/home/HomeProducts";
 import CategoryMenu from "@/components/home/CategoryMenu";
 import Heading from "@/components/ui/Heading";
-import TopReviews from "@/components/home/TopReviews";
+import { useTopReviews } from "@/hooks/reviews/useTopReviews";
 const breadcrumb = [];
 
 export const Slogan = styled.div`
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-optical-sizing: auto;
   font-weight: 469;
-  font-style: normal;
+  font-style: normal;ca
 `;
 
 function Home() {
@@ -33,6 +34,8 @@ function Home() {
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
   const [hasDiscountProducts, setHasDiscountProducts] = useState([]);
   const [forYouProducts, setForYouProducts] = useState([]);
+
+  const { topReviews } = useTopReviews();
 
   useEffect(() => {
     async function fetchNewestProducts() {
@@ -115,16 +118,18 @@ function Home() {
         </Heading>
         <HomeProducts products={bestSellerProducts} />
       </div>
-      <div className="flex flex-col gap-10 mt-10">
-        <Heading
-          as="h2"
-          className="uppercase flex justify-center font-extrabold"
-        >
-          Sản phẩm đang giảm giá
-        </Heading>
-        <HomeProducts products={hasDiscountProducts} />
-      </div>
-      {user && (
+      {hasDiscountProducts.length > 0 && (
+        <div className="flex flex-col gap-10 mt-10">
+          <Heading
+            as="h2"
+            className="uppercase flex justify-center font-extrabold"
+          >
+            Sản phẩm đang giảm giá
+          </Heading>
+          <HomeProducts products={hasDiscountProducts} />
+        </div>
+      )}
+      {user && forYouProducts.length > 0 && (
         <div className="flex flex-col gap-10 mt-10">
           <Heading
             as="h2"
@@ -136,15 +141,17 @@ function Home() {
           <HomeProducts products={forYouProducts} />
         </div>
       )}
-      <div className="flex flex-col gap-10 mt-10">
-        <Heading
-          as="h2"
-          className="uppercase flex justify-center font-extrabold"
-        >
-          Đánh giá của khách hàng
-        </Heading>
-        <TopReviews />
-      </div>
+      {topReviews.length > 0 && (
+        <div className="flex flex-col gap-10 mt-10">
+          <Heading
+            as="h2"
+            className="uppercase flex justify-center font-extrabold"
+          >
+            Đánh giá của khách hàng
+          </Heading>
+          <TopReviews topReviews={topReviews} />
+        </div>
+      )}
     </>
   );
 }

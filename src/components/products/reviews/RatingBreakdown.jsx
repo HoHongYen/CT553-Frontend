@@ -1,8 +1,8 @@
+import { jumpToRelevantDiv } from "@/utils/helpers";
 import { Progress } from "antd";
 import { HiStar } from "react-icons/hi2";
 import Heading from "../../ui/Heading";
 import Button from "@/components/ui/Button";
-import { jumpToRelevantDiv } from "@/utils/helpers";
 
 const colors = [
   "green",
@@ -19,8 +19,8 @@ const colors = [
 
 function RatingBreakdown({ allReviews, isPopUp = false }) {
   // calculate rating counts for each start, include half star
-  const labels = Array.from({ length: 10 }, (_, index) => {
-    const value = 5 - index / 2;
+  const labels = Array.from({ length: 5 }, (_, index) => {
+    const value = 5 - index;
     return value;
   });
 
@@ -37,7 +37,7 @@ function RatingBreakdown({ allReviews, isPopUp = false }) {
         {ratingCounts.map((count, index) => (
           <div key={index} className="flex items-center gap-10">
             <div className="flex w-[50px]">
-              <div>{(10 - index) / 2}</div>
+              <div>{5 - index}</div>
               <HiStar className="text-4xl text-[var(--color-yellow-700)] ml-auto" />
             </div>
             <div className="ml-auto">

@@ -14,12 +14,7 @@ function OverallRating({ allReviews }) {
         <span className="text-[4.5rem] font-semibold">{rating}</span>
         <span className="text-[4rem] text-[var(--color-grey-400)]"> / 5</span>
       </div>
-      <Rate
-        style={{ fontSize: "40px" }}
-        disabled
-        allowHalf
-        value={rating}
-      />
+      <Rate style={{ fontSize: "40px" }} disabled value={rating} />
       <div className="text-[var(--color-grey-400)]">
         {allReviews.length} lượt đánh giá
       </div>

@@ -1,13 +1,8 @@
 import { Skeleton } from "antd";
-import { useTopReviews } from "@/hooks/reviews/useTopReviews";
 import { Carousel as AntdCarousel } from "antd";
 import ReviewCard from "./ReviewCard";
 
-function TopReviews() {
-  const { topReviews } = useTopReviews();
-
-  console.log("topReviews", topReviews);
-
+function TopReviews({ topReviews }) {
   if (!topReviews) {
     return <Skeleton active />;
   }
