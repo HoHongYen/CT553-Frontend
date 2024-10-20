@@ -7,6 +7,8 @@ import { useProduct } from "@/hooks/products/useProduct";
 import { useMoveBack } from "@/hooks/common/useMoveBack";
 import { CART_ACTIONS, useCart } from "@/context/CartContext";
 import { useShowCartDrawer } from "@/context/ShowCartDrawerContext";
+import { useUser } from "@/hooks/profile/useUser";
+import { addViewCount } from "@/services/apiViewCount";
 
 import { HiOutlineShoppingCart, HiStar } from "react-icons/hi2";
 import { Carousel as AntdCarousel, Badge, Popover, Tag } from "antd";
@@ -35,6 +37,8 @@ import RatingBreakdown from "@/components/products/reviews/RatingBreakdown";
 const tagColors = ["magenta", "red", "volcano", "orange", "gold"];
 
 function ProductDetail() {
+  const { user } = useUser();
+
   const moveBack = useMoveBack();
   const navigate = useNavigate();
   const { product, isLoading } = useProduct();
@@ -91,6 +95,15 @@ function ProductDetail() {
     }
     getBreadcrumb();
   }, [product]);
+
+  useEffect(() => {
+    const helper = async () => {
+      if (user) {
+        await addViewCount({ accountId: user.id, productId: product.id });
+      }
+    };
+    helper();
+  }, [user, product]);
 
   const handleAddToCart = () => {
     let discountPrice;
