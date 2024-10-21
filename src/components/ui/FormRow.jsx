@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledFormRow = styled.div`
   display: grid;
@@ -28,19 +28,46 @@ const StyledFormRow = styled.div`
   }
 `;
 
+const sizes = {
+  small: css`
+    font-weight: 500;
+    font-size: 1.4rem;
+  `,
+  medium: css`
+    font-weight: 700;
+    font-size: 1.5rem;
+  `,
+  large: css`
+    font-weight: 700;
+    font-size: 1.6rem;
+  `,
+};
+
 const Label = styled.label`
-  font-weight: 500;
+  ${(props) => sizes[props.size]}
 `;
+
+Label.defaultProps = {
+  size: "small",
+};
 
 const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
 `;
 
-function FormRow({ label, error, children }) {
+function FormRow({ label, error, children, size, required }) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children.props.id}>{label}</Label>}
+      {label && (
+        <Label
+          size={size}
+          className={required ? "required" : ""}
+          htmlFor={children.props.id}
+        >
+          {label}
+        </Label>
+      )}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>
