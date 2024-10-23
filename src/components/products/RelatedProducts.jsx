@@ -5,6 +5,7 @@ import Heading from "../ui/Heading";
 function RelatedProducts() {
   const { relatedProducts } = useRelatedProducts();
 
+  console.log("relatedProducts", relatedProducts);
   if (!relatedProducts || relatedProducts.length === 0) return null;
   return (
     <div>

@@ -9,7 +9,7 @@ export function useRelatedProducts() {
         isLoading,
         data: { metadata: relatedProducts } = { metadata: [] },
     } = useQuery({
-        queryKey: ["relatedProducts", product.id],
+        queryKey: ["relatedProducts", "products", product.id],
         queryFn: () => getRelatedProducts(product.id),
     });
 

@@ -6,7 +6,7 @@ function ProductFilterOperations() {
   return (
     <TableOperations>
       <Filter
-        filterField="trang-thai"
+        filterField="giam-gia"
         options={[
           { value: "tat-ca", label: "Tất cả" },
           { value: "dang-giam-gia", label: "Đang giảm giá" },
