@@ -2,7 +2,7 @@ import { PAGE_SIZE, PRODUCT_ALL } from "@/utils/constants";
 import createApiClient from "./api";
 
 const baseUrl = "/api/products";
-const api = createApiClient(baseUrl);
+const api = createApiClient(baseUrl, { needAuth: true });
 
 export async function getProducts({ type = PRODUCT_ALL, categoryIds, discount, visible, filterMinPrice = 0, filterMaxPrice = 0, sortBy, page = 1, limit = PAGE_SIZE }) {
     const products = (await api.get("/", { params: { type, categoryIds, discount, visible, filterMinPrice, filterMaxPrice, sortBy, limit, page } })).data;

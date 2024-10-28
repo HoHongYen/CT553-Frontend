@@ -101,11 +101,11 @@ function OrderProvider({ children }) {
 
   useEffect(() => {
     // get the most suitable coupon to apply
-    const appliableCoupons = collectedCoupons.filter(
+    const applyableCoupons = collectedCoupons.filter(
       (coupon) => !coupon.used && totalPrice >= coupon.coupon.minimumPriceToUse
     );
 
-    const sortedCoupons = appliableCoupons.sort(
+    const sortedCoupons = applyableCoupons.sort(
       (a, b) =>
         getPriceAfterApplyingCoupon(a.coupon) -
         getPriceAfterApplyingCoupon(b.coupon)

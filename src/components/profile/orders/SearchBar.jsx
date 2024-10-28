@@ -17,7 +17,9 @@ function SearchBar({ placeholder, style }) {
 
     const order = (await getOrderById(value)).metadata;
     if (!order) {
-      toast.error("Đơn hàng không tồn tại");
+      toast.error("Đơn hàng không tồn tại", {
+        id: "clipboard",
+      });
       setValue("");
       return;
     }

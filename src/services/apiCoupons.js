@@ -15,6 +15,7 @@ export async function collectCoupon(couponCode) {
 
 export async function getCollectedCoupons() {
     const coupons = (await api.get("/collected")).data;
+    console.log("getCollectedCoupons", coupons);
     return coupons;
 }
 
