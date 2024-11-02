@@ -29,7 +29,14 @@ function ReviewList({ allReviews }) {
 
       <div className="flex flex-col divide-y gap-8 my-10">
         {reviews.map((review) => (
-          <CommentItem key={review.id} review={review} />
+          <div key={review.id}>
+            <CommentItem review={review} />
+            <div className="ml-24">
+              {review.replyByReview.length > 0 && (
+                <CommentItem isReplyReview={true} review={review.replyByReview[0]} />
+              )}
+            </div>
+          </div>
         ))}
       </div>
       <div className="mt-10">

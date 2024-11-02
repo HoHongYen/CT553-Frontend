@@ -39,10 +39,3 @@ export async function updateReview(reviewId, updatedReview) {
     return (await api.put("/" + reviewId, updatedReview)).data;
 }
 
-// export async function getAddressesOfCurrentUser() {
-//     return (await api.get("/current-account")).data;
-// }
-
-// export async function deleteAddress(addressId) {
-//     return (await api.delete("/" + addressId)).data;
-// }

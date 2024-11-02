@@ -8,7 +8,7 @@ import Modal from "@/components/ui/Modal";
 import ViewScaleImage from "../ViewScaleImage";
 import CreateReviewForm from "./CreateReviewForm";
 
-function CommentItem({ review }) {
+function CommentItem({ review, isReplyReview = false }) {
   const { user } = useUser();
 
   return (
@@ -18,10 +18,17 @@ function CommentItem({ review }) {
           <RoundImage
             path={review.account.avatar?.path || "/default-user.jpg"}
           />
-          <div className="flex flex-col">
-            <div className="font-bold">{review.account.fullName}</div>
-            <Rate disabled value={review.rating} />
-          </div>
+          {!isReplyReview && (
+            <div className="flex flex-col">
+              <div className="font-bold">{review.account.fullName}</div>
+              <Rate disabled value={review.rating} />
+            </div>
+          )}
+          {isReplyReview && (
+            <div className="flex items-center font-bold">
+              {review.account.fullName} (Quản trị viên)
+            </div>
+          )}
         </div>
         <span className="text-2xl text-[var(--color-grey-400)]">
           {formatDateTimeFromNow(review.createdAt)}

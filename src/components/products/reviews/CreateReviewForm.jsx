@@ -145,6 +145,7 @@ function CreateReviewForm({ orderDetail, reviewToEdit = {}, onCloseModal }) {
           updatedReview: {
             rating,
             comment,
+            uploadedImageIds
           },
         },
         {
@@ -161,7 +162,7 @@ function CreateReviewForm({ orderDetail, reviewToEdit = {}, onCloseModal }) {
           productId: orderDetail.variant.product.id,
           rating,
           comment,
-          uploadedImageIds: uploadedImageIds,
+          uploadedImageIds,
         },
         {
           onSuccess: () => {
