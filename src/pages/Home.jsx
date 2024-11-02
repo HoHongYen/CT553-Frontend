@@ -6,6 +6,8 @@ import {
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useUser } from "@/hooks/profile/useUser";
+import { useTopReviews } from "@/hooks/reviews/useTopReviews";
+import { useShopInfo } from "@/hooks/shopInfo/useShopInfo";
 import TopReviews from "@/components/home/TopReviews";
 import {
   getHomeProducts,
@@ -18,7 +20,7 @@ import Introduce from "@/components//home/Introduce";
 import HomeProducts from "@/components/home/HomeProducts";
 import CategoryMenu from "@/components/home/CategoryMenu";
 import Heading from "@/components/ui/Heading";
-import { useTopReviews } from "@/hooks/reviews/useTopReviews";
+import Spinner from "@/components/ui/Spinner";
 const breadcrumb = [];
 
 export const Slogan = styled.div`
@@ -29,7 +31,9 @@ export const Slogan = styled.div`
 `;
 
 function Home() {
-  const { user } = useUser();
+  const { user, isLoading: isLoading1 } = useUser();
+  const { shopInfo, isLoading: isLoading2 } = useShopInfo();
+
   const [newestProducts, setNewestProducts] = useState([]);
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
   const [hasDiscountProducts, setHasDiscountProducts] = useState([]);
@@ -78,6 +82,8 @@ function Home() {
     fetchForYouProducts();
   }, []);
 
+  if (isLoading1 || isLoading2) return <Spinner />;
+
   return (
     <>
       <Helmet>
@@ -85,8 +91,7 @@ function Home() {
       </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <Slogan className="text-3xl flex justify-center gap-5 capitalize -mt-12 -mb-6">
-        Tranh trang trí Decorpic - "Hơn cả thế giới tranh đẹp, chúng tôi biết
-        bạn cần gì"
+        {shopInfo.slogan}
       </Slogan>
       <Carousel />
       <Introduce />

@@ -99,8 +99,6 @@ function ProductDetail() {
   useEffect(() => {
     const helper = async () => {
       if (user && product) {
-        console.log("user", user);
-        console.log("product", product);
         await addViewCount({ accountId: user.id, productId: product.id });
       }
     };
