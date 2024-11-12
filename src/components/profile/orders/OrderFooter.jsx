@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCancelOrder } from "@/hooks/orders/useCancelOrder";
+import { useReturnOrder } from "@/hooks/orders/useReturnOrder";
 import { useCreateRedirectUrlVNPAY } from "@/hooks/orders/useCreateRedirectUrlVNPAY";
 import { useCart } from "@/context/CartContext";
 import {
@@ -17,12 +18,17 @@ import Tag from "@/components/ui/Tag";
 
 function OrderFooter({ order }) {
   const navigate = useNavigate();
-  const { isDeleting, cancelOrder } = useCancelOrder();
+  const { isLoading: isCanceling, cancelOrder } = useCancelOrder();
+  const { isLoading: isReturning, returnOrder } = useReturnOrder();
   const { dispatch } = useCart();
   const { createRedirectUrlVNPAY } = useCreateRedirectUrlVNPAY();
 
   const handleCancelOrder = () => {
     cancelOrder(order.id);
+  };
+
+  const handleReturnOrder = () => {
+    returnOrder(order.id);
   };
 
   const handleReOrder = () => {
@@ -116,8 +122,22 @@ function OrderFooter({ order }) {
             <Modal.Window name="cancelOrder">
               <ConfirmCertain
                 resourceName="Bạn có chắc chắn muốn hủy đơn hàng này?"
-                disabled={isDeleting}
+                disabled={isCanceling}
                 onConfirm={handleCancelOrder}
+              />
+            </Modal.Window>
+          </Modal>
+        )}
+        {order.currentStatus.name === ORDER_STATUS.DELIVERED && (
+          <Modal>
+            <Modal.Open opens="returnOrder">
+              <Button variation="normal">Đổi trả</Button>
+            </Modal.Open>
+            <Modal.Window name="returnOrder">
+              <ConfirmCertain
+                resourceName="Bạn có chắc chắn muốn đổi trả đơn hàng này?"
+                disabled={isReturning}
+                onConfirm={handleReturnOrder}
               />
             </Modal.Window>
           </Modal>

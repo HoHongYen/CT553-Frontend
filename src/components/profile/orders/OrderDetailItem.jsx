@@ -7,11 +7,9 @@ import Heading from "@/components/ui/Heading";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import CreateReviewForm from "@/components/products/reviews/CreateReviewForm";
-import { useReviews } from "@/hooks/reviews/useReviews";
 
 function OrderDetailItem({ orderDetail, currentStatus }) {
   const [hasReviewed, setHasReviewed] = useState(false);
-  const { reviews } = useReviews();
 
   useEffect(() => {
     const helper = async () => {

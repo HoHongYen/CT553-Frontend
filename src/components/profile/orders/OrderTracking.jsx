@@ -11,6 +11,7 @@ import {
   HiOutlineClipboardDocumentList,
   HiOutlineCube,
   HiOutlineTruck,
+  HiMiniArrowPath
 } from "react-icons/hi2";
 import OrderTrackingText from "./OrderTrackingText";
 
@@ -45,6 +46,12 @@ function OrderTracking({ order }) {
       description: "Đơn hàng đã được giao thành công.",
       icon: HiOutlineCheckCircle,
     },
+    {
+      title: ORDER_STATUS_TEXT[ORDER_STATUS.RETURNED],
+      color: ORDER_STATUS_COLOR[ORDER_STATUS.RETURNED],
+      description: "Đơn hàng đã được đổi trả.",
+      icon: HiMiniArrowPath,
+    },
   ];
 
   // check if order is canceled
@@ -69,7 +76,7 @@ function OrderTracking({ order }) {
 
   const items = statuses.map((status, index) => {
     const isFinished = orderStatusId > index + 1;
-    const isProcessing = orderStatusId === index + 1 || orderStatusId === 5;
+    const isProcessing = orderStatusId === index + 1 || orderStatusId === 6;
     return {
       title: (
         <OrderTrackingText
@@ -83,7 +90,7 @@ function OrderTracking({ order }) {
       description: (
         <OrderTrackingText type={isProcessing ? status.color : "grey"}>
           <p>{status.description}</p>
-          <p>{getBeginAt(orderStatusId === 5 ? 5 : index + 1)}</p>
+          <p>{getBeginAt(orderStatusId === 6 ? 6 : index + 1)}</p>
         </OrderTrackingText>
       ),
       icon: (

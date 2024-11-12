@@ -8,7 +8,11 @@ export async function createOrder(data) {
 }
 
 export async function cancelOrder(orderId) {
-    return (await api.put("/" + orderId)).data;
+    return (await api.put("/cancel/" + orderId)).data;
+}
+
+export async function returnOrder(orderId) {
+    return (await api.put("/return/" + orderId)).data;
 }
 
 export async function getAllOrderStatus() {

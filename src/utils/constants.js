@@ -108,7 +108,7 @@ export const ORDER_STATUS_COLOR = {
     [ORDER_STATUS.DELIVERING]: "yellow",
     [ORDER_STATUS.DELIVERED]: "green",
     [ORDER_STATUS.CANCELED]: "red",
-    [ORDER_STATUS.RETURNED]: "grey",
+    [ORDER_STATUS.RETURNED]: "silver",
 };
 
 export const PAYMENT_STATUS = {
