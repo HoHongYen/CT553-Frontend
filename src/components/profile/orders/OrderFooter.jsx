@@ -77,7 +77,7 @@ function OrderFooter({ order }) {
         </div>
         {order.totalDiscount > 0 && (
           <div className="italic">
-            <span className="font-semibold mr-2">Áp dụng coupon:</span> -
+            <span className="font-semibold mr-2">Áp dụng mã giảm giá:</span> -
             {formatCurrency(order.totalDiscount)}
           </div>
         )}

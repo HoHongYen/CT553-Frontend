@@ -32,7 +32,7 @@ function OrderSummary() {
         </li>
         {appliedCoupon && (
           <li className="flex flex-wrap gap-4">
-            Áp dụng coupon{" "}
+            Áp dụng mã giảm giá{" "}
             <span className="ml-auto font-bold">
               -{formatCurrency(totalDiscount)}
             </span>

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 function CouponItemButton() {
   const navigate = useNavigate();
   const handleCollectCoupon = () => {
-    toast.error("Vui lòng đăng nhập để nhận coupon!");
+    toast.error("Vui lòng đăng nhập để nhận mã giảm giá!");
     navigate("/dang-nhap");
   };
 

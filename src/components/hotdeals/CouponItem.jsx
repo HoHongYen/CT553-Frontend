@@ -5,6 +5,7 @@ import { Slogan } from "@/pages/Home";
 import CouponItemButton from "./CouponItemButton";
 import CouponItemButtonForAuthenticated from "./CouponItemButtonForAuthenticated";
 import CouponItemButtonForAuthenticatedInOrder from "./CouponItemButtonForAuthenticatedInOrder";
+import { useShopInfo } from "@/hooks/shopInfo/useShopInfo";
 
 function CouponItem({
   coupon,
@@ -14,6 +15,8 @@ function CouponItem({
   totalPrice,
 }) {
   const { isAuthenticated } = useUser();
+
+  const { shopInfo } = useShopInfo();
 
   const isAppliable = totalPrice >= coupon?.minimumPriceToUse;
 
@@ -36,7 +39,7 @@ function CouponItem({
         <div className="absolute bottom-[25px] -left-[25px] h-[33px] w-[33px] bg-[var(--color-grey-0)] rounded-full "></div>
         {/* round ribbon left end */}
         <div className="flex flex-col items-center gap-6">
-          <Slogan>Decorpic</Slogan>
+          <Slogan>{shopInfo.name}</Slogan>
           <div className="flex flex-col font-bold justify-center items-center h-[110px] w-[110px] bg-[var(--color-grey-0)] rounded-full">
             <span>GIẢM</span>
             <span className="text-[2.5rem]">
@@ -57,7 +60,7 @@ function CouponItem({
       <div className="relative overflow-hidden w-[67%] pt-10 pb-10 flex items-center">
         <div className="pl-10 flex flex-col gap-2 w-full border-l border-dashed border-l-[var(--color-grey-400)]">
           <div className="flex gap-3 font-semibold">
-            <span>Mã coupon:</span>
+            <span>Mã:</span>
             <span className="text-3xl font-bold italic text-[var(--color-green-700)]">
               {coupon.code}
             </span>

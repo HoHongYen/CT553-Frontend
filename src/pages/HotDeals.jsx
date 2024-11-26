@@ -43,7 +43,7 @@ function HotDeals() {
             as="h2"
             className="uppercase flex justify-center font-extrabold "
           >
-            Coupons hiện có
+            Các mã giảm giá hiện có
           </Heading>
           <CouponMenu coupons={coupons} />
         </div>

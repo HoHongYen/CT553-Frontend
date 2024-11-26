@@ -24,13 +24,13 @@ function CouponList() {
   return (
     <>
       <Helmet>
-        <title>Coupon của bạn</title>
+        <title>Mã giảm giá của bạn</title>
       </Helmet>
       <BreadCrumb breadcrumb={breadcrumb} />
       <StyledPolicyLayout>
         <Sidebar />
         <Row>
-          <Heading as="h1">Coupon của bạn</Heading>
+          <Heading as="h1">Mã giảm giá của bạn</Heading>
           <Row>
             <div className="grid grid-cols-2">
               {collectedCoupons?.map((item) => (

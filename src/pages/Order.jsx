@@ -216,7 +216,7 @@ function Order() {
                   as="h2"
                 >
                   <HiOutlineTicket />
-                  <span className="font-bold">Áp dụng coupon (nếu có)</span>
+                  <span className="font-bold">Áp dụng mã giảm giá (nếu có)</span>
                   {appliedCoupon && (
                     <span className="text-[var(--color-green-700)]">
                       (Đã áp dụng mã giảm giá) {appliedCoupon.coupon.code}

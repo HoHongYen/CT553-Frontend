@@ -21,7 +21,7 @@ function CouponItemButtonForAuthenticated({ coupon }) {
   const handleCollectCoupon = async () => {
     await collectCoupon(coupon.code);
     queryClient.invalidateQueries("collectedCoupons");
-    toast.success("Nhận coupon thành công!");
+    toast.success("Nhận mã giảm giá thành công!");
   };
 
   return (
