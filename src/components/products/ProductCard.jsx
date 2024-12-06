@@ -109,9 +109,6 @@ function ProductCard({ product }) {
             <ButtonIcon variation="success">
               {isInCart ? <HiShoppingCart /> : <HiOutlineShoppingCart />}
             </ButtonIcon>
-            <ButtonIcon variation="danger">
-              {isInCart ? <HiHeart /> : <HiOutlineHeart />}
-            </ButtonIcon>
           </div>
         </div>
       </div>

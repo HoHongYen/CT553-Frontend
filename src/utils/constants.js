@@ -33,7 +33,7 @@ export const profileLinks = [
     },
     {
         icon: HiOutlineTicket,
-        title: "Coupon",
+        title: "Mã giảm giá",
     },
 ];
 

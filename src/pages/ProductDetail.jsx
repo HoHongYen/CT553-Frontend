@@ -306,7 +306,7 @@ function ProductDetail() {
             </div>
 
             <p
-              className="pt-5 text-[var(--color-grey-500)]"
+              className="pt-2 pb-5 text-[var(--color-grey-500)]"
               dangerouslySetInnerHTML={{
                 __html: product.overview,
               }}

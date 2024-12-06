@@ -16,8 +16,8 @@ import SpinnerMini from "@/components/ui/SpinnerMini";
 import GoogleIcon from "@/components/icons/GoogleIcon";
 
 function LoginForm() {
-  const [email, setEmail] = useState("test@gmail.com");
-  const [password, setPassword] = useState("12345678");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading: isLoading1 } = useLogin();
   const { loginWithGoogle } = useLoginWithGoogle();

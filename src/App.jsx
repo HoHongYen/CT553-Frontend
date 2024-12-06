@@ -185,7 +185,7 @@ function App() {
                           }
                         />
                         <Route
-                          path="tai-khoan/coupon"
+                          path="tai-khoan/ma-giam-gia"
                           element={
                             <SuspenseWrapper
                               level1="profile"
